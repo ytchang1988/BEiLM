@@ -423,7 +423,7 @@
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr repeat(5, 1fr);
     gap: 48px;
     margin-bottom: 64px;
   }
@@ -529,21 +529,36 @@
   </div>
   <ul class="nav-main">
     <li class="has-dropdown">
+      <a href="#" class="nav-trigger" data-i18n="nav.news" data-i18n-html>News <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="news-events.html" data-i18n="nav.news.events">Events</a>
+        <a href="news-talks.html" data-i18n="nav.news.talks">Talks</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
       <a href="#" class="nav-trigger" data-i18n="nav.lab" data-i18n-html>Lab <span class="caret">▾</span></a>
       <div class="dropdown">
         <a href="index.html" data-i18n="nav.lab.overview">Overview</a>
         <a href="people.html" data-i18n="nav.lab.people">People</a>
+        <a href="projects.html" data-i18n="nav.lab.projects">Projects</a>
         <a href="publications.html" data-i18n="nav.lab.publications">Publications</a>
-        <a href="index.html#projects" data-i18n="nav.lab.projects">Projects</a>
       </div>
     </li>
-    <li><a href="teaching.html" data-i18n="nav.teaching">Teaching</a></li>
     <li class="has-dropdown">
       <a href="#" class="nav-trigger" data-i18n="nav.research" data-i18n-html>Research <span class="caret">▾</span></a>
       <div class="dropdown">
         <a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a>
-        <a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a>
         <a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a>
+        <a href="research-nzr.html" class="active" data-i18n="nav.research.nzr">NZR City Platform</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <a href="teaching.html" class="nav-trigger" data-i18n="nav.teaching" data-i18n-html>Teaching <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="teaching-bim.html" data-i18n="nav.teaching.bim">BIM Fundamental / Implementation Practice</a>
+        <a href="teaching-ai-bim.html" data-i18n="nav.teaching.aibim">AI-BIM for Architectural / Interior Design</a>
+        <a href="teaching-gbim.html" data-i18n="nav.teaching.gbim">Green Building Information Modeling</a>
+        <a href="teaching-digital-twin.html" data-i18n="nav.teaching.dt">Digital Twin for the Built Environment</a>
       </div>
     </li>
     <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
@@ -634,26 +649,37 @@
       <p data-i18n="footer.tagline.desc">Open to research collaborations, industry partnerships, and students curious about the intersection of AI, construction, and sustainability.</p>
     </div>
     <div class="footer-col">
+      <h4 data-i18n="footer.news">News</h4>
+      <ul>
+        <li><a href="news-events.html" data-i18n="nav.news.events">Events</a></li>
+        <li><a href="news-talks.html" data-i18n="nav.news.talks">Talks</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
       <h4 data-i18n="footer.lab">Lab</h4>
       <ul>
         <li><a href="index.html" data-i18n="nav.lab.overview">Overview</a></li>
         <li><a href="people.html" data-i18n="nav.lab.people">People</a></li>
+        <li><a href="projects.html" data-i18n="nav.lab.projects">Projects</a></li>
         <li><a href="publications.html" data-i18n="nav.lab.publications">Publications</a></li>
-        <li><a href="index.html#projects" data-i18n="nav.lab.projects">Projects</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4 data-i18n="footer.research">Research</h4>
       <ul>
         <li><a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a></li>
-        <li><a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a></li>
         <li><a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a></li>
+        <li><a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4 data-i18n="footer.teaching">Teaching</h4>
       <ul>
         <li><a href="teaching.html" data-i18n="footer.teaching.overview">Overview</a></li>
+        <li><a href="teaching-bim.html" data-i18n="nav.teaching.bim">BIM Fundamental / Implementation Practice</a></li>
+        <li><a href="teaching-ai-bim.html" data-i18n="nav.teaching.aibim">AI-BIM for Architectural / Interior Design</a></li>
+        <li><a href="teaching-gbim.html" data-i18n="nav.teaching.gbim">Green Building Information Modeling</a></li>
+        <li><a href="teaching-digital-twin.html" data-i18n="nav.teaching.dt">Digital Twin for the Built Environment</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -686,7 +712,7 @@
       'page.title': 'NZR City Platform — BEiLM Research Lab',
 
       // Nav (shared with main site)
-      'nav.news': 'News',
+      'nav.news': 'News <span class="caret">▾</span>',
       'nav.lab': 'Lab <span class="caret">▾</span>',
       'nav.lab.overview': 'Overview',
       'nav.lab.people': 'People',
@@ -696,7 +722,13 @@
       'nav.research.hpb': 'HPB Design Tool',
       'nav.research.nzr': 'NZR City Platform',
       'nav.research.sdgs': 'SDGs Campus Twin',
-      'nav.teaching': 'Teaching',
+      'nav.teaching': 'Teaching <span class="caret">▾</span>',
+      'nav.news.events': 'Events',
+      'nav.news.talks': 'Talks',
+      'nav.teaching.bim': 'BIM Fundamental / Implementation Practice',
+      'nav.teaching.aibim': 'AI-BIM for Architectural / Interior Design',
+      'nav.teaching.gbim': 'Green Building Information Modeling',
+      'nav.teaching.dt': 'Digital Twin for the Built Environment',
       'nav.contact': 'Contact',
 
 
@@ -787,7 +819,6 @@
       'people.contact.collab.desc': 'Open to research collaborations, industry partnerships, and graduate students working at the intersection of AI, construction, and sustainability.',
 
       // Publications page
-      'page.title': 'Publications — BEiLM Research Lab',
       'pubs.eyebrow': 'Live · Semantic Scholar',
       'pubs.heroTitle': 'Publications.',
       'pubs.heroLede': 'A live feed of papers, citations, and impact metrics — pulled directly from Semantic Scholar and refreshed regularly.',
@@ -806,6 +837,7 @@
       // Footer
       'footer.tagline': "Let's build what's <em>next</em>.",
       'footer.tagline.desc': 'Open to research collaborations, industry partnerships, and students curious about the intersection of AI, construction, and sustainability.',
+      'footer.news': 'News',
       'footer.lab': 'Lab',
       'footer.research': 'Research',
       'footer.teaching': 'Teaching',
@@ -820,7 +852,7 @@
       'page.title': 'NZR 城市平台 — BEiLM 研究室',
 
       // Nav
-      'nav.news': '新訊',
+      'nav.news': '新訊 <span class="caret">▾</span>',
       'nav.lab': '研究室 <span class="caret">▾</span>',
       'nav.lab.overview': '研究室概述',
       'nav.lab.people': '研究團隊',
@@ -830,7 +862,13 @@
       'nav.research.hpb': 'HPB 設計工具',
       'nav.research.nzr': 'NZR 城市平台',
       'nav.research.sdgs': 'SDGs 校園孿生',
-      'nav.teaching': '教學',
+      'nav.teaching': '教學 <span class="caret">▾</span>',
+      'nav.news.events': '活動',
+      'nav.news.talks': '演講',
+      'nav.teaching.bim': 'BIM 基礎與實務應用',
+      'nav.teaching.aibim': 'AI-BIM 建築與室內設計',
+      'nav.teaching.gbim': '綠建築資訊模型',
+      'nav.teaching.dt': '建成環境數位孿生',
       'nav.contact': '聯絡我們',
 
 
@@ -921,7 +959,6 @@
       'people.contact.collab.desc': '歡迎研究合作、產業夥伴關係,以及對 AI、營造與永續交集感到好奇的研究生。',
 
       // Publications page
-      'page.title': '學術發表 — BEiLM 研究室',
       'pubs.eyebrow': '即時更新 · Semantic Scholar',
       'pubs.heroTitle': '學術發表。',
       'pubs.heroLede': '由 Semantic Scholar 直接擷取的即時論文清單、引用數據與影響力指標,定期更新。',
@@ -940,6 +977,7 @@
       // Footer
       'footer.tagline': '讓我們一起打造<em>未來</em>。',
       'footer.tagline.desc': '歡迎研究合作、產業夥伴關係,以及對 AI、營造與永續交集感到好奇的學生。',
+      'footer.news': '新訊',
       'footer.lab': '研究室',
       'footer.research': '研究主題',
       'footer.teaching': '教學',
