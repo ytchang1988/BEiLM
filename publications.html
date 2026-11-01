@@ -351,7 +351,7 @@
   /* ============ PUBLICATIONS ============ */
   .pubs-summary {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
     border: 1px solid var(--rule);
     margin-bottom: 32px;
@@ -646,6 +646,35 @@
     .footer-brand > :nth-child(2) { margin: 14px 0 8px; }
     .footer-brand h3 { margin-bottom: 12px; }
   }
+  /* Journal / conference groups */
+  .pubs-group { margin-bottom: 56px; }
+  .pubs-group-title {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    color: var(--forest);
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--forest);
+    margin-bottom: 4px;
+  }
+  .pubs-group-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--jade);
+  }
+  .pubs-group .pub-year-divider:first-child { border-top: 0; }
+  .pub-authors strong { font-weight: 700; color: var(--forest); }
+  @media (max-width: 720px) {
+    .pubs-summary { grid-template-columns: repeat(2, 1fr); }
+    .pubs-stat:nth-child(2) { border-right: 0; }
+    .pubs-stat:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+  }
 </style>
 </head>
 <body>
@@ -730,9 +759,9 @@
 <section class="profile-hero">
   <div class="container">
     <div style="max-width: 720px;">
-      <div class="profile-meta" data-i18n="pubs.eyebrow">Live · Semantic Scholar</div>
+      <div class="profile-meta" data-i18n="pubs.eyebrow">Journal · Conference</div>
       <h1 class="profile-name" style="font-size: 56px; line-height: 1.05;" data-i18n="pubs.heroTitle" data-i18n-html>Publications.</h1>
-      <p class="profile-bio" style="margin-top: 24px;" data-i18n="pubs.heroLede">A live feed of papers, citations, and impact metrics — pulled directly from Semantic Scholar and refreshed regularly.</p>
+      <p class="profile-bio" style="margin-top: 24px;" data-i18n="pubs.heroLede">Peer-reviewed journal articles and conference papers from the lab, with citation counts kept up to date.</p>
     </div>
   </div>
 </section>
@@ -743,8 +772,12 @@
 
     <div class="pubs-summary" id="pubs-summary" aria-live="polite">
       <div class="pubs-stat">
-        <span class="pubs-stat-value" data-stat="paperCount">—</span>
-        <span class="pubs-stat-label" data-i18n="pubs.stat.papers">Papers</span>
+        <span class="pubs-stat-value" data-stat="journalCount">—</span>
+        <span class="pubs-stat-label" data-i18n="pubs.stat.journals">Journal Articles</span>
+      </div>
+      <div class="pubs-stat">
+        <span class="pubs-stat-value" data-stat="conferenceCount">—</span>
+        <span class="pubs-stat-label" data-i18n="pubs.stat.conferences">Conference Papers</span>
       </div>
       <div class="pubs-stat">
         <span class="pubs-stat-value" data-stat="citationCount">—</span>
@@ -768,15 +801,23 @@
       <div class="pubs-source" id="pubs-source-meta" data-i18n="pubs.loading">Loading…</div>
     </div>
 
-    <div class="pubs-list" id="pubs-list" aria-live="polite">
-      <!-- Skeleton placeholders -->
-      <div class="pub-item pub-skeleton"><div class="skeleton-bar w70"></div><div class="skeleton-bar w50"></div></div>
-      <div class="pub-item pub-skeleton"><div class="skeleton-bar w80"></div><div class="skeleton-bar w40"></div></div>
-      <div class="pub-item pub-skeleton"><div class="skeleton-bar w60"></div><div class="skeleton-bar w55"></div></div>
+    <div class="pubs-group">
+      <h2 class="pubs-group-title"><span data-i18n="pubs.group.journal">Journal Articles</span><span class="pubs-group-count" id="pubs-count-journal"></span></h2>
+      <div class="pubs-list" id="pubs-list-journal" aria-live="polite">
+        <div class="pub-item pub-skeleton"><div class="skeleton-bar w70"></div><div class="skeleton-bar w50"></div></div>
+        <div class="pub-item pub-skeleton"><div class="skeleton-bar w80"></div><div class="skeleton-bar w40"></div></div>
+      </div>
+    </div>
+    <div class="pubs-group">
+      <h2 class="pubs-group-title"><span data-i18n="pubs.group.conference">Conference Papers</span><span class="pubs-group-count" id="pubs-count-conference"></span></h2>
+      <div class="pubs-list" id="pubs-list-conference" aria-live="polite">
+        <div class="pub-item pub-skeleton"><div class="skeleton-bar w70"></div><div class="skeleton-bar w50"></div></div>
+        <div class="pub-item pub-skeleton"><div class="skeleton-bar w80"></div><div class="skeleton-bar w40"></div></div>
+      </div>
     </div>
 
     <div class="pubs-attribution" data-i18n="pubs.attribution" data-i18n-html>
-      Data via <a href="https://www.semanticscholar.org/" target="_blank" rel="noopener">Semantic Scholar</a> · cached for 12 hours · <span id="pubs-updated"></span>
+      Citation counts compiled by the lab · <span id="pubs-updated"></span>
     </div>
   </div>
 </section>
@@ -875,7 +916,6 @@
 
   const dict = {
     en: {
-      'people.title': 'Yun-Tsui Chang — BEiLM Research Lab',
 
       // Nav (shared with main site)
       'nav.news': 'News <span class="caret">▾</span>',
@@ -975,12 +1015,15 @@
 
       // Publications page
       'page.title': 'Publications — BEiLM Research Lab',
-      'pubs.eyebrow': 'Live · Semantic Scholar',
+      'pubs.eyebrow': 'Journal · Conference',
       'pubs.heroTitle': 'Publications.',
-      'pubs.heroLede': 'A live feed of papers, citations, and impact metrics — pulled directly from Semantic Scholar and refreshed regularly.',
+      'pubs.heroLede': 'Peer-reviewed journal articles and conference papers from the lab, with citation counts kept up to date.',
       'pubs.number': '',
       'pubs.title': "What we've <em>published</em>.",
-      'pubs.stat.papers': 'Papers',
+      'pubs.stat.journals': 'Journal Articles',
+      'pubs.stat.conferences': 'Conference Papers',
+      'pubs.group.journal': 'Journal Articles',
+      'pubs.group.conference': 'Conference Papers',
       'pubs.stat.citations': 'Citations',
       'pubs.stat.hindex': 'h-index',
       'pubs.sortby': 'SORT BY',
@@ -988,7 +1031,7 @@
       'pubs.sort.oldest': 'Oldest first',
       'pubs.sort.cited': 'Most cited',
       'pubs.loading': 'Loading…',
-      'pubs.attribution': 'Data via <a href="https://www.semanticscholar.org/" target="_blank" rel="noopener">Semantic Scholar</a> · cached for 12 hours · <span id="pubs-updated"></span>',
+      'pubs.attribution': 'Citation counts compiled by the lab · <span id="pubs-updated"></span>',
 
       // Footer
       'footer.tagline': "Let's build what's <em>next</em>.",
@@ -1004,7 +1047,6 @@
     },
 
     'zh-Hant': {
-      'people.title': '張芸翠 — BEiLM 研究室',
 
       // Nav
       'nav.news': '新訊 <span class="caret">▾</span>',
@@ -1104,12 +1146,15 @@
 
       // Publications page
       'page.title': '學術發表 — BEiLM 研究室',
-      'pubs.eyebrow': '即時更新 · Semantic Scholar',
+      'pubs.eyebrow': '期刊 · 研討會',
       'pubs.heroTitle': '學術發表。',
-      'pubs.heroLede': '由 Semantic Scholar 直接擷取的即時論文清單、引用數據與影響力指標,定期更新。',
+      'pubs.heroLede': '研究室發表的期刊論文與研討會論文,引用次數持續更新。',
       'pubs.number': '',
       'pubs.title': '我們<em>發表</em>了什麼。',
-      'pubs.stat.papers': '論文篇數',
+      'pubs.stat.journals': '期刊論文',
+      'pubs.stat.conferences': '研討會論文',
+      'pubs.group.journal': '期刊論文',
+      'pubs.group.conference': '研討會論文',
       'pubs.stat.citations': '被引用次數',
       'pubs.stat.hindex': 'h 指數',
       'pubs.sortby': '排序方式',
@@ -1117,7 +1162,7 @@
       'pubs.sort.oldest': '最早優先',
       'pubs.sort.cited': '引用最多',
       'pubs.loading': '載入中…',
-      'pubs.attribution': '資料來源:<a href="https://www.semanticscholar.org/" target="_blank" rel="noopener">Semantic Scholar</a> · 快取 12 小時 · <span id="pubs-updated"></span>',
+      'pubs.attribution': '引用次數由研究室彙整 · <span id="pubs-updated"></span>',
 
       // Footer
       'footer.tagline': '讓我們一起打造<em>未來</em>。',
@@ -1173,69 +1218,151 @@
 
 <script>
 /* ============================================================
- * BEiLM Publications — Semantic Scholar live fetch
- * Author ID: 2219835706 (Yun-Tsui Chang)
- * Caches results in localStorage for 12 hours.
+ * BEiLM Publications — Google Sheets feed
+ * Journal and conference papers come from two CSV tabs of the lab's
+ * publication sheet (File › Share › Publish to web). Only rows in the
+ * sections listed in SECTIONS are shown; the summary stats are computed
+ * from those rows. The last result is cached in localStorage so the list
+ * renders instantly while fresh data loads.
  * ============================================================ */
 (function() {
-  const AUTHOR_ID = '2219835706';
-  const CACHE_KEY = 'beilm-pubs-cache-v1';
-  const CACHE_TTL_MS = 12 * 60 * 60 * 1000; // 12 hours
-  const API_BASE = 'https://api.semanticscholar.org/graph/v1';
+  const SOURCES = {
+    journal: 'https://docs.google.com/spreadsheets/d/1bY2JrJGoZLSzEHR3f4LzgGdVdKU1k3GU_ZxHjexnHak/export?format=csv&gid=1228647075',
+    conference: 'https://docs.google.com/spreadsheets/d/1bY2JrJGoZLSzEHR3f4LzgGdVdKU1k3GU_ZxHjexnHak/export?format=csv&gid=0',
+  };
+  // Sheet rows whose first cell is one of these start a new section.
+  const SECTION_LABELS = ['Completed', 'In Progress', 'Missed', 'Other', 'Incomplete'];
+  // Sections that count as published.
+  const SECTIONS = { journal: ['Completed'], conference: ['Completed'] };
+  // Journal abbreviations used in the sheet → full names shown on the page.
+  const JOURNAL_NAMES = {
+    VIE: 'Visualization in Engineering',
+    ITcon: 'Journal of Information Technology in Construction',
+    JCP: 'Journal of Cleaner Production',
+    IIS: 'Innovative Infrastructure Solutions',
+    JCEM: 'Journal of Civil Engineering and Management',
+    JAABE: 'Journal of Asian Architecture and Building Engineering',
+  };
+  const CACHE_KEY = 'beilm-pubs-cache-v3';
 
   const els = {
     summary: document.getElementById('pubs-summary'),
-    list: document.getElementById('pubs-list'),
+    lists: {
+      journal: document.getElementById('pubs-list-journal'),
+      conference: document.getElementById('pubs-list-conference'),
+    },
+    counts: {
+      journal: document.getElementById('pubs-count-journal'),
+      conference: document.getElementById('pubs-count-conference'),
+    },
     sortSelect: document.getElementById('pubs-sort-by'),
     sourceMeta: document.getElementById('pubs-source-meta'),
-    updated: document.getElementById('pubs-updated'),
   };
 
-  let papersData = []; // current papers list (mutable for sort)
+  let data = { journal: [], conference: [] };
 
   // ---- Cache helpers ----
   function readCache() {
     try {
-      const raw = localStorage.getItem(CACHE_KEY);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      if (!parsed.fetchedAt || (Date.now() - parsed.fetchedAt) > CACHE_TTL_MS) return null;
-      return parsed;
+      const parsed = JSON.parse(localStorage.getItem(CACHE_KEY));
+      return parsed && parsed.fetchedAt ? parsed : null;
     } catch (e) { return null; }
   }
   function writeCache(payload) {
     try {
-      localStorage.setItem(CACHE_KEY, JSON.stringify({
-        fetchedAt: Date.now(),
-        author: payload.author,
-        papers: payload.papers,
-      }));
-    } catch (e) { /* quota exceeded — ignore */ }
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ fetchedAt: Date.now(), ...payload }));
+    } catch (e) { /* quota exceeded or storage blocked — ignore */ }
   }
 
-  // ---- Network ----
-  async function fetchAuthor() {
-    const url = `${API_BASE}/author/${AUTHOR_ID}?fields=name,affiliations,paperCount,citationCount,hIndex`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Author fetch failed: ${res.status}`);
-    return res.json();
+  // ---- CSV → papers ----
+  function parseCSV(text) {
+    const rows = [];
+    let row = [], field = '', quoted = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (quoted) {
+        if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+        else if (c === '"') quoted = false;
+        else field += c;
+      } else if (c === '"') quoted = true;
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && text[i + 1] === '\n') i++;
+        row.push(field); rows.push(row); row = []; field = '';
+      } else field += c;
+    }
+    if (field || row.length) { row.push(field); rows.push(row); }
+    return rows;
   }
-  async function fetchPapers() {
-    // Up to 100 papers; typical academic profiles fit. Bump limit if needed.
-    const fields = 'title,year,venue,authors,citationCount,externalIds,url,publicationTypes,publicationDate';
-    const url = `${API_BASE}/author/${AUTHOR_ID}/papers?fields=${fields}&limit=100`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Papers fetch failed: ${res.status}`);
-    const json = await res.json();
-    return json.data || [];
+
+  // Authors are the part of the APA-style reference before "(year)" or the title.
+  function authorsFrom(ref, title) {
+    if (!ref) return '';
+    let end = ref.search(/\s*\(\d{4}/);
+    if (end < 0) {
+      const probe = title.replace(/^[^A-Za-z0-9]+/, '').slice(0, 12).toLowerCase();
+      end = probe ? ref.toLowerCase().indexOf(probe) : -1;
+    }
+    return end > 0 ? ref.slice(0, end).replace(/[\s,"“”]+$/, '') : '';
+  }
+
+  function toPapers(rows, kind) {
+    const header = rows[0].map(h => h.trim());
+    const col = name => header.indexOf(name);
+    const c = {
+      time: col('Time'), venue: col(kind === 'journal' ? 'Publisher' : 'Conference'),
+      title: col('Title'), cites: col('Citation'), ref: col('reference'),
+      rg: col('ResearchGate'),
+    };
+    const cell = (r, i) => (i >= 0 && r[i] ? r[i].trim() : '');
+    let section = null;
+    const papers = [];
+    rows.slice(1).forEach(r => {
+      const first = cell(r, 0);
+      if (SECTION_LABELS.includes(first)) { section = first; return; }
+      const title = cell(r, c.title).replace(/\s+/g, ' ');
+      if (!title || !SECTIONS[kind].includes(section)) return;
+      const when = first.match(/^(\d{4})(?:\/(\d{1,2}))?/);
+      const venue = cell(r, c.venue);
+      const rg = cell(r, c.rg);
+      const cites = parseInt(cell(r, c.cites), 10);
+      papers.push({
+        title,
+        year: when ? +when[1] : null,
+        order: when ? +when[1] * 100 + (+when[2] || 0) : 0,
+        venue: JOURNAL_NAMES[venue] || venue,
+        authors: authorsFrom(cell(r, c.ref), title),
+        citationCount: Number.isNaN(cites) ? null : cites,
+        // Only ResearchGate links are shown; other links in the sheet stay private.
+        url: /^https:\/\/www\.researchgate\.net\//.test(rg) ? rg : null,
+      });
+    });
+    return papers;
+  }
+
+  async function fetchKind(kind) {
+    const res = await fetch(SOURCES[kind]);
+    if (!res.ok) throw new Error(`${kind} sheet fetch failed: ${res.status}`);
+    return toPapers(parseCSV(await res.text()), kind);
+  }
+
+  function summarize({ journal, conference }) {
+    const cites = [...journal, ...conference].map(p => p.citationCount || 0).sort((a, b) => b - a);
+    return {
+      journalCount: journal.length,
+      conferenceCount: conference.length,
+      citationCount: cites.reduce((sum, n) => sum + n, 0),
+      hIndex: cites.filter((n, i) => n >= i + 1).length,
+    };
   }
 
   // ---- Render ----
-  function renderSummary(author) {
+  function renderSummary(stats) {
     if (!els.summary) return;
-    els.summary.querySelector('[data-stat="paperCount"]').textContent = author.paperCount ?? '—';
-    els.summary.querySelector('[data-stat="citationCount"]').textContent = (author.citationCount ?? 0).toLocaleString();
-    els.summary.querySelector('[data-stat="hIndex"]').textContent = author.hIndex ?? '—';
+    Object.entries(stats).forEach(([key, value]) => {
+      const el = els.summary.querySelector(`[data-stat="${key}"]`);
+      if (el) el.textContent = value.toLocaleString();
+    });
   }
 
   function escapeHtml(s) {
@@ -1243,141 +1370,128 @@
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
-  function paperLink(paper) {
-    if (paper.url) return paper.url;
-    if (paper.externalIds && paper.externalIds.DOI) return `https://doi.org/${paper.externalIds.DOI}`;
-    return null;
+  // Bold the lab director's name in author lists.
+  function authorsHtml(authors) {
+    return escapeHtml(authors).replace(/Chang, Y\.(?:[\s-]?T\.)?/g, '<strong>$&</strong>');
   }
 
-  function authorList(authors) {
-    if (!authors || !authors.length) return '';
-    return authors.map(a => a.name).join(', ');
-  }
-
-  function renderPapers(papers) {
-    if (!els.list) return;
+  function renderList(kind) {
+    const list = els.lists[kind];
+    if (!list) return;
+    const papers = data[kind];
+    if (els.counts[kind]) els.counts[kind].textContent = papers.length || '';
     if (!papers.length) {
-      els.list.innerHTML = '<div class="pubs-error">No publications found.</div>';
+      list.innerHTML = '<div class="pubs-error">No publications found.</div>';
       return;
     }
 
     const sortBy = els.sortSelect ? els.sortSelect.value : 'year-desc';
     const sorted = [...papers].sort((a, b) => {
-      if (sortBy === 'year-desc') return (b.year || 0) - (a.year || 0);
-      if (sortBy === 'year-asc') return (a.year || 0) - (b.year || 0);
+      if (sortBy === 'year-desc') return b.order - a.order;
+      if (sortBy === 'year-asc') return a.order - b.order;
       if (sortBy === 'citations-desc') return (b.citationCount || 0) - (a.citationCount || 0);
       return 0;
     });
 
     let html = '';
-    let lastYear = null;
+    let lastYear;
     sorted.forEach(p => {
-      // Insert year divider if grouping by year
       if (sortBy.startsWith('year') && p.year !== lastYear) {
         html += `<div class="pub-year-divider">${p.year || 'UNDATED'}</div>`;
         lastYear = p.year;
       }
-      const link = paperLink(p);
-      const titleHtml = link
-        ? `<a class="pub-title" href="${escapeHtml(link)}" target="_blank" rel="noopener">${escapeHtml(p.title || 'Untitled')}</a>`
-        : `<div class="pub-title">${escapeHtml(p.title || 'Untitled')}</div>`;
+      const titleHtml = p.url
+        ? `<a class="pub-title" href="${escapeHtml(p.url)}" target="_blank" rel="noopener">${escapeHtml(p.title)}</a>`
+        : `<div class="pub-title">${escapeHtml(p.title)}</div>`;
       const venue = p.venue ? `<em>${escapeHtml(p.venue)}</em>` : '';
-      const year = p.year || '';
-      const meta = [year, venue].filter(Boolean).join(' · ');
-      const citeCount = p.citationCount ?? 0;
+      const meta = [p.year, venue].filter(Boolean).join(' · ');
+      const cites = p.citationCount;
 
       html += `
         <article class="pub-item">
           <div>
             ${titleHtml}
-            <div class="pub-authors">${escapeHtml(authorList(p.authors))}</div>
+            ${p.authors ? `<div class="pub-authors">${authorsHtml(p.authors)}</div>` : ''}
             <div class="pub-meta">${meta}</div>
           </div>
           <div class="pub-citations">
-            <span class="pub-cite-count">${citeCount}</span>
-            <span class="pub-cite-label">${citeCount === 1 ? 'cite' : 'cites'}</span>
+            <span class="pub-cite-count">${cites == null ? '—' : cites}</span>
+            ${cites == null ? '' : `<span class="pub-cite-label">${cites === 1 ? 'cite' : 'cites'}</span>`}
           </div>
         </article>`;
     });
-    els.list.innerHTML = html;
+    list.innerHTML = html;
   }
 
-  function renderError(message, isCached) {
-    if (!els.list) return;
-    els.list.innerHTML = `
-      <div class="pubs-error">
-        ${isCached ? 'Showing cached data.' : 'Could not load publications.'}
-        ${message ? `<br><small>${escapeHtml(message)}</small>` : ''}
-        <br><br>View latest at <a href="https://www.semanticscholar.org/author/${AUTHOR_ID}" target="_blank" rel="noopener">Semantic Scholar</a>.
-      </div>`;
+  function renderAll() {
+    renderList('journal');
+    renderList('conference');
+  }
+
+  function renderError(message) {
+    Object.values(els.lists).forEach(list => {
+      if (!list) return;
+      list.innerHTML = `
+        <div class="pubs-error">
+          Could not load publications.
+          ${message ? `<br><small>${escapeHtml(message)}</small>` : ''}
+          <br><br>See the full list on <a href="https://scholar.google.com/citations?user=3HGdfokAAAAJ" target="_blank" rel="noopener">Google Scholar</a>.
+        </div>`;
+    });
   }
 
   function setSourceLabel(text) {
     if (els.sourceMeta) els.sourceMeta.textContent = text;
   }
+  let lastUpdated = null;
   function setUpdatedLabel(timestamp) {
-    if (!els.updated) return;
+    // Look the span up each time: switching language re-renders the attribution line.
+    lastUpdated = timestamp;
+    const updated = document.getElementById('pubs-updated');
+    if (!updated || timestamp == null) return;
     const d = new Date(timestamp);
     const opts = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-    els.updated.textContent = `Updated ${d.toLocaleString(undefined, opts)}`;
+    updated.textContent = `Updated ${d.toLocaleString(undefined, opts)}`;
   }
 
   // ---- Main ----
   async function init() {
-    // 1. Try cache first for instant render
+    // 1. Show the cached copy right away
     const cached = readCache();
     if (cached) {
-      renderSummary(cached.author);
-      papersData = cached.papers;
-      renderPapers(papersData);
+      data = { journal: cached.journal || [], conference: cached.conference || [] };
+      renderSummary(summarize(data));
+      renderAll();
       setSourceLabel('From cache');
       setUpdatedLabel(cached.fetchedAt);
     }
 
-    // 2. Fetch fresh data (parallel)
+    // 2. Fetch fresh data from the sheet
     try {
-      setSourceLabel(cached ? 'Refreshing…' : 'Loading from Semantic Scholar…');
-      const [author, papers] = await Promise.all([fetchAuthor(), fetchPapers()]);
-      renderSummary(author);
-      papersData = papers;
-      renderPapers(papersData);
-      writeCache({ author, papers });
-      setSourceLabel('Live · Semantic Scholar');
+      setSourceLabel(cached ? 'Refreshing…' : 'Loading…');
+      const [journal, conference] = await Promise.all([fetchKind('journal'), fetchKind('conference')]);
+      data = { journal, conference };
+      renderSummary(summarize(data));
+      renderAll();
+      writeCache(data);
+      setSourceLabel('Live');
       setUpdatedLabel(Date.now());
     } catch (err) {
       console.warn('Publications fetch failed:', err);
       if (!cached) {
-        renderError(err.message, false);
+        renderError(err.message);
         setSourceLabel('Offline');
       } else {
-        // We already showed cache; just note that refresh failed
         setSourceLabel('Offline · cached data');
       }
     }
   }
 
-  // Sort handler
-  if (els.sortSelect) {
-    els.sortSelect.addEventListener('change', () => renderPapers(papersData));
-  }
-
-  // Lazy-load: only fetch when section comes into view (saves API calls if user never scrolls)
-  if ('IntersectionObserver' in window) {
-    const target = document.getElementById('publications');
-    if (target) {
-      const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          observer.disconnect();
-          init();
-        }
-      }, { rootMargin: '200px' });
-      observer.observe(target);
-    } else {
-      init();
-    }
-  } else {
-    init();
-  }
+  if (els.sortSelect) els.sortSelect.addEventListener('change', renderAll);
+  // The language toggle (registered earlier) empties #pubs-updated; refill it.
+  const langToggle = document.getElementById('lang-toggle');
+  if (langToggle) langToggle.addEventListener('click', () => setUpdatedLabel(lastUpdated));
+  init();
 })();
 </script>
 
