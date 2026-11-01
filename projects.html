@@ -348,68 +348,67 @@
   .contact-item a:hover { color: var(--forest); }
   
 
-  /* ============ RESEARCH PLACEHOLDER ============ */
-  .research-placeholder {
-    text-align: center;
-    padding: 60px 24px 100px;
-    max-width: 640px;
-    margin: 0 auto;
-  }
-  .placeholder-mark {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 28px;
-    opacity: 0.55;
-  }
-  .placeholder-tag {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--jade);
-    padding: 5px 14px;
-    border: 1px solid var(--jade);
-    border-radius: 999px;
-    margin-bottom: 24px;
-  }
-  .placeholder-title {
-    font-weight: 800;
-    font-size: 38px;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    color: var(--forest);
-    margin-bottom: 18px;
-  }
-  .placeholder-title em { color: var(--jade); font-style: normal; }
-  .placeholder-body {
-    font-size: 16px;
-    line-height: 1.65;
+  /* ============ PROJECTS ============ */
+  .profile-hero + .proj-group { border-top: none; padding-top: 0; }
+  .proj-group { padding: 64px 0; }
+  .proj-note {
+    font-size: 15px;
+    line-height: 1.6;
     color: var(--forest-2);
-    margin-bottom: 36px;
-    max-width: 56ch;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 14px;
+    max-width: 64ch;
   }
-  .placeholder-cta {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+  .proj-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    padding: 26px 0;
+    border-top: 1px solid var(--rule);
   }
-  .cta-link {
+  .proj-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--forest);
+    padding-top: 3px;
+    white-space: nowrap;
+  }
+  .proj-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 10px;
+  }
+  .proj-tag { background: var(--jade); color: white; font-size: 9px; letter-spacing: 0.2em; padding: 2px 8px; }
+  .proj-title {
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--forest);
+    max-width: 62ch;
+  }
+  .proj-sub {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--forest-2);
+    max-width: 68ch;
+  }
+  .proj-sub-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--forest);
-    border-bottom: 1px solid var(--rule);
-    padding-bottom: 4px;
-    transition: color 0.18s, border-color 0.18s;
+    color: var(--jade);
+    margin-right: 10px;
   }
-  .cta-link:hover { color: var(--jade); border-color: var(--jade); }
   @media (max-width: 920px) {
-    .placeholder-title { font-size: 28px; }
+    .proj-item { grid-template-columns: 1fr; gap: 8px; }
+    .proj-title { font-size: 17px; }
   }
 
   /* ============ FOOTER ============ */
@@ -605,35 +604,135 @@
   </div>
 </section>
 
-<!-- ============ COMING SOON PLACEHOLDER ============ -->
-<section style="padding-top: 0;">
+<!-- ============ PROJECTS: NSTC ============ -->
+<section class="proj-group">
   <div class="container">
-    <div class="research-placeholder">
-      <div class="placeholder-mark">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-          <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <g transform="translate(62, 51)">
-            <rect fill="#1F4D3A" x="0" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="22" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="44" y="0" width="10" height="10"/>
-            <rect fill="#2A9D8F" x="66" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="0" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="22" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="44" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="66" y="16" width="10" height="48"/>
-            <rect fill="#0F6E7C" x="0" y="24" width="76" height="4"/>
-          </g>
-        </svg>
-      </div>
-      <div class="placeholder-tag" data-i18n="teaching.tag">In Development</div>
-      <h2 class="placeholder-title" data-i18n="teaching.placeholder.title" data-i18n-html>This page is being <em>built</em>.</h2>
-      <p class="placeholder-body" data-i18n="teaching.placeholder.body">Project details are on their way. In the meantime, the three research platforms are described under Research, and recent papers are listed on the publications page.</p>
-      <div class="placeholder-cta">
-        <a href="index.html" class="cta-link" data-i18n="teaching.cta.overview">← Overview</a>
-        <a href="publications.html" class="cta-link" data-i18n="teaching.cta.pubs">Publications →</a>
-      </div>
+    <div class="section-header">
+      <div class="section-number" data-i18n="projects.nstc.number">01 / NSTC</div>
+      <h2 class="section-title" data-i18n="projects.nstc.title">National Science and Technology Council</h2>
+      <p class="proj-note" data-i18n="projects.nstc.note">Research grants from Taiwan’s National Science and Technology Council (the Ministry of Science and Technology, MOST, before 2022).</p>
+    </div>
+    <div class="proj-list">
+        <article class="proj-item">
+          <div class="proj-period">2026.10 – 2027.09</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">NSTC 115-2222-E-035-008</span><span class="proj-tag" data-until="2027-09-30" data-i18n="projects.ongoing">Ongoing</span></div>
+            <h3 class="proj-title" data-i18n="projects.nstc115.title">From Heterogeneous Work-Order Records to Design-Stage Information Requirements: A Cross-Site Knowledge Graph for Circular and Low-Carbon Maintenance in Social Housing</h3>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2025.12 – 2026.11</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">NSTC 114-2119-M-002-034</span><span class="proj-tag" data-until="2026-11-30" data-i18n="projects.ongoing">Ongoing</span></div>
+            <h3 class="proj-title" data-i18n="projects.nstc114.title">Collaborative Demonstration Sites Project under the Research Program on Advanced Technologies for Taiwan’s Sustainable Spatial Planning (Phase I)</h3>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2024.08 – 2025.07</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">NSTC 113-2621-M-002-007</span></div>
+            <h3 class="proj-title" data-i18n="projects.nstc113.title">Assessing the Impacts of Science Parks on Sustainable Development of the Surrounding Environment</h3>
+            <p class="proj-sub"><span class="proj-sub-label" data-i18n="projects.subproject">Sub-project</span><span data-i18n="projects.nstc113.sub">A Simulation Study on How Circular Social Housing Can Mitigate Impacts of Housing Development Near Science Parks</span></p>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2023.08 – 2026.07</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">NSTC 112-2221-E-002-078-MY3</span></div>
+            <h3 class="proj-title" data-i18n="projects.nstc112.title">A Digital-Twin Enabled Application Platform for a Net-Zero, Circular and WELL Campus</h3>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2022.08 – 2023.07</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">MOST 111-2621-M-002-008</span></div>
+            <h3 class="proj-title" data-i18n="projects.most111.title">Co-creation of Urban Transformation Guidelines towards Climate-proof and Net-zero-carbon Community and City</h3>
+            <p class="proj-sub"><span class="proj-sub-label" data-i18n="projects.subproject">Sub-project</span><span data-i18n="projects.most111.sub">Design and Evaluation Guidelines for Net-Zero Carbon and Circular Housing and Communities in Taiwan</span></p>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2021.08 – 2022.07</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">MOST 110-2621-M-002-007</span></div>
+            <h3 class="proj-title" data-i18n="projects.most110.title">Decision Support Platform for Digital Governance of Sustainable City in Response to Environmental Changes</h3>
+            <p class="proj-sub"><span class="proj-sub-label" data-i18n="projects.subproject">Sub-project</span><span data-i18n="projects.most110.sub">Combining BIM &amp; GIS Information to Simulate Circularity and Carbon Emission of Building Stock in City</span></p>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2020.08 – 2023.07</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">MOST 109-2221-E-002-054-MY3</span></div>
+            <h3 class="proj-title" data-i18n="projects.most109a.title">An Information Integration Platform for Smart Decision Making on Campus Sustainability</h3>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2020.08 – 2021.07</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">MOST 109-2621-M-002-012</span></div>
+            <h3 class="proj-title" data-i18n="projects.most109b.title">SimuCity — A Smart City Planning Simulation Platform for Urban Transformation</h3>
+            <p class="proj-sub"><span class="proj-sub-label" data-i18n="projects.subproject">Sub-project</span><span data-i18n="projects.most109b.sub">Combining BIM &amp; GIS Information to Simulate Energy and Material Circularity of Building Sector in City</span></p>
+          </div>
+        </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS: ABRI ============ -->
+<section class="proj-group">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="projects.abri.number">02 / ABRI</div>
+      <h2 class="section-title" data-i18n="projects.abri.title">Architecture and Building Research Institute</h2>
+      <p class="proj-note" data-i18n="projects.abri.note">Commissioned research for the Architecture and Building Research Institute, Ministry of the Interior.</p>
+    </div>
+    <div class="proj-list">
+        <article class="proj-item">
+          <div class="proj-period">2026.04 – 2026.12</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">11515G4002</span><span class="proj-tag" data-until="2026-12-31" data-i18n="projects.ongoing">Ongoing</span></div>
+            <h3 class="proj-title" data-i18n="projects.abri115.title">Development of an Integrated Assessment Model for Circular Buildings Incorporating Life Cycle Cost (LCC)</h3>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2025.02 – 2025.12</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">11415G0009</span></div>
+            <h3 class="proj-title" data-i18n="projects.abri114.title">The Study of Integrated Standardization and Digitalization Evaluation of Circular Building Design</h3>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2024.02 – 2024.12</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-grant">11363G0019</span></div>
+            <h3 class="proj-title" data-i18n="projects.abri113.title">A Study of Evaluation Method for Circular Buildings in Taiwan</h3>
+          </div>
+        </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS: INDUSTRY ============ -->
+<section class="proj-group">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="projects.industry.number">03 / Industry</div>
+      <h2 class="section-title" data-i18n="projects.industry.title">Industry–Academia Collaboration</h2>
+      <p class="proj-note" data-i18n="projects.industry.note">Projects developed with industry partners.</p>
+    </div>
+    <div class="proj-list">
+        <article class="proj-item">
+          <div class="proj-period">2026.07 – 2026.11</div>
+          <div class="proj-body">
+            <div class="proj-meta"><span class="proj-tag" data-until="2026-11-30" data-i18n="projects.ongoing">Ongoing</span></div>
+            <h3 class="proj-title" data-i18n="projects.ind-sparkgen.title">Design-Driven Construction Innovation: Developing the SparkGen Generative Engine and Reinventing the Brand Experience</h3>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2025.12 – 2026.10</div>
+          <div class="proj-body">
+            <h3 class="proj-title" data-i18n="projects.ind-dfma.title">A BIM–DfMA Design Support Tool for Modular Social Housing with Prefabricated Components</h3>
+          </div>
+        </article>
     </div>
   </div>
 </section>
@@ -759,11 +858,35 @@
       'teaching.eyebrow': 'Lab',
       'teaching.heroTitle': 'Projects.',
       'teaching.heroLede': 'Funded and ongoing projects across building, campus, and city scales.',
-      'teaching.tag': 'In Development',
-      'teaching.placeholder.title': 'This page is being <em>built</em>.',
-      'teaching.placeholder.body': 'Project details are on their way. In the meantime, the three research platforms are described under Research, and recent papers are listed on the publications page.',
-      'teaching.cta.overview': '← Overview',
-      'teaching.cta.pubs': 'Publications →',
+      // Projects
+      'projects.ongoing': 'Ongoing',
+      'projects.subproject': 'Sub-project',
+      'projects.nstc.number': '01 / NSTC',
+      'projects.nstc.title': 'National Science and Technology Council',
+      'projects.nstc.note': 'Research grants from Taiwan’s National Science and Technology Council (the Ministry of Science and Technology, MOST, before 2022).',
+      'projects.abri.number': '02 / ABRI',
+      'projects.abri.title': 'Architecture and Building Research Institute',
+      'projects.abri.note': 'Commissioned research for the Architecture and Building Research Institute, Ministry of the Interior.',
+      'projects.industry.number': '03 / Industry',
+      'projects.industry.title': 'Industry–Academia Collaboration',
+      'projects.industry.note': 'Projects developed with industry partners.',
+      'projects.nstc115.title': 'From Heterogeneous Work-Order Records to Design-Stage Information Requirements: A Cross-Site Knowledge Graph for Circular and Low-Carbon Maintenance in Social Housing',
+      'projects.nstc114.title': 'Collaborative Demonstration Sites Project under the Research Program on Advanced Technologies for Taiwan’s Sustainable Spatial Planning (Phase I)',
+      'projects.nstc113.title': 'Assessing the Impacts of Science Parks on Sustainable Development of the Surrounding Environment',
+      'projects.nstc113.sub': 'A Simulation Study on How Circular Social Housing Can Mitigate Impacts of Housing Development Near Science Parks',
+      'projects.nstc112.title': 'A Digital-Twin Enabled Application Platform for a Net-Zero, Circular and WELL Campus',
+      'projects.most111.title': 'Co-creation of Urban Transformation Guidelines towards Climate-proof and Net-zero-carbon Community and City',
+      'projects.most111.sub': 'Design and Evaluation Guidelines for Net-Zero Carbon and Circular Housing and Communities in Taiwan',
+      'projects.most110.title': 'Decision Support Platform for Digital Governance of Sustainable City in Response to Environmental Changes',
+      'projects.most110.sub': 'Combining BIM & GIS Information to Simulate Circularity and Carbon Emission of Building Stock in City',
+      'projects.most109a.title': 'An Information Integration Platform for Smart Decision Making on Campus Sustainability',
+      'projects.most109b.title': 'SimuCity — A Smart City Planning Simulation Platform for Urban Transformation',
+      'projects.most109b.sub': 'Combining BIM & GIS Information to Simulate Energy and Material Circularity of Building Sector in City',
+      'projects.abri115.title': 'Development of an Integrated Assessment Model for Circular Buildings Incorporating Life Cycle Cost (LCC)',
+      'projects.abri114.title': 'The Study of Integrated Standardization and Digitalization Evaluation of Circular Building Design',
+      'projects.abri113.title': 'A Study of Evaluation Method for Circular Buildings in Taiwan',
+      'projects.ind-sparkgen.title': 'Design-Driven Construction Innovation: Developing the SparkGen Generative Engine and Reinventing the Brand Experience',
+      'projects.ind-dfma.title': 'A BIM–DfMA Design Support Tool for Modular Social Housing with Prefabricated Components',
 
       // Profile hero
       'people.photo.tag': 'Director',
@@ -898,11 +1021,35 @@
       'teaching.eyebrow': '研究室',
       'teaching.heroTitle': '研究計畫。',
       'teaching.heroLede': '橫跨建築、校園與城市尺度的研究計畫與執行中專案。',
-      'teaching.tag': '建置中',
-      'teaching.placeholder.title': '此頁面正在<em>建構中</em>。',
-      'teaching.placeholder.body': '計畫詳細內容即將推出。期間可先參考「研究」選單中的三個研究平台，以及學術發表頁面。',
-      'teaching.cta.overview': '← 研究室概述',
-      'teaching.cta.pubs': '學術發表 →',
+      // Projects
+      'projects.ongoing': '執行中',
+      'projects.subproject': '子計畫',
+      'projects.nstc.number': '01 / 國科會',
+      'projects.nstc.title': '國家科學及技術委員會',
+      'projects.nstc.note': '國家科學及技術委員會(2022 年前為科技部)補助之研究計畫。',
+      'projects.abri.number': '02 / 建研所',
+      'projects.abri.title': '內政部建築研究所',
+      'projects.abri.note': '內政部建築研究所委託研究計畫。',
+      'projects.industry.number': '03 / 產學合作',
+      'projects.industry.title': '產學合作計畫',
+      'projects.industry.note': '與產業夥伴合作開發的計畫。',
+      'projects.nstc115.title': '從異質報修紀錄到設計端資訊需求:社會住宅循環低碳維護之跨場域知識圖譜',
+      'projects.nstc114.title': '第一期臺灣空間永續規劃之前瞻科技研究計畫共同示範場域計畫',
+      'projects.nstc113.title': '科學園區對區域環境永續發展之衝擊評估',
+      'projects.nstc113.sub': '以循環社宅減緩科學園區周邊住宅發展衝擊之模擬研究',
+      'projects.nstc112.title': '淨零循環健康校園之數位雙生應用平台之建構',
+      'projects.most111.title': '共創邁向氣候防護與淨零碳排社區與城市之轉型準則',
+      'projects.most111.sub': '台灣淨零循環住宅與社區的設計與評估準則',
+      'projects.most110.title': '因應環境變遷之永續城市數位治理決策支援平台之研究',
+      'projects.most110.sub': '結合 BIM 與 GIS 資訊以模擬建築群體之循環度與其碳排放量',
+      'projects.most109a.title': '永續校園智慧決策資訊整合平台之研發',
+      'projects.most109b.title': '智慧型城市規劃模擬平台之設計與應用',
+      'projects.most109b.sub': '結合 BIM 與 GIS 資料以模擬建築群體之能源與材料循環性',
+      'projects.abri115.title': '建構結合生命週期成本 (LCC) 之循環建築整合評估模式',
+      'projects.abri114.title': '循環建築設計整合標準化及數位化評估之研究',
+      'projects.abri113.title': '循環建築評估方法之研究',
+      'projects.ind-sparkgen.title': '設計驅動營建革新 — SparkGen 生成引擎研發與品牌化體驗再造',
+      'projects.ind-dfma.title': '結合預鑄構件產學合作之 BIM–DfMA 模組化社會住宅設計支援工具開發',
 
       // Profile hero
       'people.photo.tag': '主持人',
@@ -1045,6 +1192,12 @@
       applyLang(current === 'en' ? 'zh-Hant' : 'en');
     });
   }
+})();
+
+// Drop the "Ongoing" tag once a project's end date has passed.
+(function() {
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Taipei' });
+  document.querySelectorAll('[data-until]').forEach(el => { if (today > el.dataset.until) el.remove(); });
 })();
 </script>
 
