@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="page.title">Overview — BEiLM Research Lab</title>
+<style>
+  /* Type system — OPTION A: Archivo everywhere, JetBrains Mono for labels */
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --forest: #1F4D3A;
+    --forest-2: #2A6B52;
+    --ocean: #0F6E7C;
+    --jade: #2A9D8F;
+    --mint: #E8F0EC;
+    --jade-bright: #4ECDC4;
+    --paper: #F4F7F2;
+    --paper-2: #EDF3EE;
+    --rule: #CFDCD4;
+    --ink: #12302A;
+    --dark: #0B2620;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Archivo', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(244, 247, 242, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-text {
+    height: 24px;
+    width: auto;
+    display: block;
+  }
+  nav ul {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--forest);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--jade); }
+
+  /* Dropdown menus */
+  nav ul.nav-main { align-items: center; }
+  .has-dropdown { position: relative; }
+  .nav-trigger { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+  .nav-trigger .caret {
+    font-size: 8px;
+    color: var(--ocean);
+    transition: transform 0.2s, color 0.2s;
+    line-height: 1;
+  }
+  .has-dropdown:hover .nav-trigger .caret { color: var(--jade); transform: translateY(1px); }
+  .dropdown {
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    min-width: 200px;
+    background: white;
+    border: 0.5px solid var(--rule);
+    box-shadow: 0 8px 24px -8px rgba(31, 77, 58, 0.12);
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    pointer-events: none;
+  }
+  .has-dropdown:hover .dropdown,
+  .has-dropdown:focus-within .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+  /* Hover bridge — invisible padded zone above dropdown so it doesn't disappear when moving cursor down */
+  .has-dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    height: 14px;
+    pointer-events: none;
+  }
+  .has-dropdown:hover::after { pointer-events: auto; }
+  .dropdown a {
+    display: block;
+    padding: 9px 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--forest);
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+  }
+  .dropdown a:hover { background: var(--mint); color: var(--jade); }
+
+  /* Language toggle */
+  .lang-toggle-li { display: flex; align-items: center; }
+  .lang-toggle {
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 6px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--forest);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: border-color 0.18s, color 0.18s;
+  }
+  .lang-toggle:hover { border-color: var(--jade); }
+  .lang-toggle .lang-sep { color: var(--rule); }
+  .lang-toggle .lang-en,
+  .lang-toggle .lang-zh { transition: color 0.18s, font-weight 0.18s; }
+  /* Active language is jade and bolder */
+  html[lang="en"] .lang-toggle .lang-en { color: var(--jade); font-weight: 700; }
+  html[lang="en"] .lang-toggle .lang-zh { color: var(--rule); }
+  html[lang="zh-Hant"] .lang-toggle .lang-zh { color: var(--jade); font-weight: 700; }
+  html[lang="zh-Hant"] .lang-toggle .lang-en { color: var(--rule); }
+
+  /* Mobile fallback — stack dropdown items inline */
+  @media (max-width: 720px) {
+    nav ul.nav-main { gap: 18px; }
+    .dropdown {
+      position: static;
+      transform: none;
+      opacity: 1;
+      visibility: visible;
+      box-shadow: none;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      pointer-events: auto;
+      display: none;
+    }
+    .has-dropdown:hover .dropdown { display: block; }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    padding: 180px 48px 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .hero-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-meta::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--ocean);
+  }
+  .hero h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: clamp(40px, 5.5vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--forest);
+    margin-bottom: 32px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--jade);
+  }
+  .hero p.lede {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--forest-2);
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+  .hero .cta-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .cta {
+    padding: 14px 26px;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid transparent;
+  }
+  .cta-primary { background: var(--forest); color: var(--paper); }
+  .cta-primary:hover { background: var(--jade); transform: translateY(-1px); }
+  .cta-ghost { background: transparent; color: var(--forest); border: 1px solid var(--forest); }
+  .cta-ghost:hover { background: var(--forest); color: var(--paper); }
+
+  .hero-mark {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-mark .hero-orbital { width: 100%; max-width: 380px; }
+  .hero-mark .hero-wordmark { width: 100%; max-width: 280px; height: auto; }
+
+  /* Background decoration — big orbital rings instead of pillars */
+  .bg-rings {
+    position: absolute;
+    top: 0; right: 0;
+    width: 60%;
+    height: 100%;
+    opacity: 0.05;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .bg-rings svg { position: absolute; top: 30%; right: -15%; width: 900px; }
+
+  /* ============ SECTIONS ============ */
+  section { padding: 120px 48px; position: relative; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 80px;
+    padding-bottom: 32px;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .section-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .section-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--forest);
+  }
+  .section-title em {
+    font-style: normal;
+    color: var(--jade);
+  }
+
+  /* ============ FOUR i's ============ */
+  #pillars { background: white; }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .pillar-card {
+    background: white;
+    padding: 44px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+    transition: background 0.3s ease;
+    min-height: 340px;
+  }
+  .pillar-card:hover { background: var(--paper-2); }
+  .pillar-card:hover .pillar-icon rect.dot { fill: var(--jade); }
+  .pillar-index {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .pillar-icon { width: 40px; height: 50px; margin-top: 4px; }
+  .pillar-icon rect { transition: fill 0.3s ease; }
+  .pillar-name {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    color: var(--jade);
+    margin-top: 4px;
+  }
+  .pillar-desc {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--forest-2);
+  }
+  .pillar-tags {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    background: var(--paper);
+    color: var(--forest);
+    border: 0.5px solid var(--rule);
+  }
+
+  /* ============ SCALES / BE ============ */
+  #scales { background: var(--paper-2); }
+  .scales-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .scales-viz { position: relative; height: 460px; }
+  .scale-ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    border: 1px solid var(--forest);
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .scale-ring.city { width: 440px; height: 440px; background: rgba(15, 110, 124, 0.04); }
+  .scale-ring.campus { width: 280px; height: 280px; background: rgba(42, 157, 143, 0.06); }
+  .scale-ring.building { width: 140px; height: 140px; background: rgba(42, 157, 143, 0.12); }
+  .scale-ring .label {
+    position: absolute;
+    top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--forest);
+    background: var(--paper-2);
+    padding: 0 10px;
+  }
+  .scale-ring.building .label { color: var(--jade); }
+
+  .scales-text h3 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 1.15;
+    color: var(--forest);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .scales-text h3 em { font-style: normal; color: var(--jade); }
+  .scales-text p {
+    font-family: 'Archivo', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--forest-2);
+    margin-bottom: 24px;
+  }
+  .scale-item {
+    display: flex;
+    gap: 20px;
+    padding: 18px 0;
+    border-top: 0.5px solid var(--rule);
+  }
+  .scale-item:last-child { border-bottom: 0.5px solid var(--rule); }
+  .scale-marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    min-width: 74px;
+    padding-top: 4px;
+  }
+  .scale-info h4 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--forest);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .scale-info p {
+    font-family: 'Archivo', sans-serif;
+    font-size: 14px;
+    color: var(--forest-2);
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  /* ============ LIFECYCLE ============ */
+  #lifecycle { background: white; }
+  .lifecycle-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 24px;
+    align-items: stretch;
+    margin-bottom: 48px;
+  }
+  .phase-card {
+    background: var(--paper);
+    padding: 40px 28px;
+    border-top: 3px solid var(--forest);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 300px;
+    transition: all 0.3s ease;
+  }
+  .phase-card.phase-2 { border-top-color: var(--ocean); }
+  .phase-card.phase-3 { border-top-color: var(--jade); }
+  .phase-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgba(31, 77, 58, 0.2);
+  }
+  .phase-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .phase-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 1.15;
+    color: var(--jade);
+    letter-spacing: -0.02em;
+  }
+  .phase-desc {
+    font-family: 'Archivo', sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--forest-2);
+  }
+  .phase-tags {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-top: 12px;
+  }
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--forest);
+    font-family: 'Archivo', sans-serif;
+    font-size: 22px;
+  }
+  .cycle-note {
+    text-align: center;
+    padding: 36px 40px;
+    background: var(--paper-2);
+    font-family: 'Archivo', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--forest);
+    border-left: 3px solid var(--jade);
+    max-width: 820px;
+    margin: 0 auto;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+
+  /* ============ MATRIX ============ */
+  #matrix {
+    background: var(--dark);
+    color: var(--mint);
+    padding: 140px 48px;
+  }
+  #matrix .section-title { color: var(--mint); }
+  #matrix .section-number { color: var(--jade); }
+  #matrix .section-header { border-bottom-color: rgba(232, 240, 236, 0.15); }
+  .formula {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1.4;
+    text-align: center;
+    margin: 60px 0 24px;
+    letter-spacing: -0.02em;
+  }
+  .formula .var { color: var(--jade); }
+  .formula .op { color: rgba(232, 240, 236, 0.5); margin: 0 16px; font-weight: 400; }
+  .formula-caption {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(232, 240, 236, 0.5);
+    margin-bottom: 60px;
+  }
+  .matrix-body {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Archivo', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(232, 240, 236, 0.85);
+  }
+
+  /* ============ NEWS ============ */
+  #news { background: white; }
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--forest);
+    color: var(--mint);
+    padding: 80px 48px 40px;
+  }
+  .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.8fr 1fr;
+    gap: 48px;
+    margin-bottom: 60px;
+  }
+  .footer-brand .footer-wordmark {
+    height: 48px;
+    width: auto;
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 8px;
+  }
+  .footer-brand h3 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    margin-top: 20px;
+    color: var(--mint);
+    letter-spacing: -0.02em;
+  }
+  .footer-brand h3 em { font-style: normal; color: var(--jade-bright); }
+  .footer-brand p {
+    font-family: 'Archivo', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(232, 240, 236, 0.7);
+    max-width: 340px;
+  }
+  .footer-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--jade-bright);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li {
+    font-family: 'Archivo', sans-serif;
+    font-size: 14px;
+    color: rgba(232, 240, 236, 0.7);
+    margin-bottom: 10px;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .footer-col li:hover { color: var(--mint); }
+  .footer-col a { color: inherit; text-decoration: none; }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 32px;
+    border-top: 0.5px solid rgba(232, 240, 236, 0.15);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: rgba(232, 240, 236, 0.5);
+    text-transform: uppercase;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    section, .hero { padding-left: 24px; padding-right: 24px; }
+    .hero { padding-top: 120px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-mark .hero-orbital { max-width: 280px; }
+    .hero-mark .hero-wordmark { max-width: 220px; }
+    .section-header { grid-template-columns: 1fr; gap: 16px; }
+    .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    .scales-layout { grid-template-columns: 1fr; gap: 48px; }
+    .scales-viz { height: 340px; }
+    .scale-ring.city { width: 300px; height: 300px; }
+    .scale-ring.campus { width: 200px; height: 200px; }
+    .scale-ring.building { width: 100px; height: 100px; }
+    .lifecycle-flow { grid-template-columns: 1fr; }
+    .arrow { transform: rotate(90deg); padding: 8px 0; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+  @media (max-width: 560px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+  }
+  /* ============ PAGE HEADER (overview) ============ */
+  .page-hero { padding: 160px 48px 40px; }
+  .page-hero h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: 56px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--forest);
+    margin-bottom: 24px;
+  }
+  .page-hero .lede { max-width: 60ch; }
+  .page-hero + section { padding-top: 64px; }
+  @media (max-width: 900px) {
+    .page-hero { padding: 120px 24px 24px; }
+    .page-hero h1 { font-size: 44px; }
+  }
+  /* ============ FOOTER LAYOUT ============
+   * Brand sits on its own row; the five link columns share the full width
+   * (Teaching gets extra room for the course names). */
+  .footer-brand {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    column-gap: 28px;
+    align-items: center;
+    padding-bottom: 40px;
+    border-bottom: 0.5px solid rgba(232, 240, 236, 0.15);
+  }
+  .footer-brand > :nth-child(1),
+  .footer-brand > :nth-child(2) { grid-row: span 2; margin: 0; }
+  .footer-brand > :nth-child(1) { width: 64px; height: 64px; }
+  .footer-brand h3 { align-self: end; margin: 0 0 4px; }
+  .footer-brand p { align-self: start; max-width: 60ch; }
+  @media (max-width: 900px) {
+    .footer-brand { display: block; }
+    .footer-brand > :nth-child(2) { margin: 14px 0 8px; }
+    .footer-brand h3 { margin-bottom: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="brand">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="34" height="34">
+      <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
+      <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
+      <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
+      <g transform="translate(62, 51)">
+        <rect fill="#1F4D3A" x="0" y="0" width="10" height="10"/>
+        <rect fill="#1F4D3A" x="22" y="0" width="10" height="10"/>
+        <rect fill="#1F4D3A" x="44" y="0" width="10" height="10"/>
+        <rect fill="#2A9D8F" x="66" y="0" width="10" height="10"/>
+        <rect fill="#1F4D3A" x="0" y="16" width="10" height="48"/>
+        <rect fill="#1F4D3A" x="22" y="16" width="10" height="48"/>
+        <rect fill="#1F4D3A" x="44" y="16" width="10" height="48"/>
+        <rect fill="#1F4D3A" x="66" y="16" width="10" height="48"/>
+        <rect fill="#0F6E7C" x="0" y="24" width="76" height="4"/>
+      </g>
+    </svg>
+    <svg class="brand-text" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 180">
+      <text x="0" y="140" style="font-family:'Archivo',sans-serif; font-weight:800; font-size:130px; letter-spacing:-0.03em;">
+        <tspan fill="#1F4D3A">BE</tspan><tspan fill="#2A9D8F">ı</tspan><tspan fill="#1F4D3A">LM</tspan>
+      </text>
+      <rect x="188.045" y="42.500" width="7.904" height="7.904" fill="#1F4D3A"/>
+      <rect x="200.941" y="42.500" width="7.904" height="7.904" fill="#1F4D3A"/>
+      <rect x="188.045" y="55.396" width="7.904" height="7.904" fill="#1F4D3A"/>
+      <rect x="200.941" y="55.396" width="7.904" height="7.904" fill="#2A9D8F"/>
+    </svg>
+  </div>
+  <ul class="nav-main">
+    <li class="has-dropdown">
+      <a href="#" class="nav-trigger" data-i18n="nav.news" data-i18n-html>News <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="news-events.html" data-i18n="nav.news.events">Events</a>
+        <a href="news-talks.html" data-i18n="nav.news.talks">Talks</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <a href="#lab" class="nav-trigger" data-i18n="nav.lab" data-i18n-html>Lab <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="overview.html" class="active" data-i18n="nav.lab.overview">Overview</a>
+        <a href="people.html" data-i18n="nav.lab.people">People</a>
+        <a href="projects.html" data-i18n="nav.lab.projects">Projects</a>
+        <a href="publications.html" data-i18n="nav.lab.publications">Publications</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <a href="#research" class="nav-trigger" data-i18n="nav.research" data-i18n-html>Research <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a>
+        <a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a>
+        <a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <a href="teaching.html" class="nav-trigger" data-i18n="nav.teaching" data-i18n-html>Teaching <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="teaching-bim.html" data-i18n="nav.teaching.bim">BIM Fundamental / Implementation Practice</a>
+        <a href="teaching-ai-bim.html" data-i18n="nav.teaching.aibim">AI-BIM for Architectural / Interior Design</a>
+        <a href="teaching-gbim.html" data-i18n="nav.teaching.gbim">Green Building Information Modeling</a>
+        <a href="teaching-digital-twin.html" data-i18n="nav.teaching.dt">Digital Twin for the Built Environment</a>
+      </div>
+    </li>
+    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    <li class="lang-toggle-li">
+      <button class="lang-toggle" id="lang-toggle" aria-label="Switch language" type="button">
+        <span class="lang-en">EN</span>
+        <span class="lang-sep">/</span>
+        <span class="lang-zh">中</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- ============ PAGE HEADER ============ -->
+<section class="page-hero">
+  <div class="container">
+    <div class="hero-meta" data-i18n="overview.eyebrow">Lab</div>
+    <h1 data-i18n="overview.heroTitle">Overview.</h1>
+    <p class="lede" data-i18n="overview.heroLede">The framework behind our work: three nested scales of the built environment, four i's of inquiry, and a lifecycle from planning to regeneration.</p>
+  </div>
+</section>
+
+<!-- ============ BUILT ENVIRONMENT / SCALES ============ -->
+<section id="scales">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="be.number">01 / Built Environment</div>
+      <h2 class="section-title" data-i18n="be.title" data-i18n-html>From a single <em>building</em> to an entire <em>city</em>.</h2>
+    </div>
+    <div class="scales-layout">
+      <div class="scales-viz">
+        <div class="scale-ring city"><span class="label" data-i18n="be.scale.city">City</span></div>
+        <div class="scale-ring campus"><span class="label" data-i18n="be.scale.campus">Campus</span></div>
+        <div class="scale-ring building"><span class="label" data-i18n="be.scale.building">Building</span></div>
+      </div>
+      <div class="scales-text">
+        <h3 data-i18n="be.h3" data-i18n-html>Three <em>nested scales</em> of research.</h3>
+        <p data-i18n="be.intro">The built environment isn't a single artifact — it's a set of nested systems. Our research moves fluidly between them, because decisions at each scale shape the others.</p>
+        <div class="scale-item">
+          <span class="scale-marker">BE · 01</span>
+          <div class="scale-info">
+            <h4 data-i18n="be.scale.building">Building</h4>
+            <p data-i18n="be.scale.building.desc">Housing and individual structures — performance of the envelope, and the quality of the spaces within.</p>
+          </div>
+        </div>
+        <div class="scale-item">
+          <span class="scale-marker">BE · 02</span>
+          <div class="scale-info">
+            <h4 data-i18n="be.scale.campus">Campus</h4>
+            <p data-i18n="be.scale.campus.desc">Universities and institutional precincts — coordinated portfolios of buildings and open space.</p>
+          </div>
+        </div>
+        <div class="scale-item">
+          <span class="scale-marker">BE · 03</span>
+          <div class="scale-info">
+            <h4 data-i18n="be.scale.city">City</h4>
+            <p data-i18n="be.scale.city.desc">Urban systems, infrastructure networks, and the built environment at metropolitan scale.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOUR i's ============ -->
+<section id="pillars">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="i.number">02 / The Four i's</div>
+      <h2 class="section-title" data-i18n="i.title" data-i18n-html>Four pillars of <em>inquiry</em>, tied by a shared purpose.</h2>
+    </div>
+    <div class="pillars-grid">
+
+      <div class="pillar-card">
+        <span class="pillar-index">i — 01</span>
+        <svg class="pillar-icon" viewBox="0 0 40 50">
+          <rect class="dot" fill="#1F4D3A" x="14" y="2" width="12" height="12"/>
+          <rect fill="#1F4D3A" x="14" y="20" width="12" height="28"/>
+        </svg>
+        <h3 class="pillar-name" data-i18n="i.informatics">Informatics</h3>
+        <p class="pillar-desc" data-i18n="i.informatics.desc">Structured knowledge of the built environment — data models, spatial reasoning, and the representations that let machines understand architecture.</p>
+        <div class="pillar-tags">
+          <span class="tag">BIM</span>
+          <span class="tag">GIS</span>
+          <span class="tag" data-i18n="i.informatics.tag.kg">Knowledge Graphs</span>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <span class="pillar-index">i — 02</span>
+        <svg class="pillar-icon" viewBox="0 0 40 50">
+          <rect class="dot" fill="#1F4D3A" x="14" y="2" width="12" height="12"/>
+          <rect fill="#1F4D3A" x="14" y="20" width="12" height="28"/>
+        </svg>
+        <h3 class="pillar-name" data-i18n="i.intelligence">Intelligence</h3>
+        <p class="pillar-desc" data-i18n="i.intelligence.desc">Machine learning, reasoning, and decision support — helping designers, operators, and cities make better choices under real-world uncertainty.</p>
+        <div class="pillar-tags">
+          <span class="tag" data-i18n="i.intelligence.tag.ml">Machine Learning</span>
+          <span class="tag" data-i18n="i.intelligence.tag.ds">Decision Support</span>
+          <span class="tag">AI</span>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <span class="pillar-index">i — 03</span>
+        <svg class="pillar-icon" viewBox="0 0 40 50">
+          <rect class="dot" fill="#1F4D3A" x="14" y="2" width="12" height="12"/>
+          <rect fill="#1F4D3A" x="14" y="20" width="12" height="28"/>
+        </svg>
+        <h3 class="pillar-name" data-i18n="i.industrialization">Industrialization</h3>
+        <p class="pillar-desc" data-i18n="i.industrialization.desc">Turning ideas into matter — robotics, modular construction, and the industrialization of how buildings get made at scale and with precision.</p>
+        <div class="pillar-tags">
+          <span class="tag" data-i18n="i.industrialization.tag.robotics">Robotics</span>
+          <span class="tag" data-i18n="i.industrialization.tag.modular">Modular Construction</span>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <span class="pillar-index">i — 04</span>
+        <svg class="pillar-icon" viewBox="0 0 40 50">
+          <rect class="dot" fill="#2A9D8F" x="14" y="2" width="12" height="12"/>
+          <rect fill="#1F4D3A" x="14" y="20" width="12" height="28"/>
+        </svg>
+        <h3 class="pillar-name" data-i18n="i.integration">Integration</h3>
+        <p class="pillar-desc" data-i18n="i.integration.desc">Systems thinking across people, processes, and platforms — collaboration, participation, and the dynamics that hold the other three i's together.</p>
+        <div class="pillar-tags">
+          <span class="tag" data-i18n="i.integration.tag.collab">Collaboration</span>
+          <span class="tag" data-i18n="i.integration.tag.particip">Participation</span>
+          <span class="tag" data-i18n="i.integration.tag.sd">System Dynamics</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIFECYCLE ============ -->
+<section id="lifecycle">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="lm.number">03 / Lifecycle Management</div>
+      <h2 class="section-title" data-i18n="lm.title" data-i18n-html>From first sketch to <em>circular return</em>.</h2>
+    </div>
+
+    <div class="lifecycle-flow">
+      <div class="phase-card phase-1">
+        <span class="phase-label">LM · 01</span>
+        <h3 class="phase-title" data-i18n="lm.design">Planning &amp; Design</h3>
+        <p class="phase-desc" data-i18n="lm.design.desc">Lifecycle analysis, carbon accounting, and design-stage decision making that sets the trajectory for everything that follows.</p>
+        <div class="phase-tags">
+          <span class="tag" data-i18n="lm.design.tag.lca">Lifecycle Analysis</span>
+          <span class="tag" data-i18n="lm.design.tag.sust">Sustainability Analysis</span>
+          <span class="tag" data-i18n="lm.design.tag.gen">Generative Design</span>
+          <span class="tag" data-i18n="lm.design.tag.opt">Design Optimization</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="phase-card phase-2">
+        <span class="phase-label">LM · 02</span>
+        <h3 class="phase-title" data-i18n="lm.om">Operation &amp; Maintenance</h3>
+        <p class="phase-desc" data-i18n="lm.om.desc">Facility management, building performance monitoring, and the long middle years where most energy, cost, and emissions actually accumulate.</p>
+        <div class="phase-tags">
+          <span class="tag" data-i18n="lm.om.tag.energy">Energy Management</span>
+          <span class="tag" data-i18n="lm.om.tag.fm">Facility Management</span>
+        </div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="phase-card phase-3">
+        <span class="phase-label">LM · 03</span>
+        <h3 class="phase-title" data-i18n="lm.eol">End of Life &amp; Regeneration</h3>
+        <p class="phase-desc" data-i18n="lm.eol.desc">Deconstruction, material recovery, and circular economy — treating the end of one building as the beginning of the next.</p>
+        <div class="phase-tags">
+          <span class="tag" data-i18n="lm.eol.tag.circular">Circular Economy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cycle-note" data-i18n="lm.quote">
+      "A building isn't finished when construction ends — that's when its real life begins."
+    </div>
+  </div>
+</section>
+
+<!-- ============ MATRIX ============ -->
+<section id="matrix">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="matrix.number">04 / The Research Matrix</div>
+      <h2 class="section-title" data-i18n="matrix.title" data-i18n-html>A simple formula for <em>complex work</em>.</h2>
+    </div>
+    <div class="formula">
+      <span class="var">BE</span>
+      <span class="op">×</span>
+      <span class="var">i</span>
+      <span class="op">×</span>
+      <span class="var">LM</span>
+    </div>
+    <div class="formula-caption" data-i18n="matrix.caption">Three scales · Four methods · Three lifecycle phases · 36 research positions</div>
+    <p class="matrix-body" data-i18n="matrix.body">Every project in the lab sits somewhere on this grid — a specific combination of method, scale, and lifecycle phase. It's a compass for new research, a way to explain what we do to partners, and an honest map of where knowledge is still thin.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="80" height="80">
+        <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#E8F0EC" stroke-width="2.8"/>
+        <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#E8F0EC" stroke-width="2.8"/>
+        <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#E8F0EC" stroke-width="2.8"/>
+        <g transform="translate(62, 51)">
+          <rect fill="#E8F0EC" x="0" y="0" width="10" height="10"/>
+          <rect fill="#E8F0EC" x="22" y="0" width="10" height="10"/>
+          <rect fill="#E8F0EC" x="44" y="0" width="10" height="10"/>
+          <rect fill="#4ECDC4" x="66" y="0" width="10" height="10"/>
+          <rect fill="#E8F0EC" x="0" y="16" width="10" height="48"/>
+          <rect fill="#E8F0EC" x="22" y="16" width="10" height="48"/>
+          <rect fill="#E8F0EC" x="44" y="16" width="10" height="48"/>
+          <rect fill="#E8F0EC" x="66" y="16" width="10" height="48"/>
+          <rect fill="#4ECDC4" x="0" y="24" width="76" height="4"/>
+        </g>
+      </svg>
+      <svg class="footer-wordmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 180">
+        <text x="0" y="140" style="font-family:'Archivo',sans-serif; font-weight:800; font-size:130px; letter-spacing:-0.03em;">
+          <tspan fill="#E8F0EC">BE</tspan><tspan fill="#4ECDC4">ı</tspan><tspan fill="#E8F0EC">LM</tspan>
+        </text>
+        <rect x="188.045" y="42.500" width="7.904" height="7.904" fill="#E8F0EC"/>
+        <rect x="200.941" y="42.500" width="7.904" height="7.904" fill="#E8F0EC"/>
+        <rect x="188.045" y="55.396" width="7.904" height="7.904" fill="#E8F0EC"/>
+        <rect x="200.941" y="55.396" width="7.904" height="7.904" fill="#4ECDC4"/>
+      </svg>
+      <h3 data-i18n="footer.tagline" data-i18n-html>Let's build what's <em>next</em>.</h3>
+      <p data-i18n="footer.tagline.desc">Open to research collaborations, industry partnerships, and students curious about the intersection of AI, construction, and sustainability.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.news">News</h4>
+      <ul>
+        <li><a href="news-events.html" data-i18n="nav.news.events">Events</a></li>
+        <li><a href="news-talks.html" data-i18n="nav.news.talks">Talks</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.lab">Lab</h4>
+      <ul>
+        <li><a href="overview.html" data-i18n="nav.lab.overview">Overview</a></li>
+        <li><a href="people.html" data-i18n="nav.lab.people">People</a></li>
+        <li><a href="projects.html" data-i18n="nav.lab.projects">Projects</a></li>
+        <li><a href="publications.html" data-i18n="nav.lab.publications">Publications</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.research">Research</h4>
+      <ul>
+        <li><a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a></li>
+        <li><a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a></li>
+        <li><a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.teaching">Teaching</h4>
+      <ul>
+        <li><a href="teaching-bim.html" data-i18n="nav.teaching.bim">BIM Fundamental / Implementation Practice</a></li>
+        <li><a href="teaching-ai-bim.html" data-i18n="nav.teaching.aibim">AI-BIM for Architectural / Interior Design</a></li>
+        <li><a href="teaching-gbim.html" data-i18n="nav.teaching.gbim">Green Building Information Modeling</a></li>
+        <li><a href="teaching-digital-twin.html" data-i18n="nav.teaching.dt">Digital Twin for the Built Environment</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.connect">Connect</h4>
+      <ul>
+        <li><a href="mailto:yuntchang@fcu.edu.tw">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/yuntsui-chang/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.semanticscholar.org/author/Yun-Tsui-Chang/2219835706" target="_blank" rel="noopener">Semantic Scholar</a></li>
+        <li><a href="https://scholar.google.com/citations?user=3HGdfokAAAAJ" target="_blank" rel="noopener">Google Scholar</a></li>
+        <li><a href="https://github.com/ytchang1988" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://orcid.org/0000-0003-1515-4187" target="_blank" rel="noopener">ORCID</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span data-i18n="footer.copyright">© 2026 BEiLM Research Lab</span>
+    <span data-i18n="footer.tagline.short">Built Environment · Intelligence · Lifecycle</span>
+    <span data-i18n="footer.location">Taiwan</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+ * BEiLM i18n — bilingual EN/zh-Hant
+ * ============================================================ */
+(function() {
+  const STORAGE_KEY = 'beilm-lang';
+  const DEFAULT_LANG = 'en';
+
+  const dict = {
+    en: {
+      'page.title': 'Overview — BEiLM Research Lab',
+
+      // Nav
+      'nav.news': 'News <span class="caret">▾</span>',
+      'nav.lab': 'Lab <span class="caret">▾</span>',
+      'nav.lab.overview': 'Overview',
+      'nav.lab.people': 'People',
+      'nav.lab.publications': 'Publications',
+      'nav.lab.projects': 'Projects',
+      'nav.research': 'Research <span class="caret">▾</span>',
+      'nav.research.hpb': 'HPB Design Tool',
+      'nav.research.nzr': 'NZR City Platform',
+      'nav.research.sdgs': 'SDGs Campus Twin',
+      'nav.teaching': 'Teaching <span class="caret">▾</span>',
+      'nav.news.events': 'Events',
+      'nav.news.talks': 'Talks',
+      'nav.teaching.bim': 'BIM Fundamental / Implementation Practice',
+      'nav.teaching.aibim': 'AI-BIM for Architectural / Interior Design',
+      'nav.teaching.gbim': 'Green Building Information Modeling',
+      'nav.teaching.dt': 'Digital Twin for the Built Environment',
+      'nav.contact': 'Contact',
+
+      // Hero
+      'hero.meta': 'Research Lab · Taiwan',
+      'hero.headline': 'Where the <em>built environment</em> meets <em>intelligence</em> throughout <em>lifecycle</em>.',
+      'hero.lede': 'BEiLM is a research lab investigating how informatics, intelligence, industrialization, and integration transform how we design, operate, and regenerate buildings, campuses, and cities.',
+      'hero.cta.primary': 'Explore the framework →',
+      'hero.cta.secondary': 'Partner with us',
+
+      // Overview page
+      'overview.eyebrow': 'Lab',
+      'overview.heroTitle': 'Overview.',
+      'overview.heroLede': 'The framework behind our work: three nested scales of the built environment, four i\'s of inquiry, and a lifecycle from planning to regeneration.',
+      // BE
+      'be.number': '01 / Built Environment',
+      'be.title': 'From a single <em>building</em> to an entire <em>city</em>.',
+      'be.h3': 'Three <em>nested scales</em> of research.',
+      'be.intro': "The built environment isn't a single artifact — it's a set of nested systems. Our research moves fluidly between them, because decisions at each scale shape the others.",
+      'be.scale.building': 'Building',
+      'be.scale.building.desc': 'Housing and individual structures — performance of the envelope, and the quality of the spaces within.',
+      'be.scale.campus': 'Campus',
+      'be.scale.campus.desc': 'Universities and institutional precincts — coordinated portfolios of buildings and open space.',
+      'be.scale.city': 'City',
+      'be.scale.city.desc': 'Urban systems, infrastructure networks, and the built environment at metropolitan scale.',
+
+      // i
+      'i.number': "02 / The Four i's",
+      'i.title': 'Four pillars of <em>inquiry</em>, tied by a shared purpose.',
+      'i.informatics': 'Informatics',
+      'i.informatics.desc': 'Structured knowledge of the built environment — data models, spatial reasoning, and the representations that let machines understand architecture.',
+      'i.informatics.tag.kg': 'Knowledge Graphs',
+      'i.intelligence': 'Intelligence',
+      'i.intelligence.desc': 'Machine learning, reasoning, and decision support — helping designers, operators, and cities make better choices under real-world uncertainty.',
+      'i.intelligence.tag.ml': 'Machine Learning',
+      'i.intelligence.tag.ds': 'Decision Support',
+      'i.industrialization': 'Industrialization',
+      'i.industrialization.desc': 'Turning ideas into matter — robotics, modular construction, and the industrialization of how buildings get made at scale and with precision.',
+      'i.industrialization.tag.robotics': 'Robotics',
+      'i.industrialization.tag.modular': 'Modular Construction',
+      'i.integration': 'Integration',
+      'i.integration.desc': "Systems thinking across people, processes, and platforms — collaboration, participation, and the dynamics that hold the other three i's together.",
+      'i.integration.tag.collab': 'Collaboration',
+      'i.integration.tag.particip': 'Participation',
+      'i.integration.tag.sd': 'System Dynamics',
+
+      // LM
+      'lm.number': '03 / Lifecycle Management',
+      'lm.title': 'From first sketch to <em>circular return</em>.',
+      'lm.design': 'Planning & Design',
+      'lm.design.desc': 'Lifecycle analysis, carbon accounting, and design-stage decision making that sets the trajectory for everything that follows.',
+      'lm.design.tag.lca': 'Lifecycle Analysis',
+      'lm.design.tag.sust': 'Sustainability Analysis',
+      'lm.design.tag.gen': 'Generative Design',
+      'lm.design.tag.opt': 'Design Optimization',
+      'lm.om': 'Operation & Maintenance',
+      'lm.om.desc': 'Facility management, building performance monitoring, and the long middle years where most energy, cost, and emissions actually accumulate.',
+      'lm.om.tag.energy': 'Energy Management',
+      'lm.om.tag.fm': 'Facility Management',
+      'lm.eol': 'End of Life & Regeneration',
+      'lm.eol.desc': 'Deconstruction, material recovery, and circular economy — treating the end of one building as the beginning of the next.',
+      'lm.eol.tag.circular': 'Circular Economy',
+      'lm.quote': '"A building isn\'t finished when construction ends — that\'s when its real life begins."',
+
+      // Matrix
+      'matrix.number': '04 / The Research Matrix',
+      'matrix.title': 'A simple formula for <em>complex work</em>.',
+      'matrix.caption': 'Three scales · Four methods · Three lifecycle phases · 36 research positions',
+      'matrix.body': "Every project in the lab sits somewhere on this grid — a specific combination of method, scale, and lifecycle phase. It's a compass for new research, a way to explain what we do to partners, and an honest map of where knowledge is still thin.",
+
+      // Footer
+      'footer.tagline': "Let's build what's <em>next</em>.",
+      'footer.tagline.desc': 'Open to research collaborations, industry partnerships, and students curious about the intersection of AI, construction, and sustainability.',
+      'footer.news': 'News',
+      'footer.lab': 'Lab',
+      'footer.research': 'Research',
+      'footer.teaching': 'Teaching',
+      'footer.connect': 'Connect',
+      'footer.copyright': '© 2026 BEiLM Research Lab',
+      'footer.tagline.short': 'Built Environment · Intelligence · Lifecycle',
+      'footer.location': 'Taiwan',
+    },
+
+    'zh-Hant': {
+      'page.title': '研究室概述 — BEiLM 研究室',
+
+      // Nav
+      'nav.news': '新訊 <span class="caret">▾</span>',
+      'nav.lab': '研究室 <span class="caret">▾</span>',
+      'nav.lab.overview': '研究室概述',
+      'nav.lab.people': '研究團隊',
+      'nav.lab.publications': '學術發表',
+      'nav.lab.projects': '研究計畫',
+      'nav.research': '研究主題 <span class="caret">▾</span>',
+      'nav.research.hpb': 'HPB 設計工具',
+      'nav.research.nzr': 'NZR 城市平台',
+      'nav.research.sdgs': 'SDGs 校園孿生',
+      'nav.teaching': '教學 <span class="caret">▾</span>',
+      'nav.news.events': '活動',
+      'nav.news.talks': '演講',
+      'nav.teaching.bim': 'BIM 基礎與實務應用',
+      'nav.teaching.aibim': 'AI-BIM 建築與室內設計',
+      'nav.teaching.gbim': '綠建築資訊模型',
+      'nav.teaching.dt': '建成環境數位孿生',
+      'nav.contact': '聯絡我們',
+
+      // Hero
+      'hero.meta': '研究室 · 臺灣',
+      'hero.headline': '在<em>建築環境</em>與<em>智慧科技</em>的交會點,貫穿整個<em>生命週期</em>。',
+      'hero.lede': 'BEiLM 是一個研究室,探討資訊化、智能化、工業化與整合化如何改變我們設計、營運與再生建築物、校園與城市的方式。',
+      'hero.cta.primary': '探索研究架構 →',
+      'hero.cta.secondary': '與我們合作',
+
+      // Overview page
+      'overview.eyebrow': '研究室',
+      'overview.heroTitle': '研究室概述。',
+      'overview.heroLede': '我們的研究架構:建築環境的三個尺度、四個 i 的研究面向,以及從規劃到再生的完整生命週期。',
+      // BE
+      'be.number': '01 / 建築環境',
+      'be.title': '從<em>一棟建築</em>到<em>整座城市</em>。',
+      'be.h3': '三個<em>嵌套尺度</em>的研究範疇。',
+      'be.intro': '建築環境並非單一物件,而是一組嵌套的系統。我們的研究在這些尺度間流動,因為每個尺度的決策都會形塑其他尺度。',
+      'be.scale.building': '建築物',
+      'be.scale.building.desc': '住宅與各類建築單體 — 探討建築外殼的性能,以及內部空間的品質。',
+      'be.scale.campus': '校園',
+      'be.scale.campus.desc': '大學校園與機構園區 — 協調建築群與開放空間的整體規劃。',
+      'be.scale.city': '城市',
+      'be.scale.city.desc': '都市系統、基礎設施網絡,以及大都會尺度的建築環境。',
+
+      // i
+      'i.number': '02 / 四個 i',
+      'i.title': '四個<em>探究</em>面向,共享同一個目標。',
+      'i.informatics': '資訊化 (Informatics)',
+      'i.informatics.desc': '建築環境的結構化知識 — 資料模型、空間推理,以及讓機器理解建築的各種表徵方式。',
+      'i.informatics.tag.kg': '知識圖譜',
+      'i.intelligence': '智能化 (Intelligence)',
+      'i.intelligence.desc': '機器學習、推理與決策支援 — 協助設計者、營運者與城市在真實不確定性下做出更好的選擇。',
+      'i.intelligence.tag.ml': '機器學習',
+      'i.intelligence.tag.ds': '決策支援',
+      'i.industrialization': '工業化 (Industrialization)',
+      'i.industrialization.desc': '將想法化為實體 — 機器人、模組化營造,以及讓建築物得以大規模、高精度生產的工業化方法。',
+      'i.industrialization.tag.robotics': '機器人',
+      'i.industrialization.tag.modular': '模組化營造',
+      'i.integration': '整合化 (Integration)',
+      'i.integration.desc': '跨越人、流程與平台的系統思維 — 協作、參與,以及將其他三個 i 連結起來的動態關係。',
+      'i.integration.tag.collab': '協作',
+      'i.integration.tag.particip': '參與',
+      'i.integration.tag.sd': '系統動力學',
+
+      // LM
+      'lm.number': '03 / 生命週期管理',
+      'lm.title': '從第一筆草圖到<em>循環再生</em>。',
+      'lm.design': '規劃與設計',
+      'lm.design.desc': '生命週期分析、碳排計算,以及設計階段的決策 — 為後續一切奠定軌跡。',
+      'lm.design.tag.lca': '生命週期分析',
+      'lm.design.tag.sust': '永續性分析',
+      'lm.design.tag.gen': '生成式設計',
+      'lm.design.tag.opt': '設計最佳化',
+      'lm.om': '營運與維護',
+      'lm.om.desc': '設施管理、建築性能監測,以及那段漫長的中段歲月 — 大部分能源、成本與排放都在此累積。',
+      'lm.om.tag.energy': '能源管理',
+      'lm.om.tag.fm': '設施管理',
+      'lm.eol': '退役與再生',
+      'lm.eol.desc': '拆除解構、材料回收與循環經濟 — 將一棟建築的終點視為下一棟的起點。',
+      'lm.eol.tag.circular': '循環經濟',
+      'lm.quote': '「建築物並非在施工結束時完成 — 那其實是它真實生命的開始。」',
+
+      // Matrix
+      'matrix.number': '04 / 研究矩陣',
+      'matrix.title': '用簡單的公式詮釋<em>複雜的工作</em>。',
+      'matrix.caption': '三個尺度 · 四種方法 · 三個生命週期階段 · 36 個研究位置',
+      'matrix.body': '研究室的每一個計畫都坐落在這個矩陣的某個位置 — 是方法、尺度與生命週期階段的特定組合。它是新研究的指南針、向合作夥伴解釋我們工作的方式,也是一張誠實標示出知識仍然薄弱之處的地圖。',
+
+      // Footer
+      'footer.tagline': '讓我們一起打造<em>未來</em>。',
+      'footer.tagline.desc': '歡迎研究合作、產業夥伴關係,以及對 AI、營造與永續交集感到好奇的學生。',
+      'footer.news': '新訊',
+      'footer.lab': '研究室',
+      'footer.research': '研究主題',
+      'footer.teaching': '教學',
+      'footer.connect': '聯絡',
+      'footer.copyright': '© 2026 BEiLM 研究室',
+      'footer.tagline.short': '建築環境 · 智慧科技 · 生命週期',
+      'footer.location': '臺灣',
+    },
+  };
+
+  function applyLang(lang) {
+    if (!dict[lang]) lang = DEFAULT_LANG;
+    const strings = dict[lang];
+    const html = document.getElementById('html-root') || document.documentElement;
+    html.setAttribute('lang', lang);
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const value = strings[key];
+      if (value == null) return;
+      if (el.hasAttribute('data-i18n-html') || /<[a-z]/.test(value)) {
+        el.innerHTML = value;
+      } else {
+        el.textContent = value;
+      }
+    });
+
+    if (strings['page.title']) document.title = strings['page.title'];
+
+    const btn = document.getElementById('lang-toggle');
+    if (btn) btn.setAttribute('aria-label', lang === 'en' ? 'Switch to Chinese' : '切換為英文');
+
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  }
+
+  function getInitialLang() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && dict[saved]) return saved;
+    } catch (e) {}
+    return DEFAULT_LANG;
+  }
+
+  applyLang(getInitialLang());
+
+  const btn = document.getElementById('lang-toggle');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const current = (document.getElementById('html-root') || document.documentElement).getAttribute('lang');
+      applyLang(current === 'en' ? 'zh-Hant' : 'en');
+    });
+  }
+})();
+
+</script>
+
+</body>
+</html>

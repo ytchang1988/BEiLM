@@ -412,6 +412,96 @@
     .placeholder-title { font-size: 28px; }
   }
 
+  /* ============ TALKS ============ */
+  .talks-list { display: flex; flex-direction: column; }
+  .talk-item {
+    display: grid;
+    grid-template-columns: 160px 1fr 240px;
+    gap: 40px;
+    padding: 36px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .talk-poster {
+    display: block;
+    align-self: start;
+    border: 1px solid var(--rule);
+    transition: border-color 0.18s, transform 0.18s;
+  }
+  .talk-poster:hover { border-color: var(--jade); transform: translateY(-2px); }
+  .talk-poster img { width: 100%; height: auto; }
+  .talk-date { display: flex; flex-direction: column; gap: 4px; }
+  .talk-day {
+    font-weight: 800;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--forest);
+  }
+  .talk-month, .talk-weekday {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .talk-meta {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 12px;
+  }
+  .talk-tag {
+    background: var(--jade);
+    color: white;
+    font-size: 9px;
+    padding: 2px 8px;
+  }
+  .talk-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--forest);
+    margin-bottom: 10px;
+  }
+  .talk-summary {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--forest-2);
+    margin-bottom: 18px;
+    max-width: 64ch;
+  }
+  .talk-event {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--forest);
+    padding-left: 14px;
+    border-left: 2px solid var(--jade);
+    margin-bottom: 20px;
+    max-width: 64ch;
+  }
+  .talk-details { display: grid; gap: 10px; margin-bottom: 24px; }
+  .talk-details > div { display: grid; grid-template-columns: 110px 1fr; gap: 16px; }
+  .talk-details dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    padding-top: 3px;
+  }
+  .talk-details dd { font-size: 14px; line-height: 1.55; color: var(--forest-2); }
+  @media (max-width: 920px) {
+    .talk-item { grid-template-columns: 1fr; gap: 16px; }
+    .talk-poster { max-width: 320px; }
+    .talk-date { flex-direction: row; align-items: baseline; gap: 12px; }
+    .talk-day { font-size: 40px; }
+    .talk-details > div { grid-template-columns: 1fr; gap: 2px; }
+  }
+
   /* ============ FOOTER ============ */
   footer {
     background: var(--dark);
@@ -560,7 +650,7 @@
     <li class="has-dropdown">
       <a href="#" class="nav-trigger" data-i18n="nav.lab" data-i18n-html>Lab <span class="caret">▾</span></a>
       <div class="dropdown">
-        <a href="index.html" data-i18n="nav.lab.overview">Overview</a>
+        <a href="overview.html" data-i18n="nav.lab.overview">Overview</a>
         <a href="people.html" data-i18n="nav.lab.people">People</a>
         <a href="projects.html" data-i18n="nav.lab.projects">Projects</a>
         <a href="publications.html" data-i18n="nav.lab.publications">Publications</a>
@@ -605,35 +695,37 @@
   </div>
 </section>
 
-<!-- ============ COMING SOON PLACEHOLDER ============ -->
+<!-- ============ TALKS ============ -->
 <section style="padding-top: 0;">
   <div class="container">
-    <div class="research-placeholder">
-      <div class="placeholder-mark">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-          <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <g transform="translate(62, 51)">
-            <rect fill="#1F4D3A" x="0" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="22" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="44" y="0" width="10" height="10"/>
-            <rect fill="#2A9D8F" x="66" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="0" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="22" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="44" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="66" y="16" width="10" height="48"/>
-            <rect fill="#0F6E7C" x="0" y="24" width="76" height="4"/>
-          </g>
-        </svg>
-      </div>
-      <div class="placeholder-tag" data-i18n="teaching.tag">In Development</div>
-      <h2 class="placeholder-title" data-i18n="teaching.placeholder.title" data-i18n-html>This page is being <em>built</em>.</h2>
-      <p class="placeholder-body" data-i18n="teaching.placeholder.body">A list of talks and presentations is on its way. In the meantime, feel free to get in touch about speaking invitations.</p>
-      <div class="placeholder-cta">
-        <a href="news-events.html" class="cta-link" data-i18n="teaching.cta.overview">← Events</a>
-        <a href="publications.html" class="cta-link" data-i18n="teaching.cta.pubs">Publications →</a>
-      </div>
+    <div class="talks-list">
+      <article class="talk-item">
+        <div class="talk-date">
+          <span class="talk-day">12</span>
+          <span class="talk-month" data-i18n="talks.lcc.month">Nov 2026</span>
+          <span class="talk-weekday" data-i18n="talks.lcc.weekday">Thursday</span>
+        </div>
+        <div class="talk-body">
+          <div class="talk-meta">
+            <span class="talk-tag" data-until="2026-11-12" data-i18n="talks.upcoming">Upcoming</span>
+            <span data-i18n="talks.lcc.type">Seminar · Speaker</span>
+          </div>
+          <h3 class="talk-title" data-i18n="talks.lcc.title">Life Cycle Cost Analysis of Circular Buildings: A Social Housing Case Study</h3>
+          <p class="talk-summary" data-i18n="talks.lcc.summary">Compares the life cycle cost (LCC) of two social housing projects before and after circular design strategies are introduced.</p>
+          <p class="talk-event" data-i18n="talks.lcc.event">Seminar on the commissioned research project “An Integrated Circular Building Assessment Model Incorporating Life Cycle Cost (LCC)”</p>
+          <dl class="talk-details">
+            <div><dt data-i18n="talks.label.time">Time</dt><dd data-i18n="talks.lcc.time">15:30–16:00 (seminar 14:00–17:00)</dd></div>
+            <div><dt data-i18n="talks.label.venue">Venue</dt><dd data-i18n="talks.lcc.venue" data-i18n-html>15F Conference Room, Architecture and Building Research Institute, Ministry of the Interior<br>No. 200, Sec. 3, Beixin Rd., Xindian Dist., New Taipei City</dd></div>
+            <div><dt data-i18n="talks.label.organizers">Organizers</dt><dd data-i18n="talks.lcc.organizers">Architecture and Building Research Institute, MOI (host) · Taiwan Construction Research Institute and Feng Chia University (co-organizers)</dd></div>
+          </dl>
+          <div class="talk-actions" data-until="2026-11-02">
+            <a class="cta-link" href="https://forms.gle/zokNmgdNAFQk7tkS9" target="_blank" rel="noopener" data-i18n="talks.lcc.register">Register online (closes Nov 2) →</a>
+          </div>
+        </div>
+        <a class="talk-poster" href="talk-20261112-lcc-poster.webp" target="_blank" rel="noopener">
+          <img src="talk-20261112-lcc-poster.webp" alt="Seminar poster" data-i18n-alt="talks.lcc.posterAlt" width="1084" height="1495" loading="lazy">
+        </a>
+      </article>
     </div>
   </div>
 </section>
@@ -680,7 +772,7 @@
     <div class="footer-col">
       <h4 data-i18n="footer.lab">Lab</h4>
       <ul>
-        <li><a href="index.html" data-i18n="nav.lab.overview">Overview</a></li>
+        <li><a href="overview.html" data-i18n="nav.lab.overview">Overview</a></li>
         <li><a href="people.html" data-i18n="nav.lab.people">People</a></li>
         <li><a href="projects.html" data-i18n="nav.lab.projects">Projects</a></li>
         <li><a href="publications.html" data-i18n="nav.lab.publications">Publications</a></li>
@@ -759,11 +851,23 @@
       'teaching.eyebrow': 'News',
       'teaching.heroTitle': 'Talks.',
       'teaching.heroLede': 'Invited talks, keynotes, and conference presentations by lab members.',
-      'teaching.tag': 'In Development',
-      'teaching.placeholder.title': 'This page is being <em>built</em>.',
-      'teaching.placeholder.body': 'A list of talks and presentations is on its way. In the meantime, feel free to get in touch about speaking invitations.',
-      'teaching.cta.overview': '← Events',
-      'teaching.cta.pubs': 'Publications →',
+
+      // Talks
+      'talks.upcoming': 'Upcoming',
+      'talks.label.time': 'Time',
+      'talks.label.venue': 'Venue',
+      'talks.label.organizers': 'Organizers',
+      'talks.lcc.month': 'Nov 2026',
+      'talks.lcc.weekday': 'Thursday',
+      'talks.lcc.type': 'Seminar · Speaker',
+      'talks.lcc.title': 'Life Cycle Cost Analysis of Circular Buildings: A Social Housing Case Study',
+      'talks.lcc.summary': 'Compares the life cycle cost (LCC) of two social housing projects before and after circular design strategies are introduced.',
+      'talks.lcc.event': 'Seminar on the commissioned research project “An Integrated Circular Building Assessment Model Incorporating Life Cycle Cost (LCC)”',
+      'talks.lcc.time': '15:30–16:00 (seminar 14:00–17:00)',
+      'talks.lcc.venue': '15F Conference Room, Architecture and Building Research Institute, Ministry of the Interior<br>No. 200, Sec. 3, Beixin Rd., Xindian Dist., New Taipei City',
+      'talks.lcc.organizers': 'Architecture and Building Research Institute, MOI (host) · Taiwan Construction Research Institute and Feng Chia University (co-organizers)',
+      'talks.lcc.register': 'Register online (closes Nov 2) →',
+      'talks.lcc.posterAlt': 'Seminar poster with the full programme',
 
       // Profile hero
       'people.photo.tag': 'Director',
@@ -898,11 +1002,23 @@
       'teaching.eyebrow': '新訊',
       'teaching.heroTitle': '演講。',
       'teaching.heroLede': '研究室成員的受邀演講、專題演說與研討會發表。',
-      'teaching.tag': '建置中',
-      'teaching.placeholder.title': '此頁面正在<em>建構中</em>。',
-      'teaching.placeholder.body': '演講與發表清單即將推出。期間歡迎來信邀約演講。',
-      'teaching.cta.overview': '← 活動',
-      'teaching.cta.pubs': '學術發表 →',
+
+      // Talks
+      'talks.upcoming': '即將舉行',
+      'talks.label.time': '時間',
+      'talks.label.venue': '地點',
+      'talks.label.organizers': '主協辦',
+      'talks.lcc.month': '2026 年 11 月',
+      'talks.lcc.weekday': '星期四',
+      'talks.lcc.type': '推廣說明會 · 講者',
+      'talks.lcc.title': '循環建築全生命週期成本分析 — 以社會住宅為例',
+      'talks.lcc.summary': '以社會住宅 2 案例,比較循環設計導入前後之全生命週期成本 (LCC) 差異。',
+      'talks.lcc.event': '「建構結合生命週期成本 (LCC) 之循環建築整合評估模式」委託研究計畫案推廣說明會',
+      'talks.lcc.time': '15:30–16:00(說明會 14:00–17:00)',
+      'talks.lcc.venue': '內政部建築研究所 15 樓會議室<br>新北市新店區北新路三段 200 號 15 樓',
+      'talks.lcc.organizers': '主辦:內政部建築研究所 · 協辦:財團法人臺灣營建研究院、逢甲大學',
+      'talks.lcc.register': '線上報名(11/2 截止) →',
+      'talks.lcc.posterAlt': '說明會海報與完整議程',
 
       // Profile hero
       'people.photo.tag': '主持人',
@@ -1024,6 +1140,10 @@
         el.textContent = value;
       }
     });
+    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+      const value = strings[el.getAttribute('data-i18n-alt')];
+      if (value != null) el.setAttribute('alt', value);
+    });
     if (strings['people.title']) document.title = strings['people.title'];
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
   }
@@ -1045,6 +1165,14 @@
       applyLang(current === 'en' ? 'zh-Hant' : 'en');
     });
   }
+})();
+
+// Drop time-limited bits (the "Upcoming" tag, registration links) once their date has passed.
+(function() {
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Taipei' });
+  document.querySelectorAll('[data-until]').forEach(el => {
+    if (today > el.dataset.until) el.remove();
+  });
 })();
 </script>
 

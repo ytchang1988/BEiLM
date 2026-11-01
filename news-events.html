@@ -412,6 +412,102 @@
     .placeholder-title { font-size: 28px; }
   }
 
+  /* ============ EVENTS ============ */
+  .events-list { display: flex; flex-direction: column; }
+  .event-item {
+    display: grid;
+    grid-template-columns: 180px 1fr 280px;
+    gap: 40px;
+    padding: 36px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .event-poster {
+    display: block;
+    align-self: start;
+    border: 1px solid var(--rule);
+    transition: border-color 0.18s, transform 0.18s;
+  }
+  .event-poster:hover { border-color: var(--jade); transform: translateY(-2px); }
+  .event-poster img { width: 100%; height: auto; }
+  .event-date { display: flex; flex-direction: column; gap: 4px; }
+  .event-day {
+    font-weight: 800;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--forest);
+    white-space: nowrap;
+  }
+  .event-month, .event-weekday {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .event-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 12px;
+  }
+  .event-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--forest);
+    margin-bottom: 14px;
+    max-width: 40ch;
+  }
+  .event-summary {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--forest-2);
+    margin-bottom: 18px;
+    max-width: 68ch;
+  }
+  .event-highlights {
+    list-style: none;
+    margin-bottom: 24px;
+    max-width: 68ch;
+  }
+  .event-highlights li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--forest);
+    margin-bottom: 8px;
+  }
+  .event-highlights li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.6em;
+    width: 8px; height: 8px;
+    background: var(--jade);
+  }
+  .event-details { display: grid; gap: 10px; margin-bottom: 24px; }
+  .event-details > div { display: grid; grid-template-columns: 110px 1fr; gap: 16px; }
+  .event-details dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    padding-top: 3px;
+  }
+  .event-details dd { font-size: 14px; line-height: 1.55; color: var(--forest-2); }
+  @media (max-width: 920px) {
+    .event-item { grid-template-columns: 1fr; gap: 16px; }
+    .event-poster { max-width: 360px; }
+    .event-date { flex-direction: row; align-items: baseline; gap: 12px; }
+    .event-day { font-size: 36px; }
+    .event-details > div { grid-template-columns: 1fr; gap: 2px; }
+  }
+
   /* ============ FOOTER ============ */
   footer {
     background: var(--dark);
@@ -560,7 +656,7 @@
     <li class="has-dropdown">
       <a href="#" class="nav-trigger" data-i18n="nav.lab" data-i18n-html>Lab <span class="caret">▾</span></a>
       <div class="dropdown">
-        <a href="index.html" data-i18n="nav.lab.overview">Overview</a>
+        <a href="overview.html" data-i18n="nav.lab.overview">Overview</a>
         <a href="people.html" data-i18n="nav.lab.people">People</a>
         <a href="projects.html" data-i18n="nav.lab.projects">Projects</a>
         <a href="publications.html" data-i18n="nav.lab.publications">Publications</a>
@@ -605,35 +701,37 @@
   </div>
 </section>
 
-<!-- ============ COMING SOON PLACEHOLDER ============ -->
+<!-- ============ EVENTS ============ -->
 <section style="padding-top: 0;">
   <div class="container">
-    <div class="research-placeholder">
-      <div class="placeholder-mark">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-          <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <g transform="translate(62, 51)">
-            <rect fill="#1F4D3A" x="0" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="22" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="44" y="0" width="10" height="10"/>
-            <rect fill="#2A9D8F" x="66" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="0" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="22" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="44" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="66" y="16" width="10" height="48"/>
-            <rect fill="#0F6E7C" x="0" y="24" width="76" height="4"/>
-          </g>
-        </svg>
-      </div>
-      <div class="placeholder-tag" data-i18n="teaching.tag">In Development</div>
-      <h2 class="placeholder-title" data-i18n="teaching.placeholder.title" data-i18n-html>This page is being <em>built</em>.</h2>
-      <p class="placeholder-body" data-i18n="teaching.placeholder.body">Event announcements and recaps are on their way. In the meantime, feel free to get in touch about collaborations or visits.</p>
-      <div class="placeholder-cta">
-        <a href="index.html" class="cta-link" data-i18n="teaching.cta.overview">← Overview</a>
-        <a href="news-talks.html" class="cta-link" data-i18n="teaching.cta.pubs">Talks →</a>
-      </div>
+    <div class="events-list">
+      <article class="event-item">
+        <div class="event-date">
+          <span class="event-day">12–16</span>
+          <span class="event-month" data-i18n="events.hyd.month">Oct 2026</span>
+          <span class="event-weekday" data-i18n="events.hyd.weekday">Mon – Fri</span>
+        </div>
+        <div class="event-body">
+          <div class="event-meta" data-i18n="events.hyd.type">International Workshop · Hackathon · Host</div>
+          <h3 class="event-title" data-i18n="events.hyd.title">#HackYourDistrict 2026 — AI for Liveable Neighbourhoods: Co-Creating Urban Futures</h3>
+          <ul class="event-highlights">
+            <li data-i18n="events.hyd.h1">Keynotes and a stakeholder session with Taichung City Government and local NGOs on transport, housing, sustainability, and resilience</li>
+            <li data-i18n="events.hyd.h2">Three workshops: AI tools for urban and transport planning, vibe coding for GIS data analysis and visualization, and generative AI for participation</li>
+            <li data-i18n="events.hyd.h3">Site visits to Taichung Central Park, Taichung City Government, and Taichung Old Town</li>
+            <li data-i18n="events.hyd.h4">A day-and-a-half hackathon in interdisciplinary teams, closing with public presentations and a jury award</li>
+          </ul>
+          <dl class="event-details">
+            <div><dt data-i18n="events.label.dates">Dates</dt><dd data-i18n="events.hyd.dates">12–16 October 2026 (excursion 17 October)</dd></div>
+            <div><dt data-i18n="events.label.venue">Venue</dt><dd data-i18n="events.hyd.venue">School of Architecture, Feng Chia University, Taichung</dd></div>
+            <div><dt data-i18n="events.label.partners">Partners</dt><dd data-i18n="events.hyd.partners">TU Berlin (Chair of Work, Technology and Participation) · Feng Chia University (School of Architecture) · National Taiwan University (Graduate Institute of Building and Planning)</dd></div>
+            <div><dt data-i18n="events.label.funding">Funding</dt><dd data-i18n="events.hyd.funding">German Academic Exchange Service (DAAD)</dd></div>
+          </dl>
+          <a class="cta-link" href="https://www.tu.berlin/arte/forschung/projekte/hackyourdistrict/hackyourdistrict-2026" target="_blank" rel="noopener" data-i18n="events.hyd.link">Event page at TU Berlin →</a>
+        </div>
+        <a class="event-poster" href="event-20261012-hackyourdistrict-poster.webp" target="_blank" rel="noopener">
+          <img src="event-20261012-hackyourdistrict-poster.webp" alt="#HackYourDistrict 2026 call for application poster" data-i18n-alt="events.hyd.posterAlt" width="800" height="800" loading="lazy">
+        </a>
+      </article>
     </div>
   </div>
 </section>
@@ -680,7 +778,7 @@
     <div class="footer-col">
       <h4 data-i18n="footer.lab">Lab</h4>
       <ul>
-        <li><a href="index.html" data-i18n="nav.lab.overview">Overview</a></li>
+        <li><a href="overview.html" data-i18n="nav.lab.overview">Overview</a></li>
         <li><a href="people.html" data-i18n="nav.lab.people">People</a></li>
         <li><a href="projects.html" data-i18n="nav.lab.projects">Projects</a></li>
         <li><a href="publications.html" data-i18n="nav.lab.publications">Publications</a></li>
@@ -759,11 +857,26 @@
       'teaching.eyebrow': 'News',
       'teaching.heroTitle': 'Events.',
       'teaching.heroLede': 'Workshops, seminars, competitions, and other happenings around the lab.',
-      'teaching.tag': 'In Development',
-      'teaching.placeholder.title': 'This page is being <em>built</em>.',
-      'teaching.placeholder.body': 'Event announcements and recaps are on their way. In the meantime, feel free to get in touch about collaborations or visits.',
-      'teaching.cta.overview': '← Overview',
-      'teaching.cta.pubs': 'Talks →',
+
+      // Events
+      'events.label.dates': 'Dates',
+      'events.label.venue': 'Venue',
+      'events.label.partners': 'Partners',
+      'events.label.funding': 'Funding',
+      'events.hyd.month': 'Oct 2026',
+      'events.hyd.weekday': 'Mon – Fri',
+      'events.hyd.type': 'International Workshop · Hackathon · Host',
+      'events.hyd.title': '#HackYourDistrict 2026 — AI for Liveable Neighbourhoods: Co-Creating Urban Futures',
+      'events.hyd.h1': 'Keynotes and a stakeholder session with Taichung City Government and local NGOs on transport, housing, sustainability, and resilience',
+      'events.hyd.h2': 'Three workshops: AI tools for urban and transport planning, vibe coding for GIS data analysis and visualization, and generative AI for participation',
+      'events.hyd.h3': 'Site visits to Taichung Central Park, Taichung City Government, and Taichung Old Town',
+      'events.hyd.h4': 'A day-and-a-half hackathon in interdisciplinary teams, closing with public presentations and a jury award',
+      'events.hyd.dates': '12–16 October 2026 (excursion 17 October)',
+      'events.hyd.venue': 'School of Architecture, Feng Chia University, Taichung',
+      'events.hyd.partners': 'TU Berlin (Chair of Work, Technology and Participation) · Feng Chia University (School of Architecture) · National Taiwan University (Graduate Institute of Building and Planning)',
+      'events.hyd.funding': 'German Academic Exchange Service (DAAD)',
+      'events.hyd.link': 'Event page at TU Berlin →',
+      'events.hyd.posterAlt': '#HackYourDistrict 2026 call for application poster',
 
       // Profile hero
       'people.photo.tag': 'Director',
@@ -898,11 +1011,26 @@
       'teaching.eyebrow': '新訊',
       'teaching.heroTitle': '活動。',
       'teaching.heroLede': '研究室的工作坊、研討會、競賽與各項活動。',
-      'teaching.tag': '建置中',
-      'teaching.placeholder.title': '此頁面正在<em>建構中</em>。',
-      'teaching.placeholder.body': '活動公告與回顧即將推出。期間歡迎來信洽談合作或參訪。',
-      'teaching.cta.overview': '← 研究室概述',
-      'teaching.cta.pubs': '演講 →',
+
+      // Events
+      'events.label.dates': '日期',
+      'events.label.venue': '地點',
+      'events.label.partners': '合作單位',
+      'events.label.funding': '經費支持',
+      'events.hyd.month': '2026 年 10 月',
+      'events.hyd.weekday': '週一至週五',
+      'events.hyd.type': '國際工作坊 · 黑客松 · 主辦',
+      'events.hyd.title': '#HackYourDistrict 2026 — AI 打造宜居社區:共創城市未來',
+      'events.hyd.h1': '專題演講,以及與臺中市政府、在地 NGO 就交通、住宅、永續與韌性議題的利害關係人座談',
+      'events.hyd.h2': '三場工作坊:AI 輔助都市與交通規劃、以 Vibe Coding 進行 GIS 資料分析與視覺化、生成式 AI 與公眾參與',
+      'events.hyd.h3': '實地踏查臺中中央公園、臺中市政府與臺中舊城區',
+      'events.hyd.h4': '一天半的跨領域團隊黑客松,最後公開發表並由評審選出優勝隊伍',
+      'events.hyd.dates': '2026 年 10 月 12–16 日(10 月 17 日城市導覽)',
+      'events.hyd.venue': '逢甲大學建築專業學院,臺中',
+      'events.hyd.partners': '德國柏林工業大學(工作、科技與參與講座) · 逢甲大學(建築專業學院) · 國立臺灣大學(建築與城鄉研究所)',
+      'events.hyd.funding': '德國學術交流總署 (DAAD)',
+      'events.hyd.link': 'TU Berlin 活動頁面 →',
+      'events.hyd.posterAlt': '#HackYourDistrict 2026 徵件海報',
 
       // Profile hero
       'people.photo.tag': '主持人',
@@ -1023,6 +1151,10 @@
       } else {
         el.textContent = value;
       }
+    });
+    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+      const value = strings[el.getAttribute('data-i18n-alt')];
+      if (value != null) el.setAttribute('alt', value);
     });
     if (strings['people.title']) document.title = strings['people.title'];
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}

@@ -665,6 +665,63 @@
   @media (max-width: 560px) {
     .pillars-grid { grid-template-columns: 1fr; }
   }
+  /* ============ NEWS ============ */
+  #news { background: white; }
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .news-card {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 24px;
+    padding: 20px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    color: var(--forest);
+    text-decoration: none;
+    transition: border-color 0.18s, transform 0.18s;
+  }
+  .news-card:hover { border-color: var(--jade); transform: translateY(-2px); }
+  .news-thumb { aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid var(--rule); background: white; }
+  .news-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .news-body { display: flex; flex-direction: column; }
+  .news-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 12px;
+  }
+  .news-kind { color: var(--jade); font-weight: 700; }
+  .news-tag { background: var(--jade); color: white; font-size: 9px; padding: 2px 8px; }
+  .news-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .news-desc { font-size: 14px; line-height: 1.55; color: var(--forest-2); margin-bottom: 16px; }
+  .news-more {
+    margin-top: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--forest);
+  }
+  .news-card:hover .news-more { color: var(--jade); }
+  @media (max-width: 900px) {
+    .news-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .news-card { grid-template-columns: 96px 1fr; gap: 16px; padding: 16px; }
+  }
   /* ============ FOOTER LAYOUT ============
    * Brand sits on its own row; the five link columns share the full width
    * (Teaching gets extra room for the course names). */
@@ -731,7 +788,7 @@
     <li class="has-dropdown">
       <a href="#lab" class="nav-trigger" data-i18n="nav.lab" data-i18n-html>Lab <span class="caret">▾</span></a>
       <div class="dropdown">
-        <a href="#" data-i18n="nav.lab.overview">Overview</a>
+        <a href="overview.html" data-i18n="nav.lab.overview">Overview</a>
         <a href="people.html" data-i18n="nav.lab.people">People</a>
         <a href="projects.html" data-i18n="nav.lab.projects">Projects</a>
         <a href="publications.html" data-i18n="nav.lab.publications">Publications</a>
@@ -807,190 +864,41 @@
       <h1 data-i18n="hero.headline" data-i18n-html>Where the <em>built environment</em> meets <em>intelligence</em> throughout <em>lifecycle</em>.</h1>
       <p class="lede" data-i18n="hero.lede">BEiLM is a research lab investigating how informatics, intelligence, industrialization, and integration transform how we design, operate, and regenerate buildings, campuses, and cities.</p>
       <div class="cta-row">
-        <a href="#scales" class="cta cta-primary" data-i18n="hero.cta.primary">Explore the framework →</a>
+        <a href="overview.html" class="cta cta-primary" data-i18n="hero.cta.primary">Explore the framework →</a>
         <a href="#contact" class="cta cta-ghost" data-i18n="hero.cta.secondary">Partner with us</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ BUILT ENVIRONMENT / SCALES ============ -->
-<section id="scales">
+<!-- ============ NEWS ============
+     Cards are sorted newest first by data-date (see the script at the end). -->
+<section id="news">
   <div class="container">
     <div class="section-header">
-      <div class="section-number" data-i18n="be.number">01 / Built Environment</div>
-      <h2 class="section-title" data-i18n="be.title" data-i18n-html>From a single <em>building</em> to an entire <em>city</em>.</h2>
+      <div class="section-number" data-i18n="news.number">Latest / News</div>
+      <h2 class="section-title" data-i18n="news.title" data-i18n-html>What's <em>happening</em> at the lab.</h2>
     </div>
-    <div class="scales-layout">
-      <div class="scales-viz">
-        <div class="scale-ring city"><span class="label" data-i18n="be.scale.city">City</span></div>
-        <div class="scale-ring campus"><span class="label" data-i18n="be.scale.campus">Campus</span></div>
-        <div class="scale-ring building"><span class="label" data-i18n="be.scale.building">Building</span></div>
-      </div>
-      <div class="scales-text">
-        <h3 data-i18n="be.h3" data-i18n-html>Three <em>nested scales</em> of research.</h3>
-        <p data-i18n="be.intro">The built environment isn't a single artifact — it's a set of nested systems. Our research moves fluidly between them, because decisions at each scale shape the others.</p>
-        <div class="scale-item">
-          <span class="scale-marker">BE · 01</span>
-          <div class="scale-info">
-            <h4 data-i18n="be.scale.building">Building</h4>
-            <p data-i18n="be.scale.building.desc">Housing and individual structures — performance of the envelope, and the quality of the spaces within.</p>
-          </div>
+    <div class="news-grid" id="news-grid">
+      <a class="news-card" href="news-talks.html" data-date="2026-11-12">
+        <div class="news-thumb"><img src="talk-20261112-lcc-poster.webp" alt="" loading="lazy"></div>
+        <div class="news-body">
+          <div class="news-meta"><span class="news-kind" data-i18n="news.kind.talk">Talk</span><span class="news-tag" data-until="2026-11-12" data-i18n="news.upcoming">Upcoming</span><span data-i18n="news.lcc.date">12 Nov 2026</span></div>
+          <h3 class="news-title" data-i18n="news.lcc.title">Life Cycle Cost Analysis of Circular Buildings: A Social Housing Case Study</h3>
+          <p class="news-desc" data-i18n="news.lcc.desc">Speaker at the ABRI seminar on an LCC-integrated circular building assessment model · New Taipei City</p>
+          <span class="news-more" data-i18n="news.more.talks">All talks →</span>
         </div>
-        <div class="scale-item">
-          <span class="scale-marker">BE · 02</span>
-          <div class="scale-info">
-            <h4 data-i18n="be.scale.campus">Campus</h4>
-            <p data-i18n="be.scale.campus.desc">Universities and institutional precincts — coordinated portfolios of buildings and open space.</p>
-          </div>
+      </a>
+      <a class="news-card" href="news-events.html" data-date="2026-10-12">
+        <div class="news-thumb"><img src="event-20261012-hackyourdistrict-poster.webp" alt="" loading="lazy"></div>
+        <div class="news-body">
+          <div class="news-meta"><span class="news-kind" data-i18n="news.kind.event">Event</span><span data-i18n="news.hyd.date">12–16 Oct 2026</span></div>
+          <h3 class="news-title" data-i18n="news.hyd.title">#HackYourDistrict 2026 — AI for Liveable Neighbourhoods</h3>
+          <p class="news-desc" data-i18n="news.hyd.desc">Five-day international workshop and urban hackathon with TU Berlin and National Taiwan University · Feng Chia University, Taichung</p>
+          <span class="news-more" data-i18n="news.more.events">All events →</span>
         </div>
-        <div class="scale-item">
-          <span class="scale-marker">BE · 03</span>
-          <div class="scale-info">
-            <h4 data-i18n="be.scale.city">City</h4>
-            <p data-i18n="be.scale.city.desc">Urban systems, infrastructure networks, and the built environment at metropolitan scale.</p>
-          </div>
-        </div>
-      </div>
+      </a>
     </div>
-  </div>
-</section>
-
-<!-- ============ FOUR i's ============ -->
-<section id="pillars">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-number" data-i18n="i.number">02 / The Four i's</div>
-      <h2 class="section-title" data-i18n="i.title" data-i18n-html>Four pillars of <em>inquiry</em>, tied by a shared purpose.</h2>
-    </div>
-    <div class="pillars-grid">
-
-      <div class="pillar-card">
-        <span class="pillar-index">i — 01</span>
-        <svg class="pillar-icon" viewBox="0 0 40 50">
-          <rect class="dot" fill="#1F4D3A" x="14" y="2" width="12" height="12"/>
-          <rect fill="#1F4D3A" x="14" y="20" width="12" height="28"/>
-        </svg>
-        <h3 class="pillar-name" data-i18n="i.informatics">Informatics</h3>
-        <p class="pillar-desc" data-i18n="i.informatics.desc">Structured knowledge of the built environment — data models, spatial reasoning, and the representations that let machines understand architecture.</p>
-        <div class="pillar-tags">
-          <span class="tag">BIM</span>
-          <span class="tag">GIS</span>
-          <span class="tag" data-i18n="i.informatics.tag.kg">Knowledge Graphs</span>
-        </div>
-      </div>
-
-      <div class="pillar-card">
-        <span class="pillar-index">i — 02</span>
-        <svg class="pillar-icon" viewBox="0 0 40 50">
-          <rect class="dot" fill="#1F4D3A" x="14" y="2" width="12" height="12"/>
-          <rect fill="#1F4D3A" x="14" y="20" width="12" height="28"/>
-        </svg>
-        <h3 class="pillar-name" data-i18n="i.intelligence">Intelligence</h3>
-        <p class="pillar-desc" data-i18n="i.intelligence.desc">Machine learning, reasoning, and decision support — helping designers, operators, and cities make better choices under real-world uncertainty.</p>
-        <div class="pillar-tags">
-          <span class="tag" data-i18n="i.intelligence.tag.ml">Machine Learning</span>
-          <span class="tag" data-i18n="i.intelligence.tag.ds">Decision Support</span>
-          <span class="tag">AI</span>
-        </div>
-      </div>
-
-      <div class="pillar-card">
-        <span class="pillar-index">i — 03</span>
-        <svg class="pillar-icon" viewBox="0 0 40 50">
-          <rect class="dot" fill="#1F4D3A" x="14" y="2" width="12" height="12"/>
-          <rect fill="#1F4D3A" x="14" y="20" width="12" height="28"/>
-        </svg>
-        <h3 class="pillar-name" data-i18n="i.industrialization">Industrialization</h3>
-        <p class="pillar-desc" data-i18n="i.industrialization.desc">Turning ideas into matter — robotics, modular construction, and the industrialization of how buildings get made at scale and with precision.</p>
-        <div class="pillar-tags">
-          <span class="tag" data-i18n="i.industrialization.tag.robotics">Robotics</span>
-          <span class="tag" data-i18n="i.industrialization.tag.modular">Modular Construction</span>
-        </div>
-      </div>
-
-      <div class="pillar-card">
-        <span class="pillar-index">i — 04</span>
-        <svg class="pillar-icon" viewBox="0 0 40 50">
-          <rect class="dot" fill="#2A9D8F" x="14" y="2" width="12" height="12"/>
-          <rect fill="#1F4D3A" x="14" y="20" width="12" height="28"/>
-        </svg>
-        <h3 class="pillar-name" data-i18n="i.integration">Integration</h3>
-        <p class="pillar-desc" data-i18n="i.integration.desc">Systems thinking across people, processes, and platforms — collaboration, participation, and the dynamics that hold the other three i's together.</p>
-        <div class="pillar-tags">
-          <span class="tag" data-i18n="i.integration.tag.collab">Collaboration</span>
-          <span class="tag" data-i18n="i.integration.tag.particip">Participation</span>
-          <span class="tag" data-i18n="i.integration.tag.sd">System Dynamics</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============ LIFECYCLE ============ -->
-<section id="lifecycle">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-number" data-i18n="lm.number">03 / Lifecycle Management</div>
-      <h2 class="section-title" data-i18n="lm.title" data-i18n-html>From first sketch to <em>circular return</em>.</h2>
-    </div>
-
-    <div class="lifecycle-flow">
-      <div class="phase-card phase-1">
-        <span class="phase-label">LM · 01</span>
-        <h3 class="phase-title" data-i18n="lm.design">Planning &amp; Design</h3>
-        <p class="phase-desc" data-i18n="lm.design.desc">Lifecycle analysis, carbon accounting, and design-stage decision making that sets the trajectory for everything that follows.</p>
-        <div class="phase-tags">
-          <span class="tag" data-i18n="lm.design.tag.lca">Lifecycle Analysis</span>
-          <span class="tag" data-i18n="lm.design.tag.sust">Sustainability Analysis</span>
-          <span class="tag" data-i18n="lm.design.tag.gen">Generative Design</span>
-          <span class="tag" data-i18n="lm.design.tag.opt">Design Optimization</span>
-        </div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="phase-card phase-2">
-        <span class="phase-label">LM · 02</span>
-        <h3 class="phase-title" data-i18n="lm.om">Operation &amp; Maintenance</h3>
-        <p class="phase-desc" data-i18n="lm.om.desc">Facility management, building performance monitoring, and the long middle years where most energy, cost, and emissions actually accumulate.</p>
-        <div class="phase-tags">
-          <span class="tag" data-i18n="lm.om.tag.energy">Energy Management</span>
-          <span class="tag" data-i18n="lm.om.tag.fm">Facility Management</span>
-        </div>
-      </div>
-      <div class="arrow">→</div>
-      <div class="phase-card phase-3">
-        <span class="phase-label">LM · 03</span>
-        <h3 class="phase-title" data-i18n="lm.eol">End of Life &amp; Regeneration</h3>
-        <p class="phase-desc" data-i18n="lm.eol.desc">Deconstruction, material recovery, and circular economy — treating the end of one building as the beginning of the next.</p>
-        <div class="phase-tags">
-          <span class="tag" data-i18n="lm.eol.tag.circular">Circular Economy</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="cycle-note" data-i18n="lm.quote">
-      "A building isn't finished when construction ends — that's when its real life begins."
-    </div>
-  </div>
-</section>
-
-<!-- ============ MATRIX ============ -->
-<section id="matrix">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-number" data-i18n="matrix.number">04 / The Research Matrix</div>
-      <h2 class="section-title" data-i18n="matrix.title" data-i18n-html>A simple formula for <em>complex work</em>.</h2>
-    </div>
-    <div class="formula">
-      <span class="var">BE</span>
-      <span class="op">×</span>
-      <span class="var">i</span>
-      <span class="op">×</span>
-      <span class="var">LM</span>
-    </div>
-    <div class="formula-caption" data-i18n="matrix.caption">Three scales · Four methods · Three lifecycle phases · 36 research positions</div>
-    <p class="matrix-body" data-i18n="matrix.body">Every project in the lab sits somewhere on this grid — a specific combination of method, scale, and lifecycle phase. It's a compass for new research, a way to explain what we do to partners, and an honest map of where knowledge is still thin.</p>
   </div>
 </section>
 
@@ -1036,7 +944,7 @@
     <div class="footer-col">
       <h4 data-i18n="footer.lab">Lab</h4>
       <ul>
-        <li><a href="index.html" data-i18n="nav.lab.overview">Overview</a></li>
+        <li><a href="overview.html" data-i18n="nav.lab.overview">Overview</a></li>
         <li><a href="people.html" data-i18n="nav.lab.people">People</a></li>
         <li><a href="projects.html" data-i18n="nav.lab.projects">Projects</a></li>
         <li><a href="publications.html" data-i18n="nav.lab.publications">Publications</a></li>
@@ -1117,6 +1025,20 @@
       'hero.cta.primary': 'Explore the framework →',
       'hero.cta.secondary': 'Partner with us',
 
+      // News
+      'news.number': 'Latest / News',
+      'news.title': 'What\'s <em>happening</em> at the lab.',
+      'news.kind.talk': 'Talk',
+      'news.kind.event': 'Event',
+      'news.upcoming': 'Upcoming',
+      'news.more.talks': 'All talks →',
+      'news.more.events': 'All events →',
+      'news.lcc.date': '12 Nov 2026',
+      'news.lcc.title': 'Life Cycle Cost Analysis of Circular Buildings: A Social Housing Case Study',
+      'news.lcc.desc': 'Speaker at the ABRI seminar on an LCC-integrated circular building assessment model · New Taipei City',
+      'news.hyd.date': '12–16 Oct 2026',
+      'news.hyd.title': '#HackYourDistrict 2026 — AI for Liveable Neighbourhoods',
+      'news.hyd.desc': 'Five-day international workshop and urban hackathon with TU Berlin and National Taiwan University · Feng Chia University, Taichung',
       // BE
       'be.number': '01 / Built Environment',
       'be.title': 'From a single <em>building</em> to an entire <em>city</em>.',
@@ -1216,6 +1138,20 @@
       'hero.cta.primary': '探索研究架構 →',
       'hero.cta.secondary': '與我們合作',
 
+      // News
+      'news.number': '最新 / 新訊',
+      'news.title': '研究室的<em>最新動態</em>。',
+      'news.kind.talk': '演講',
+      'news.kind.event': '活動',
+      'news.upcoming': '即將舉行',
+      'news.more.talks': '所有演講 →',
+      'news.more.events': '所有活動 →',
+      'news.lcc.date': '2026.11.12',
+      'news.lcc.title': '循環建築全生命週期成本分析 — 以社會住宅為例',
+      'news.lcc.desc': '內政部建築研究所「循環建築整合評估模式」推廣說明會講者 · 新北市',
+      'news.hyd.date': '2026.10.12–16',
+      'news.hyd.title': '#HackYourDistrict 2026 — AI 打造宜居社區',
+      'news.hyd.desc': '與柏林工業大學、臺灣大學合辦的五天國際工作坊暨城市黑客松 · 逢甲大學,臺中',
       // BE
       'be.number': '01 / 建築環境',
       'be.title': '從<em>一棟建築</em>到<em>整座城市</em>。',
@@ -1328,6 +1264,20 @@
       applyLang(current === 'en' ? 'zh-Hant' : 'en');
     });
   }
+})();
+
+// News: newest first, and drop time-limited bits (the "Upcoming" tag) once their date has passed.
+(function() {
+  const grid = document.getElementById('news-grid');
+  if (grid) {
+    [...grid.children]
+      .sort((a, b) => b.dataset.date.localeCompare(a.dataset.date))
+      .forEach(card => grid.appendChild(card));
+  }
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Taipei' });
+  document.querySelectorAll('[data-until]').forEach(el => {
+    if (today > el.dataset.until) el.remove();
+  });
 })();
 </script>
 
