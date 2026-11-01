@@ -348,55 +348,125 @@
   .contact-item a:hover { color: var(--forest); }
   
 
-  /* ============ RESEARCH PLACEHOLDER ============ */
-  .research-placeholder {
-    text-align: center;
-    padding: 60px 24px 100px;
-    max-width: 640px;
-    margin: 0 auto;
+  /* ============ RESEARCH JOURNEY ============ */
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    list-style: none;
   }
-  .placeholder-mark {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 28px;
-    opacity: 0.55;
-  }
-  .placeholder-tag {
-    display: inline-block;
+  .journey-step { border-top: 2px solid var(--forest); padding-top: 18px; }
+  .journey-period {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--jade);
-    padding: 5px 14px;
-    border: 1px solid var(--jade);
-    border-radius: 999px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
-  .placeholder-title {
-    font-weight: 800;
-    font-size: 38px;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+  .journey-title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
     color: var(--forest);
-    margin-bottom: 18px;
+    margin-bottom: 10px;
   }
-  .placeholder-title em { color: var(--jade); font-style: normal; }
-  .placeholder-body {
-    font-size: 16px;
-    line-height: 1.65;
-    color: var(--forest-2);
-    margin-bottom: 36px;
-    max-width: 56ch;
-    margin-left: auto;
-    margin-right: auto;
+  .journey-text { font-size: 15px; line-height: 1.65; color: var(--forest-2); }
+  @media (max-width: 920px) {
+    .journey { grid-template-columns: 1fr; gap: 28px; }
   }
-  .placeholder-cta {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+
+  /* ============ PROJECTS ON THIS TOPIC ============ */
+  .proj-list { display: flex; flex-direction: column; margin-bottom: 32px; }
+  .proj-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    padding: 22px 0;
+    border-top: 1px solid var(--rule);
   }
+  .proj-item:last-child { border-bottom: 1px solid var(--rule); }
+  .proj-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--forest);
+    padding-top: 3px;
+    white-space: nowrap;
+  }
+  .proj-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 8px;
+  }
+  .proj-tag { background: var(--jade); color: white; font-size: 9px; letter-spacing: 0.2em; padding: 2px 8px; }
+  .proj-title {
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--forest);
+    max-width: 70ch;
+  }
+  .proj-sub { margin-top: 8px; font-size: 14px; line-height: 1.55; color: var(--forest-2); max-width: 72ch; }
+  .proj-sub-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--jade);
+    margin-right: 10px;
+  }
+  @media (max-width: 920px) {
+    .proj-item { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  /* ============ PUBLICATIONS ON THIS TOPIC ============ */
+  .pubs-group { margin-bottom: 56px; }
+  .pubs-group-title {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--forest);
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--forest);
+  }
+  .pubs-group-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--jade);
+  }
+  .pubs-list { display: flex; flex-direction: column; }
+  .pub-item { padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .pub-item:hover .pub-title { color: var(--jade); }
+  .pub-title {
+    display: block;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: var(--forest);
+    margin-bottom: 6px;
+    max-width: 80ch;
+    transition: color 0.18s;
+  }
+  .pub-authors { font-size: 13px; line-height: 1.5; color: var(--forest-2); margin-bottom: 4px; }
+  .pub-authors strong { font-weight: 700; color: var(--forest); }
+  .pub-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .pub-meta em { font-style: italic; text-transform: none; letter-spacing: 0; color: var(--forest-2); }
   .cta-link {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -408,9 +478,6 @@
     transition: color 0.18s, border-color 0.18s;
   }
   .cta-link:hover { color: var(--jade); border-color: var(--jade); }
-  @media (max-width: 920px) {
-    .placeholder-title { font-size: 28px; }
-  }
 
   /* ============ FOOTER ============ */
   footer {
@@ -569,9 +636,11 @@
     <li class="has-dropdown">
       <a href="#" class="nav-trigger" data-i18n="nav.research" data-i18n-html>Research <span class="caret">▾</span></a>
       <div class="dropdown">
+        <a href="research-bimai.html" data-i18n="nav.research.bimai">BIM-AI Project Assistant</a>
+        <a href="research-csh.html" data-i18n="nav.research.csh">CSH Knowledge Base</a>
         <a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a>
-        <a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a>
         <a href="research-nzr.html" class="active" data-i18n="nav.research.nzr">NZR City Platform</a>
+        <a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a>
       </div>
     </li>
     <li class="has-dropdown">
@@ -598,43 +667,157 @@
 <section class="profile-hero">
   <div class="container">
     <div style="max-width: 720px;">
-      <div class="profile-meta" data-i18n="research.eyebrow">Project · Net-Zero Resilient</div>
+      <div class="profile-meta" data-i18n="research.eyebrow">Focus · Net-Zero Resilient</div>
       <h1 class="profile-name" style="font-size: 56px; line-height: 1.05;" data-i18n="research.heroTitle">NZR City Platform.</h1>
       <p class="profile-bio" style="margin-top: 24px;" data-i18n="research.heroLede">A city-scale platform for tracking, simulating, and accelerating the path to a net-zero, resilient built environment.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ COMING SOON PLACEHOLDER ============ -->
+<!-- ============ RESEARCH JOURNEY ============ -->
 <section style="padding-top: 0;">
   <div class="container">
-    <div class="research-placeholder">
-      <div class="placeholder-mark">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-          <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <g transform="translate(62, 51)">
-            <rect fill="#1F4D3A" x="0" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="22" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="44" y="0" width="10" height="10"/>
-            <rect fill="#2A9D8F" x="66" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="0" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="22" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="44" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="66" y="16" width="10" height="48"/>
-            <rect fill="#0F6E7C" x="0" y="24" width="76" height="4"/>
-          </g>
-        </svg>
-      </div>
-      <div class="placeholder-tag" data-i18n="research.tag">In Development</div>
-      <h2 class="placeholder-title" data-i18n="research.placeholder.title" data-i18n-html>This page is being <em>built</em>.</h2>
-      <p class="placeholder-body" data-i18n="research.placeholder.body">Detailed research content is on its way. In the meantime, the lab's framework — Built Environment × Four i's × Lifecycle Management — is described on the overview page, and recent papers are listed on the publications page.</p>
-      <div class="placeholder-cta">
-        <a href="index.html" class="cta-link" data-i18n="research.cta.overview">← Overview</a>
-        <a href="publications.html" class="cta-link" data-i18n="research.cta.pubs">Publications →</a>
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.journey.number">Research Journey</div>
+      <h2 class="section-title" data-i18n="research.journey.title" data-i18n-html>From past to <em>present</em>.</h2>
+    </div>
+    <ol class="journey">
+      <li class="journey-step">
+        <div class="journey-period">2020 – 2022</div>
+        <h3 class="journey-title" data-i18n="research.journey.1.title">Platforms for sustainable cities</h3>
+        <p class="journey-text" data-i18n="research.journey.1.text">SimuCity and a decision support platform for a sustainable Taipei, a review of urban simulation platforms, BIM and GIS simulation of the energy and material circularity of Taipei’s building stock, transdisciplinary teaching on smart cities and digital democracy in the Guandu Plain, and co-created guidelines for climate-proof, net-zero communities and cities — including net-zero, circular housing.</p>
+      </li>
+      <li class="journey-step">
+        <div class="journey-period">2023 – 2025</div>
+        <h3 class="journey-title" data-i18n="research.journey.2.title">Building stocks and co-creation</h3>
+        <p class="journey-text" data-i18n="research.journey.2.text">Building archetypes and parametric models for estimating the material use and environmental impacts of urban building stocks, automated window-to-wall ratio extraction, the impacts of science parks on their surroundings — and how circular social housing could ease them — and hackathons — CO2Uptake and HackYourDistrict — as models for co-creating a net-zero future.</p>
+      </li>
+      <li class="journey-step">
+        <div class="journey-period" data-i18n="research.journey.3.period">2026 – now</div>
+        <h3 class="journey-title" data-i18n="research.journey.3.title">Resilient spatial decisions</h3>
+        <p class="journey-text" data-i18n="research.journey.3.text">System dynamics and GIS for sustainable, resilient planning; citizen science and generative visioning for children’s independent mobility; demonstration sites for Taiwan’s sustainable spatial planning; and #HackYourDistrict 2026 on AI for liveable neighbourhoods.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ON THIS TOPIC ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.projects.number">Projects</div>
+      <h2 class="section-title" data-i18n="research.projects.title" data-i18n-html>Funded <em>projects</em>.</h2>
+    </div>
+    <div class="proj-list">
+        <article class="proj-item">
+          <div class="proj-period">2020.08 – 2021.07</div>
+          <div>
+            <div class="proj-meta"><span>MOST 109-2621-M-002-012</span></div>
+            <h3 class="proj-title" data-i18n="research.proj.most109b.title">SimuCity — A Smart City Planning Simulation Platform for Urban Transformation</h3>
+            <p class="proj-sub"><span class="proj-sub-label" data-i18n="research.projects.subproject">Sub-project</span><span data-i18n="research.proj.most109b.sub">Combining BIM &amp; GIS Information to Simulate Energy and Material Circularity of Building Sector in City</span></p>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2021.08 – 2022.07</div>
+          <div>
+            <div class="proj-meta"><span>MOST 110-2621-M-002-007</span></div>
+            <h3 class="proj-title" data-i18n="research.proj.most110.title">Decision Support Platform for Digital Governance of Sustainable City in Response to Environmental Changes</h3>
+            <p class="proj-sub"><span class="proj-sub-label" data-i18n="research.projects.subproject">Sub-project</span><span data-i18n="research.proj.most110.sub">Combining BIM &amp; GIS Information to Simulate Circularity and Carbon Emission of Building Stock in City</span></p>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2022.08 – 2023.07</div>
+          <div>
+            <div class="proj-meta"><span>MOST 111-2621-M-002-008</span></div>
+            <h3 class="proj-title" data-i18n="research.proj.most111.title">Co-creation of Urban Transformation Guidelines towards Climate-proof and Net-zero-carbon Community and City</h3>
+            <p class="proj-sub"><span class="proj-sub-label" data-i18n="research.projects.subproject">Sub-project</span><span data-i18n="research.proj.most111.sub">Design and Evaluation Guidelines for Net-Zero Carbon and Circular Housing and Communities in Taiwan</span></p>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2024.08 – 2025.07</div>
+          <div>
+            <div class="proj-meta"><span>NSTC 113-2621-M-002-007</span></div>
+            <h3 class="proj-title" data-i18n="research.proj.nstc113.title">Assessing the Impacts of Science Parks on Sustainable Development of the Surrounding Environment</h3>
+            <p class="proj-sub"><span class="proj-sub-label" data-i18n="research.projects.subproject">Sub-project</span><span data-i18n="research.proj.nstc113.sub">A Simulation Study on How Circular Social Housing Can Mitigate Impacts of Housing Development Near Science Parks</span></p>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2025.12 – 2026.11</div>
+          <div>
+            <div class="proj-meta"><span>NSTC 114-2119-M-002-034</span><span class="proj-tag" data-until="2026-11-30" data-i18n="research.projects.ongoing">Ongoing</span></div>
+            <h3 class="proj-title" data-i18n="research.proj.nstc114.title">Collaborative Demonstration Sites Project under the Research Program on Advanced Technologies for Taiwan’s Sustainable Spatial Planning (Phase I)</h3>
+          </div>
+        </article>
+    </div>
+    <a href="projects.html" class="cta-link" data-i18n="research.projects.all">All projects →</a>
+  </div>
+</section>
+
+<!-- ============ PUBLICATIONS ON THIS TOPIC ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.pubs.number">Publications</div>
+      <h2 class="section-title" data-i18n="research.pubs.title" data-i18n-html>Papers on <em>this topic</em>.</h2>
+    </div>
+    <div class="pubs-group">
+      <h3 class="pubs-group-title"><span data-i18n="research.pubs.conference">Conference Papers</span><span class="pubs-group-count">12</span></h3>
+      <div class="pubs-list">
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/353316950_How_does_transdisciplinary_knowledge_co-production_take_place_A_case_study_on_the_project_of_Decision_Making_Support_Platform_for_Sustainable_Taipei?_sg%5B0%5D=SBbaBscdtxmNxtuongZKtrtDOMz7rCN5vYLYzDTj7ciGtTuiotbHgDv4ezuIUrfd7odook509Lb7_cB3S_DDVCIJKTzX8oJb8g6FkCKd.NTe3jgVhX12LzO35YyNdqgFAr9A0fzoofoFqPNJ9oMC9eKL_rnATeBVZHcIs8aubo51wdph06BCuLoSOnyWAKA" target="_blank" rel="noopener">How does cross-disciplinary knowledge production take place? A case study on the project of “Decision Support Platform for Sustainable Taipei”</a>
+          <div class="pub-meta">2021 · <em>ISDRS</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/355771489_The_Needs_and_Trends_of_Urban_Simulation_Platforms-A_Review" target="_blank" rel="noopener">The Needs and Trends of Urban Simulation Platforms-A Review</a>
+          <div class="pub-authors"><strong>Chang, Y. T.</strong>, Pal, A., Hackl, J., &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2021 · <em>ISARC</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/374421181_Teaching_Smart_City_for_Sustainable_Guandu_Plain_in_Taipei_A_Reflection_on_Transdisciplinary_Education?_sg%5B0%5D=UaxITDhWOCoeW5hcF3yjBNS7ErkyuNwossDSpYkZEJ2BBpl8hxteylRbolWOln2G1W_Q1pKHjSfEgtSAllm63p7Jzg-lPAS-aRY3zVOL.Hb2PPAJlDPkXU-2l_sM5SCJDRH0phAa1BpT2UrAAmHL3Dyv2P_MsxiF5OZib1RMj1Efez_djsUTV5f6813r-Eg&amp;_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6ImxvZ2luIiwicGFnZSI6InByb2ZpbGUiLCJwcmV2aW91c1BhZ2UiOiJwcm9maWxlIiwicG9zaXRpb24iOiJwYWdlQ29udGVudCJ9fQ" target="_blank" rel="noopener">Teaching Smart City and Digital Democracy for Sustainable Guandu Plain in Taipei: a reflection on transdisciplinary education</a>
+          <div class="pub-meta">2022 · <em>ISDRS</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/366524769_Combining_BIM_GIS_Information_to_Simulate_Circularity_of_Building_Stocks_in_a_City-A_Case_Study_of_Taipei_City?_sg%5B0%5D=j-9cmxFxocLVm_D5d91PtLnxFbauHlitqm8SkEQJIdWqtge_kCyA2Jaqy60CLafXLlG7dE6u11fEVAaAv987glPDfucLnZZIQMM1Bs2R.4F46cAeu_4LH-X1O7Rykf4wccdGkPEEhw7b-o_ppDcFEcvIha2Win_VUN-LfrZlyFNXZhlzwzcRocb5otKEwnA" target="_blank" rel="noopener">Combining BIM &amp; GIS Information to Simulate Circularity of Building Stocks in a City—A Case Study of Taipei City</a>
+          <div class="pub-authors"><strong>Chang, Y. T.</strong>, Sierra, E. M., &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2022 · <em>SBEfin</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/374421281_CO2Uptake_-A_Taiwan_Hackathon_Project_Devising_the_Collaboration_and_Co-Creation_Model_for_a_Net-Zero_Future" target="_blank" rel="noopener">CO2Uptake - A Taiwan Hackathon Project Devise the Collaboration and Co-Creation Model for a Net-Zero Future</a>
+          <div class="pub-meta">2023 · <em>ISDRS</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/383399579_Building_Archetype_Identification_and_Modeling_for_Material_Stock_Estimation_of_RC_Buildings_A_Conceptual_Framework_and_Case_Study_in_Shezidao" target="_blank" rel="noopener">Building Archetype Identification and Modeling for Material Stock Estimation of RC Buildings: A Conceptual Framework and Case Study in Shezidao</a>
+          <div class="pub-authors">Pinsotes, A. D., Intan, T., Ali, A. G. J., <strong>Chang, Y.-T.</strong>, &amp; Hsieh, S.-H.</div>
+          <div class="pub-meta">2024 · <em>SCEM</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/391275488_Building_Energy_Simulation_Tools_for_Parametric_Modeling_of_Building_Archetypes_A_comparative_study" target="_blank" rel="noopener">Building Energy Simulation Tools for Parametric Modeling of Building Archetypes: A Comparative Study</a>
+          <div class="pub-authors">Chang, J. C., <strong>Chang, Y. T.</strong>, &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2025 · <em>CAADRIA</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/398990692_Parametric_Modelling_for_Rapid_Estimation_and_Comparison_of_the_Main_Material_Usages_and_Environmental_Impacts_of_Urban_Building_Stocks?_sg%5B0%5D=aA5KGgnnCh0Ee3eXq9hBkGk_SyzVrdnWxkqCdD9RUVvJkZJAsX_GPiOTJ8C9VVVeStXPP5yRUEbW12MMoci7Yli3bp_5K1iC6zcSRk3U.GQuHeZzYfSY3-eW3BnBHS5m4tggU3A1bZvbdCEO3r6d7BOrkRI026owCt_Ij-ZJL0g3AmFvX9Kzv__Qe5jnwtw&amp;_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6ImhvbWUiLCJwYWdlIjoicHJvZmlsZSIsInByZXZpb3VzUGFnZSI6InByb2ZpbGUiLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19" target="_blank" rel="noopener">Parametric Modeling for Estimating Material Uses and Environmental Impacts of Urban Building Stocks</a>
+          <div class="pub-meta">2025 · <em>SBE</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">“Hackathon+” as an approach to integrate civic tech in transportation planning: The case of a HackYourDistrict workshop in Kaohsiung</div>
+          <div class="pub-meta">2025 · <em>ISDRS</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/397981791_Automatic_Extraction_and_Integration_of_Building_Window-to-Wall_Ratio_Data" target="_blank" rel="noopener">Automatic Extraction and Integration of Building Window-to-Wall Ratio Data</a>
+          <div class="pub-meta">2025 · <em>IGRASS</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">Mapping System Dynamics in Spatial Decision Systems: A Bibliometric and Content Analysis of SD–GIS Integration for Sustainable and Resilient Planning</div>
+          <div class="pub-meta">2026 · <em>ISDC</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">Accountable imaginaries: citizen science and generative visioning for the independent mobility of children and young people in Taiwan</div>
+          <div class="pub-meta">2026 · <em>IOER</em></div>
+        </article>
       </div>
     </div>
+    <a href="publications.html" class="cta-link" data-i18n="research.pubs.all">All publications →</a>
   </div>
 </section>
 
@@ -689,9 +872,11 @@
     <div class="footer-col">
       <h4 data-i18n="footer.research">Research</h4>
       <ul>
+        <li><a href="research-bimai.html" data-i18n="nav.research.bimai">BIM-AI Project Assistant</a></li>
+        <li><a href="research-csh.html" data-i18n="nav.research.csh">CSH Knowledge Base</a></li>
         <li><a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a></li>
-        <li><a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a></li>
         <li><a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a></li>
+        <li><a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -744,6 +929,8 @@
       'nav.research': 'Research <span class="caret">▾</span>',
       'nav.research.hpb': 'HPB Design Tool',
       'nav.research.nzr': 'NZR City Platform',
+      'nav.research.bimai': 'BIM-AI Project Assistant',
+      'nav.research.csh': 'CSH Knowledge Base',
       'nav.research.sdgs': 'SDGs Campus Twin',
       'nav.teaching': 'Teaching <span class="caret">▾</span>',
       'nav.news.events': 'Events',
@@ -756,14 +943,42 @@
 
 
       // Research page
-      'research.eyebrow': 'Project · Net-Zero Resilient',
+      'research.eyebrow': 'Focus · Net-Zero Resilient',
       'research.heroTitle': 'NZR City Platform.',
       'research.heroLede': "A city-scale platform for tracking, simulating, and accelerating the path to a net-zero, resilient built environment.",
-      'research.tag': 'In Development',
-      'research.placeholder.title': 'This page is being <em>built</em>.',
-      'research.placeholder.body': "Detailed research content is on its way. In the meantime, the lab's framework — Built Environment × Four i's × Lifecycle Management — is described on the overview page, and recent papers are listed on the publications page.",
-      'research.cta.overview': '← Overview',
-      'research.cta.pubs': 'Publications →',
+      // Research journey
+      'research.journey.number': 'Research Journey',
+      'research.journey.title': 'From past to <em>present</em>.',
+      'research.journey.1.title': 'Platforms for sustainable cities',
+      'research.journey.1.text': 'SimuCity and a decision support platform for a sustainable Taipei, a review of urban simulation platforms, BIM and GIS simulation of the energy and material circularity of Taipei’s building stock, transdisciplinary teaching on smart cities and digital democracy in the Guandu Plain, and co-created guidelines for climate-proof, net-zero communities and cities — including net-zero, circular housing.',
+      'research.journey.2.title': 'Building stocks and co-creation',
+      'research.journey.2.text': 'Building archetypes and parametric models for estimating the material use and environmental impacts of urban building stocks, automated window-to-wall ratio extraction, the impacts of science parks on their surroundings — and how circular social housing could ease them — and hackathons — CO2Uptake and HackYourDistrict — as models for co-creating a net-zero future.',
+      'research.journey.3.title': 'Resilient spatial decisions',
+      'research.journey.3.text': 'System dynamics and GIS for sustainable, resilient planning; citizen science and generative visioning for children’s independent mobility; demonstration sites for Taiwan’s sustainable spatial planning; and #HackYourDistrict 2026 on AI for liveable neighbourhoods.',
+      'research.journey.3.period': '2026 – now',
+      // Projects on this topic
+      'research.projects.number': 'Projects',
+      'research.projects.title': 'Funded <em>projects</em>.',
+      'research.projects.ongoing': 'Ongoing',
+      'research.projects.subproject': 'Sub-project',
+      'research.projects.abri': 'ABRI',
+      'research.projects.industry': 'Industry–Academia',
+      'research.projects.all': 'All projects →',
+      'research.proj.most109b.title': 'SimuCity — A Smart City Planning Simulation Platform for Urban Transformation',
+      'research.proj.most109b.sub': 'Combining BIM & GIS Information to Simulate Energy and Material Circularity of Building Sector in City',
+      'research.proj.most110.title': 'Decision Support Platform for Digital Governance of Sustainable City in Response to Environmental Changes',
+      'research.proj.most110.sub': 'Combining BIM & GIS Information to Simulate Circularity and Carbon Emission of Building Stock in City',
+      'research.proj.most111.title': 'Co-creation of Urban Transformation Guidelines towards Climate-proof and Net-zero-carbon Community and City',
+      'research.proj.most111.sub': 'Design and Evaluation Guidelines for Net-Zero Carbon and Circular Housing and Communities in Taiwan',
+      'research.proj.nstc113.title': 'Assessing the Impacts of Science Parks on Sustainable Development of the Surrounding Environment',
+      'research.proj.nstc113.sub': 'A Simulation Study on How Circular Social Housing Can Mitigate Impacts of Housing Development Near Science Parks',
+      'research.proj.nstc114.title': 'Collaborative Demonstration Sites Project under the Research Program on Advanced Technologies for Taiwan’s Sustainable Spatial Planning (Phase I)',
+      // Publications on this topic
+      'research.pubs.number': 'Publications',
+      'research.pubs.title': 'Papers on <em>this topic</em>.',
+      'research.pubs.journal': 'Journal Articles',
+      'research.pubs.conference': 'Conference Papers',
+      'research.pubs.all': 'All publications →',
 
       // Profile hero
       'people.photo.tag': 'Director',
@@ -883,6 +1098,8 @@
       'nav.research': '研究主題 <span class="caret">▾</span>',
       'nav.research.hpb': 'HPB 設計工具',
       'nav.research.nzr': 'NZR 城市平台',
+      'nav.research.bimai': 'BIM-AI 專案助理',
+      'nav.research.csh': 'CSH 知識庫',
       'nav.research.sdgs': 'SDGs 校園孿生',
       'nav.teaching': '教學 <span class="caret">▾</span>',
       'nav.news.events': '活動',
@@ -895,14 +1112,42 @@
 
 
       // Research page
-      'research.eyebrow': '研究計畫 · 淨零韌性',
+      'research.eyebrow': '研究主題 · 淨零韌性',
       'research.heroTitle': 'NZR 城市平台。',
       'research.heroLede': '一個城市尺度的平台 — 追蹤、模擬,並加速建築環境邁向淨零與韌性的進程。',
-      'research.tag': '建置中',
-      'research.placeholder.title': '此頁面正在<em>建構中</em>。',
-      'research.placeholder.body': '詳細的研究內容即將推出。同時,研究室的整體架構 — 建築環境 × 四個 i × 生命週期管理 — 已在概述頁面說明,近期論文則列於學術發表頁面。',
-      'research.cta.overview': '← 研究室概述',
-      'research.cta.pubs': '學術發表 →',
+      // Research journey
+      'research.journey.number': '研究歷程',
+      'research.journey.title': '從過去到<em>現在</em>。',
+      'research.journey.1.title': '永續城市平台',
+      'research.journey.1.text': '從 SimuCity 智慧城市規劃模擬平台與「永續臺北決策支援平台」出發,回顧都市模擬平台的需求與趨勢、結合 BIM 與 GIS 模擬臺北市建築群的能源與材料循環度、在關渡平原推動智慧城市與數位民主的跨領域教學,並共創邁向氣候防護與淨零碳排社區與城市的轉型準則,包括淨零循環住宅的設計與評估準則。',
+      'research.journey.2.title': '建築存量與共創',
+      'research.journey.2.text': '以建築原型與參數化模型估算都市建築存量的材料使用與環境衝擊、自動擷取建築窗牆比資料、評估科學園區對周邊環境的衝擊及循環社宅的減緩效果,並透過 CO2Uptake 與 HackYourDistrict 等黑客松,建立邁向淨零的協作與共創模式。',
+      'research.journey.3.title': '韌性空間決策',
+      'research.journey.3.text': '結合系統動力學與 GIS 支援永續韌性規劃、以公民科學與生成式願景探討兒少獨立移動、參與臺灣空間永續規劃前瞻計畫的共同示範場域,並舉辦以 AI 打造宜居社區為主題的 #HackYourDistrict 2026。',
+      'research.journey.3.period': '2026 – 至今',
+      // Projects on this topic
+      'research.projects.number': '研究計畫',
+      'research.projects.title': '相關<em>研究計畫</em>。',
+      'research.projects.ongoing': '執行中',
+      'research.projects.subproject': '子計畫',
+      'research.projects.abri': '建研所',
+      'research.projects.industry': '產學合作',
+      'research.projects.all': '所有研究計畫 →',
+      'research.proj.most109b.title': '智慧型城市規劃模擬平台之設計與應用',
+      'research.proj.most109b.sub': '結合 BIM 與 GIS 資料以模擬建築群體之能源與材料循環性',
+      'research.proj.most110.title': '因應環境變遷之永續城市數位治理決策支援平台之研究',
+      'research.proj.most110.sub': '結合 BIM 與 GIS 資訊以模擬建築群體之循環度與其碳排放量',
+      'research.proj.most111.title': '共創邁向氣候防護與淨零碳排社區與城市之轉型準則',
+      'research.proj.most111.sub': '台灣淨零循環住宅與社區的設計與評估準則',
+      'research.proj.nstc113.title': '科學園區對區域環境永續發展之衝擊評估',
+      'research.proj.nstc113.sub': '以循環社宅減緩科學園區周邊住宅發展衝擊之模擬研究',
+      'research.proj.nstc114.title': '第一期臺灣空間永續規劃之前瞻科技研究計畫共同示範場域計畫',
+      // Publications on this topic
+      'research.pubs.number': '學術發表',
+      'research.pubs.title': '這個主題的<em>相關論文</em>。',
+      'research.pubs.journal': '期刊論文',
+      'research.pubs.conference': '研討會論文',
+      'research.pubs.all': '所有學術發表 →',
 
       // Profile hero
       'people.photo.tag': '主持人',
@@ -1045,6 +1290,12 @@
       applyLang(current === 'en' ? 'zh-Hant' : 'en');
     });
   }
+})();
+
+// Drop the "Ongoing" tag once a project's end date has passed.
+(function() {
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Taipei' });
+  document.querySelectorAll('[data-until]').forEach(el => { if (today > el.dataset.until) el.remove(); });
 })();
 </script>
 

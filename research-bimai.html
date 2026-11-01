@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="page.title">BIM-AI Project Assistant — BEiLM Research Lab</title>
+<style>
+  /* Reuse the same design tokens from main site */
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --forest: #1F4D3A;
+    --forest-2: #2D6951;
+    --ocean: #0F6E7C;
+    --jade: #2A9D8F;
+    --paper: #F4F7F2;
+    --rule: #CFDCD4;
+    --dark: #0B2620;
+    --mint: #E8F0EC;
+    --jade-bright: #4ECDC4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--forest);
+    font-family: 'Archivo', system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(244, 247, 242, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--rule);
+    padding: 18px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-orbital { width: 34px; height: 34px; }
+  .brand-text { height: 24px; width: auto; display: block; }
+
+  nav ul { display: flex; gap: 32px; list-style: none; align-items: center; }
+  nav a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--forest); transition: color 0.18s;
+  }
+  nav a:hover { color: var(--jade); }
+  nav a.active { color: var(--jade); }
+
+  /* Dropdown */
+  .has-dropdown { position: relative; }
+  .nav-trigger { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+  .nav-trigger .caret { font-size: 8px; color: var(--ocean); transition: transform 0.2s, color 0.2s; line-height: 1; }
+  .has-dropdown:hover .nav-trigger .caret { color: var(--jade); transform: translateY(1px); }
+  .dropdown {
+    position: absolute; top: calc(100% + 14px); left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    min-width: 200px; background: white;
+    border: 0.5px solid var(--rule);
+    box-shadow: 0 8px 24px -8px rgba(31, 77, 58, 0.12);
+    padding: 8px 0;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  }
+  .has-dropdown:hover .dropdown,
+  .has-dropdown:focus-within .dropdown {
+    opacity: 1; visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+  .has-dropdown::after {
+    content: ''; position: absolute; top: 100%; left: 0; right: 0;
+    height: 14px; pointer-events: none;
+  }
+  .has-dropdown:hover::after { pointer-events: auto; }
+  .dropdown a {
+    display: block; padding: 9px 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--forest); white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+  }
+  .dropdown a.active { color: var(--jade); }
+  .dropdown a:hover { background: var(--mint); color: var(--jade); }
+
+  /* Lang toggle */
+  .lang-toggle {
+    background: transparent; border: 1px solid var(--rule); padding: 6px 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
+    color: var(--forest); cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+    transition: border-color 0.18s;
+  }
+  .lang-toggle:hover { border-color: var(--jade); }
+  .lang-toggle .lang-sep { color: var(--rule); }
+  html[lang="en"] .lang-toggle .lang-en { color: var(--jade); font-weight: 700; }
+  html[lang="en"] .lang-toggle .lang-zh { color: var(--rule); }
+  html[lang="zh-Hant"] .lang-toggle .lang-zh { color: var(--jade); font-weight: 700; }
+  html[lang="zh-Hant"] .lang-toggle .lang-en { color: var(--rule); }
+
+  /* ============ CONTAINER ============ */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  section { padding: 80px 0; }
+  section + section { border-top: 1px solid var(--rule); }
+
+  /* ============ HERO / PROFILE HEAD ============ */
+  .profile-hero { padding-top: 160px; }
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .profile-photo-wrap { position: relative; }
+  .profile-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border: 1px solid var(--rule);
+    background: var(--mint);
+    filter: saturate(0.95);
+  }
+  .profile-photo-tag {
+    position: absolute;
+    top: 16px; left: 16px;
+    background: var(--jade);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+  }
+
+  .profile-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 28px;
+  }
+  .profile-meta::before {
+    content: ''; width: 32px; height: 1px; background: var(--ocean);
+  }
+
+  .profile-name {
+    font-weight: 800;
+    font-size: 64px;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--forest);
+    margin-bottom: 12px;
+  }
+  .profile-name-cn {
+    font-family: 'Archivo', 'PingFang TC', 'Noto Sans TC', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--ocean);
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  .profile-title {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--forest);
+    line-height: 1.4;
+    margin-bottom: 32px;
+  }
+  .profile-title em { color: var(--jade); font-style: normal; font-weight: 700; }
+
+  .profile-bio {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--forest-2);
+    margin-bottom: 32px;
+    max-width: 60ch;
+  }
+
+  .profile-links {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .profile-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 16px;
+    border: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--forest);
+    transition: border-color 0.18s, color 0.18s;
+  }
+  .profile-link:hover { border-color: var(--jade); color: var(--jade); }
+  .profile-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ============ SECTION HEADER ============ */
+  .section-header { margin-bottom: 48px; }
+  .section-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--jade);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-weight: 800;
+    font-size: 38px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--forest);
+    max-width: 26ch;
+  }
+  .section-title em { color: var(--jade); font-style: normal; }
+
+  /* ============ EXPERTISE ============ */
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .expertise-card {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 28px 28px 32px;
+    position: relative;
+    transition: border-color 0.18s, transform 0.18s;
+  }
+  .expertise-card:hover {
+    border-color: var(--jade);
+    transform: translateY(-2px);
+  }
+  .expertise-num {
+    position: absolute;
+    top: 24px; right: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ocean);
+  }
+  .expertise-name {
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--forest);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    margin-right: 60px;
+  }
+  .expertise-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--forest-2);
+  }
+
+  /* ============ TIMELINE ============ */
+  .timeline { display: flex; flex-direction: column; }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .tl-item:first-child { border-top: 0; padding-top: 0; }
+  .tl-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--ocean);
+    padding-top: 4px;
+  }
+  .tl-content h4 {
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--forest);
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+    margin-bottom: 4px;
+  }
+  .tl-content h4 em {
+    color: var(--jade);
+    font-style: normal;
+  }
+  .tl-org {
+    font-family: 'Archivo', sans-serif;
+    font-size: 14px;
+    color: var(--forest-2);
+    margin-bottom: 6px;
+  }
+  .tl-detail {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .tl-current-tag {
+    display: inline-block;
+    background: var(--jade);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    padding: 2px 8px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  /* ============ CONTACT BLOCK ============ */
+  .contact-block {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .contact-item h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 8px;
+  }
+  .contact-item p, .contact-item a {
+    font-size: 15px;
+    color: var(--forest);
+    line-height: 1.45;
+    word-break: break-word;
+  }
+  .contact-item a { color: var(--jade); transition: color 0.18s; }
+  .contact-item a:hover { color: var(--forest); }
+  
+
+  /* ============ RESEARCH JOURNEY ============ */
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    list-style: none;
+  }
+  .journey-step { border-top: 2px solid var(--forest); padding-top: 18px; }
+  .journey-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--jade);
+    margin-bottom: 10px;
+  }
+  .journey-title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--forest);
+    margin-bottom: 10px;
+  }
+  .journey-text { font-size: 15px; line-height: 1.65; color: var(--forest-2); }
+  @media (max-width: 920px) {
+    .journey { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  /* ============ PUBLICATIONS ON THIS TOPIC ============ */
+  .pubs-group { margin-bottom: 56px; }
+  .pubs-group-title {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--forest);
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--forest);
+  }
+  .pubs-group-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--jade);
+  }
+  .pubs-list { display: flex; flex-direction: column; }
+  .pub-item { padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .pub-item:hover .pub-title { color: var(--jade); }
+  .pub-title {
+    display: block;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: var(--forest);
+    margin-bottom: 6px;
+    max-width: 80ch;
+    transition: color 0.18s;
+  }
+  .pub-authors { font-size: 13px; line-height: 1.5; color: var(--forest-2); margin-bottom: 4px; }
+  .pub-authors strong { font-weight: 700; color: var(--forest); }
+  .pub-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .pub-meta em { font-style: italic; text-transform: none; letter-spacing: 0; color: var(--forest-2); }
+  .cta-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--forest);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 4px;
+    transition: color 0.18s, border-color 0.18s;
+  }
+  .cta-link:hover { color: var(--jade); border-color: var(--jade); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--dark);
+    color: var(--mint);
+    padding: 80px 48px 40px;
+    margin-top: 80px;
+  }
+  .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.8fr 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+  }
+  .footer-brand .footer-orbital { width: 80px; height: 80px; margin-bottom: 16px; }
+  .footer-brand .footer-wordmark { height: 48px; width: auto; display: block; margin-top: 14px; margin-bottom: 8px; }
+  .footer-brand h3 {
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--mint);
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .footer-brand h3 em { color: var(--jade-bright); font-style: normal; }
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(232, 240, 236, 0.65);
+    max-width: 32ch;
+  }
+  .footer-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--jade-bright);
+    margin-bottom: 18px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li, .footer-col a {
+    font-size: 14px;
+    line-height: 2;
+    color: var(--mint);
+    transition: color 0.18s;
+  }
+  .footer-col a:hover { color: var(--jade-bright); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 32px;
+    border-top: 0.5px solid rgba(232, 240, 236, 0.15);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(232, 240, 236, 0.45);
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 920px) {
+    nav { padding: 14px 24px; flex-wrap: wrap; }
+    nav ul { gap: 18px; }
+    section, .container { padding-left: 24px; padding-right: 24px; }
+    .profile-hero { padding-top: 130px; }
+    .profile-grid { grid-template-columns: 1fr; gap: 36px; }
+    .profile-photo-wrap { max-width: 320px; }
+    .profile-name { font-size: 48px; }
+    .profile-name-cn { font-size: 24px; }
+    .section-title { font-size: 28px; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .tl-item { grid-template-columns: 1fr; gap: 6px; }
+    .tl-period { padding-top: 0; }
+    .contact-block { grid-template-columns: 1fr; gap: 22px; padding: 28px 28px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  /* ============ FOOTER LAYOUT ============
+   * Brand sits on its own row; the five link columns share the full width
+   * (Teaching gets extra room for the course names). */
+  .footer-brand {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    column-gap: 28px;
+    align-items: center;
+    padding-bottom: 40px;
+    border-bottom: 0.5px solid rgba(232, 240, 236, 0.15);
+  }
+  .footer-brand > :nth-child(1),
+  .footer-brand > :nth-child(2) { grid-row: span 2; margin: 0; }
+  .footer-brand > :nth-child(1) { width: 64px; height: 64px; }
+  .footer-brand h3 { align-self: end; margin: 0 0 4px; }
+  .footer-brand p { align-self: start; max-width: 60ch; }
+  @media (max-width: 900px) {
+    .footer-brand { display: block; }
+    .footer-brand > :nth-child(2) { margin: 14px 0 8px; }
+    .footer-brand h3 { margin-bottom: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="brand">
+    <a href="index.html" style="display: flex; align-items: center; gap: 12px;">
+      <svg class="brand-orbital" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
+        <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
+        <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
+        <g transform="translate(62, 51)">
+          <rect fill="#1F4D3A" x="0" y="0" width="10" height="10"/>
+          <rect fill="#1F4D3A" x="22" y="0" width="10" height="10"/>
+          <rect fill="#1F4D3A" x="44" y="0" width="10" height="10"/>
+          <rect fill="#2A9D8F" x="66" y="0" width="10" height="10"/>
+          <rect fill="#1F4D3A" x="0" y="16" width="10" height="48"/>
+          <rect fill="#1F4D3A" x="22" y="16" width="10" height="48"/>
+          <rect fill="#1F4D3A" x="44" y="16" width="10" height="48"/>
+          <rect fill="#1F4D3A" x="66" y="16" width="10" height="48"/>
+          <rect fill="#0F6E7C" x="0" y="24" width="76" height="4"/>
+        </g>
+      </svg>
+      <svg class="brand-text" xmlns="http://www.w3.org/2000/svg" viewBox="0 37 400 103" preserveAspectRatio="xMidYMid meet">
+        <text x="0" y="140" style="font-family:'Archivo',sans-serif; font-weight:800; font-size:130px; letter-spacing:-0.03em;">
+          <tspan fill="#1F4D3A">BE</tspan><tspan fill="#2A9D8F">ı</tspan><tspan fill="#1F4D3A">LM</tspan>
+        </text>
+        <rect x="188.045" y="42.500" width="7.904" height="7.904" fill="#1F4D3A"/>
+        <rect x="200.941" y="42.500" width="7.904" height="7.904" fill="#1F4D3A"/>
+        <rect x="188.045" y="55.396" width="7.904" height="7.904" fill="#1F4D3A"/>
+        <rect x="200.941" y="55.396" width="7.904" height="7.904" fill="#2A9D8F"/>
+      </svg>
+    </a>
+  </div>
+  <ul class="nav-main">
+    <li class="has-dropdown">
+      <a href="#" class="nav-trigger" data-i18n="nav.news" data-i18n-html>News <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="news-events.html" data-i18n="nav.news.events">Events</a>
+        <a href="news-talks.html" data-i18n="nav.news.talks">Talks</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <a href="#" class="nav-trigger" data-i18n="nav.lab" data-i18n-html>Lab <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="overview.html" data-i18n="nav.lab.overview">Overview</a>
+        <a href="people.html" data-i18n="nav.lab.people">People</a>
+        <a href="projects.html" data-i18n="nav.lab.projects">Projects</a>
+        <a href="publications.html" data-i18n="nav.lab.publications">Publications</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <a href="#" class="nav-trigger" data-i18n="nav.research" data-i18n-html>Research <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="research-bimai.html" class="active" data-i18n="nav.research.bimai">BIM-AI Project Assistant</a>
+        <a href="research-csh.html" data-i18n="nav.research.csh">CSH Knowledge Base</a>
+        <a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a>
+        <a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a>
+        <a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <a href="teaching.html" class="nav-trigger" data-i18n="nav.teaching" data-i18n-html>Teaching <span class="caret">▾</span></a>
+      <div class="dropdown">
+        <a href="teaching-bim.html" data-i18n="nav.teaching.bim">BIM Fundamental / Implementation Practice</a>
+        <a href="teaching-ai-bim.html" data-i18n="nav.teaching.aibim">AI-BIM for Architectural / Interior Design</a>
+        <a href="teaching-gbim.html" data-i18n="nav.teaching.gbim">Green Building Information Modeling</a>
+        <a href="teaching-digital-twin.html" data-i18n="nav.teaching.dt">Digital Twin for the Built Environment</a>
+      </div>
+    </li>
+    <li><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+    <li>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Switch language" type="button">
+        <span class="lang-en">EN</span>
+        <span class="lang-sep">/</span>
+        <span class="lang-zh">中</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- ============ RESEARCH HERO ============ -->
+<section class="profile-hero">
+  <div class="container">
+    <div style="max-width: 720px;">
+      <div class="profile-meta" data-i18n="research.eyebrow">Focus · Building Information Modeling × AI</div>
+      <h1 class="profile-name" style="font-size: 56px; line-height: 1.05;" data-i18n="research.heroTitle">BIM-AI Project Assistant.</h1>
+      <p class="profile-bio" style="margin-top: 24px;" data-i18n="research.heroLede">An AI assistant for BIM-based projects — supporting design checking, generative design, cost estimation, site inspection, and risk analysis across the project lifecycle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESEARCH JOURNEY ============ -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.journey.number">Research Journey</div>
+      <h2 class="section-title" data-i18n="research.journey.title" data-i18n-html>From past to <em>present</em>.</h2>
+    </div>
+    <ol class="journey">
+      <li class="journey-step">
+        <div class="journey-period">2016 – 2021</div>
+        <h3 class="journey-title" data-i18n="research.journey.1.title">BIM foundations</h3>
+        <p class="journey-text" data-i18n="research.journey.1.text">Mapping global BIM research trends and BIM education, applying BIM to design warning analysis for a major airport terminal, and later combining BIM with IoT in a dynamic indoor evacuation guidance system.</p>
+      </li>
+      <li class="journey-step">
+        <div class="journey-period">2023 – 2024</div>
+        <h3 class="journey-title" data-i18n="research.journey.2.title">Learning and decision factors</h3>
+        <p class="journey-text" data-i18n="research.journey.2.text">A simulation game, “To BIM or Not to BIM”, that teaches AEC students how project delivery works; fuzzy cognitive maps of how BIM performance factors interact; and a first step into AI with neural networks and BIM for material cost estimation.</p>
+      </li>
+      <li class="journey-step">
+        <div class="journey-period" data-i18n="research.journey.3.period">2025 – now</div>
+        <h3 class="journey-title" data-i18n="research.journey.3.title">AI-assisted projects</h3>
+        <p class="journey-text" data-i18n="research.journey.3.text">Generative and automated design workflows for housing and public housing, BIM with AR and visual SLAM for site inspection, and LLM-based multi-agent simulation of construction project risks.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ PUBLICATIONS ON THIS TOPIC ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.pubs.number">Publications</div>
+      <h2 class="section-title" data-i18n="research.pubs.title" data-i18n-html>Papers on <em>this topic</em>.</h2>
+    </div>
+    <div class="pubs-group">
+      <h3 class="pubs-group-title"><span data-i18n="research.pubs.journal">Journal Articles</span><span class="pubs-group-count">3</span></h3>
+      <div class="pubs-list">
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/304009382_A_review_of_tertiary_BIM_education_for_advanced_engineering_communication_with_visualization" target="_blank" rel="noopener">A review of tertiary BIM education for advanced engineering communication with visualization</a>
+          <div class="pub-authors">Chegu Badrinath, A., <strong>Chang, Y. T.</strong>, &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2016 · <em>Visualization in Engineering</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">動態視覺化室內逃生輔助系統之設計與實作－運用建築資訊模型及物聯網資訊</div>
+          <div class="pub-meta">2021 · <em>中國土木水利工程學刊</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/394572881_Integration_of_BIM_and_ar_with_VSLAM_to_assist_in_construction_site_inspection?_sg%5B0%5D=AE40ta5hhwaSk0n50QxeWbyjO6HU_hjPcZtbK-cdO9aivsGOIvO1cikfmA2XKVVHXxAF-4JvAeALMKDZbN25HCkpRt4jVonKwyNBUDXk.dUYEw6yvncGQBVcGgcsvInOZKSOsuwkMzavPEEwogmq39KZR5DGGBuqj7uudKoOvjscKe_UZuXW86M6L8sf8Qw&amp;_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6Il9kaXJlY3QiLCJwYWdlIjoicHJvZmlsZSIsInByZXZpb3VzUGFnZSI6InByb2ZpbGUiLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19" target="_blank" rel="noopener">Integration of BIM and AR with VSLAM to assist in construction site inspection</a>
+          <div class="pub-authors">Kuo, W. L., Huan, B. K., Hsieh, S. H., Tsai, Y. H., &amp; <strong>Chang, Y. T.</strong></div>
+          <div class="pub-meta">2025 · <em>Journal of Civil Engineering and Management</em></div>
+        </article>
+      </div>
+    </div>
+    <div class="pubs-group">
+      <h3 class="pubs-group-title"><span data-i18n="research.pubs.conference">Conference Papers</span><span class="pubs-group-count">8</span></h3>
+      <div class="pubs-list">
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/304888686_A_preliminary_study_on_BIM_enabled_design_warning_analysis_in_T3A_terminal_of_chongqing_jiangbei_international_airport" target="_blank" rel="noopener">A preliminary study on BIM-enabled design warning analysis in T3A terminal of Chongqing Jiang Bei International Airport</a>
+          <div class="pub-authors">Badrinath, A., <strong>Chang, Y.</strong>, Lin, E., Hsien, S., &amp; Zhao, B.</div>
+          <div class="pub-meta">2016 · <em>ICCCBE</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/304888711_An_overview_of_global_research_trends_in_BIM_from_analysis_of_BIM_publications?_sg%5B0%5D=SBbaBscdtxmNxtuongZKtrtDOMz7rCN5vYLYzDTj7ciGtTuiotbHgDv4ezuIUrfd7odook509Lb7_cB3S_DDVCIJKTzX8oJb8g6FkCKd.NTe3jgVhX12LzO35YyNdqgFAr9A0fzoofoFqPNJ9oMC9eKL_rnATeBVZHcIs8aubo51wdph06BCuLoSOnyWAKA" target="_blank" rel="noopener">An overview of global research trends in BIM from analysis of BIM publications</a>
+          <div class="pub-authors">Badrinath, A. C., <strong>Chang, Y. T.</strong>, &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2016 · <em>ICCCBE</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/372456198_To_BIM_or_Not_to_BIM_A_Simulation_Game_for_Teaching_AEC_Students_the_Key_Mechanisms_in_Project_Delivery?_sg%5B0%5D=UaxITDhWOCoeW5hcF3yjBNS7ErkyuNwossDSpYkZEJ2BBpl8hxteylRbolWOln2G1W_Q1pKHjSfEgtSAllm63p7Jzg-lPAS-aRY3zVOL.Hb2PPAJlDPkXU-2l_sM5SCJDRH0phAa1BpT2UrAAmHL3Dyv2P_MsxiF5OZib1RMj1Efez_djsUTV5f6813r-Eg&amp;_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6ImxvZ2luIiwicGFnZSI6InByb2ZpbGUiLCJwcmV2aW91c1BhZ2UiOiJwcm9maWxlIiwicG9zaXRpb24iOiJwYWdlQ29udGVudCJ9fQ" target="_blank" rel="noopener">“To BIM or Not to BIM”: A Simulation Game for Teaching AEC Students the Key Mechanisms in Project Delivery</a>
+          <div class="pub-authors"><strong>Chang, Y. T.</strong>, Pal, A., Wu, T. H., &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2023 · <em>ICCBEI</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/378544050_FCM-Enabled_Approach_for_Investigating_Interdependencies_of_BIM_Performance_Factors_in_the_Sustainable_Built_Environment" target="_blank" rel="noopener">FCM-enabled approach for investigating interdependencies of BIM performance factors in the sustainable built environment</a>
+          <div class="pub-meta">2023 · <em>CONVR</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/383399860_Combining_Neural_Network_and_BIM_for_Material_Cost_Estimation_A_Case_Study" target="_blank" rel="noopener">Combining Neural Network and BIM for Material Cost Estimation: A Case Study</a>
+          <div class="pub-meta">2024 · <em>SCEM</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/395357782_A_Generative_Design_Workflow_for_Residential_Building_A_Comparative_Study" target="_blank" rel="noopener">A Generative Design Workflow for Residential Building: A Comparative Study</a>
+          <div class="pub-meta">2025 · <em>SCEM</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/395473933_Revisit_Public_Housing_Design_in_Taiwan_Automated_Design_and_Evaluation_Workflow_integrating_Shape_Machine_and_Local_Data" target="_blank" rel="noopener">Revisit Public Housing Design in Taiwan: Automated Design and Evaluation Workflow integrating Shape Machine and Local Data</a>
+          <div class="pub-meta">2025 · <em>SCEM</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">Toward Enhancing Understanding of Construction Project Risks through Large Language Model based Multi-Agent Simulation</div>
+          <div class="pub-meta">2025 · <em>CECAR</em></div>
+        </article>
+      </div>
+    </div>
+    <a href="publications.html" class="cta-link" data-i18n="research.pubs.all">All publications →</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <svg class="footer-orbital" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#E8F0EC" stroke-width="2.8"/>
+        <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#E8F0EC" stroke-width="2.8"/>
+        <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#E8F0EC" stroke-width="2.8"/>
+        <g transform="translate(62, 51)">
+          <rect fill="#E8F0EC" x="0" y="0" width="10" height="10"/>
+          <rect fill="#E8F0EC" x="22" y="0" width="10" height="10"/>
+          <rect fill="#E8F0EC" x="44" y="0" width="10" height="10"/>
+          <rect fill="#4ECDC4" x="66" y="0" width="10" height="10"/>
+          <rect fill="#E8F0EC" x="0" y="16" width="10" height="48"/>
+          <rect fill="#E8F0EC" x="22" y="16" width="10" height="48"/>
+          <rect fill="#E8F0EC" x="44" y="16" width="10" height="48"/>
+          <rect fill="#E8F0EC" x="66" y="16" width="10" height="48"/>
+          <rect fill="#4ECDC4" x="0" y="24" width="76" height="4"/>
+        </g>
+      </svg>
+      <svg class="footer-wordmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 180">
+        <text x="0" y="140" style="font-family:'Archivo',sans-serif; font-weight:800; font-size:130px; letter-spacing:-0.03em;">
+          <tspan fill="#E8F0EC">BE</tspan><tspan fill="#4ECDC4">ı</tspan><tspan fill="#E8F0EC">LM</tspan>
+        </text>
+        <rect x="188.045" y="42.500" width="7.904" height="7.904" fill="#E8F0EC"/>
+        <rect x="200.941" y="42.500" width="7.904" height="7.904" fill="#E8F0EC"/>
+        <rect x="188.045" y="55.396" width="7.904" height="7.904" fill="#E8F0EC"/>
+        <rect x="200.941" y="55.396" width="7.904" height="7.904" fill="#4ECDC4"/>
+      </svg>
+      <h3 data-i18n="footer.tagline" data-i18n-html>Let's build what's <em>next</em>.</h3>
+      <p data-i18n="footer.tagline.desc">Open to research collaborations, industry partnerships, and students curious about the intersection of AI, construction, and sustainability.</p>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.news">News</h4>
+      <ul>
+        <li><a href="news-events.html" data-i18n="nav.news.events">Events</a></li>
+        <li><a href="news-talks.html" data-i18n="nav.news.talks">Talks</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.lab">Lab</h4>
+      <ul>
+        <li><a href="overview.html" data-i18n="nav.lab.overview">Overview</a></li>
+        <li><a href="people.html" data-i18n="nav.lab.people">People</a></li>
+        <li><a href="projects.html" data-i18n="nav.lab.projects">Projects</a></li>
+        <li><a href="publications.html" data-i18n="nav.lab.publications">Publications</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.research">Research</h4>
+      <ul>
+        <li><a href="research-bimai.html" data-i18n="nav.research.bimai">BIM-AI Project Assistant</a></li>
+        <li><a href="research-csh.html" data-i18n="nav.research.csh">CSH Knowledge Base</a></li>
+        <li><a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a></li>
+        <li><a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a></li>
+        <li><a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.teaching">Teaching</h4>
+      <ul>
+        <li><a href="teaching-bim.html" data-i18n="nav.teaching.bim">BIM Fundamental / Implementation Practice</a></li>
+        <li><a href="teaching-ai-bim.html" data-i18n="nav.teaching.aibim">AI-BIM for Architectural / Interior Design</a></li>
+        <li><a href="teaching-gbim.html" data-i18n="nav.teaching.gbim">Green Building Information Modeling</a></li>
+        <li><a href="teaching-digital-twin.html" data-i18n="nav.teaching.dt">Digital Twin for the Built Environment</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.connect">Connect</h4>
+      <ul>
+        <li><a href="mailto:yuntchang@fcu.edu.tw">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/yuntsui-chang/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.semanticscholar.org/author/Yun-Tsui-Chang/2219835706" target="_blank" rel="noopener">Semantic Scholar</a></li>
+        <li><a href="https://scholar.google.com/citations?user=3HGdfokAAAAJ" target="_blank" rel="noopener">Google Scholar</a></li>
+        <li><a href="https://github.com/ytchang1988" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://orcid.org/0000-0003-1515-4187" target="_blank" rel="noopener">ORCID</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span data-i18n="footer.copyright">© 2026 BEiLM Research Lab</span>
+    <span data-i18n="footer.tagline.short">Built Environment · Intelligence · Lifecycle</span>
+    <span data-i18n="footer.location">Taiwan</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+ * BEiLM People page i18n
+ * ============================================================ */
+(function() {
+  const STORAGE_KEY = 'beilm-lang';
+  const DEFAULT_LANG = 'en';
+
+  const dict = {
+    en: {
+      'page.title': 'BIM-AI Project Assistant — BEiLM Research Lab',
+
+      // Nav (shared with main site)
+      'nav.news': 'News <span class="caret">▾</span>',
+      'nav.lab': 'Lab <span class="caret">▾</span>',
+      'nav.lab.overview': 'Overview',
+      'nav.lab.people': 'People',
+      'nav.lab.publications': 'Publications',
+      'nav.lab.projects': 'Projects',
+      'nav.research': 'Research <span class="caret">▾</span>',
+      'nav.research.hpb': 'HPB Design Tool',
+      'nav.research.nzr': 'NZR City Platform',
+      'nav.research.bimai': 'BIM-AI Project Assistant',
+      'nav.research.csh': 'CSH Knowledge Base',
+      'nav.research.sdgs': 'SDGs Campus Twin',
+      'nav.teaching': 'Teaching <span class="caret">▾</span>',
+      'nav.news.events': 'Events',
+      'nav.news.talks': 'Talks',
+      'nav.teaching.bim': 'BIM Fundamental / Implementation Practice',
+      'nav.teaching.aibim': 'AI-BIM for Architectural / Interior Design',
+      'nav.teaching.gbim': 'Green Building Information Modeling',
+      'nav.teaching.dt': 'Digital Twin for the Built Environment',
+      'nav.contact': 'Contact',
+
+
+      // Research page
+      'research.eyebrow': 'Focus · Building Information Modeling × AI',
+      'research.heroTitle': 'BIM-AI Project Assistant.',
+      'research.heroLede': 'An AI assistant for BIM-based projects — supporting design checking, generative design, cost estimation, site inspection, and risk analysis across the project lifecycle.',
+      // Research journey
+      'research.journey.number': 'Research Journey',
+      'research.journey.title': 'From past to <em>present</em>.',
+      'research.journey.1.title': 'BIM foundations',
+      'research.journey.1.text': 'Mapping global BIM research trends and BIM education, applying BIM to design warning analysis for a major airport terminal, and later combining BIM with IoT in a dynamic indoor evacuation guidance system.',
+      'research.journey.2.title': 'Learning and decision factors',
+      'research.journey.2.text': 'A simulation game, “To BIM or Not to BIM”, that teaches AEC students how project delivery works; fuzzy cognitive maps of how BIM performance factors interact; and a first step into AI with neural networks and BIM for material cost estimation.',
+      'research.journey.3.title': 'AI-assisted projects',
+      'research.journey.3.text': 'Generative and automated design workflows for housing and public housing, BIM with AR and visual SLAM for site inspection, and LLM-based multi-agent simulation of construction project risks.',
+      'research.journey.3.period': '2025 – now',
+      // Publications on this topic
+      'research.pubs.number': 'Publications',
+      'research.pubs.title': 'Papers on <em>this topic</em>.',
+      'research.pubs.journal': 'Journal Articles',
+      'research.pubs.conference': 'Conference Papers',
+      'research.pubs.all': 'All publications →',
+
+      // Profile hero
+      'people.photo.tag': 'Director',
+      'people.meta': 'Lab Director · Principal Investigator',
+      'people.name': 'Yun-Tsui Chang',
+      'people.name.cn': '張芸翠',
+      'people.title.line': 'Assistant Professor, <em>College of Architecture, Feng Chia University</em><br>Founder &amp; Director, <em>BEiLM Research Lab</em>',
+      'people.bio': 'Architect, urban planner, and computational design researcher working at the intersection of building informatics, sustainability, and lifecycle thinking. Trained across architecture (NCKU), urban planning (UCL Bartlett), and civil engineering (NTU), with a decade of practice in green building certification and sustainable design. The lab she founded — BEiLM — investigates how informatics, intelligence, industrialization, and integration transform the way we design, operate, and regenerate the built environment.',
+      'people.link.pubs': 'Publications',
+
+      // Expertise
+      'people.expertise.number': '01 / Research Expertise',
+      'people.expertise.title': 'Four <em>research areas</em>, one connected practice.',
+      'people.expertise.1.name': 'Design Theory & Computational Design',
+      'people.expertise.1.desc': 'Generative methods, parametric modeling, and the computational logic underlying contemporary architectural design.',
+      'people.expertise.2.name': 'Urban Communities & Environmental Planning',
+      'people.expertise.2.desc': 'Bridging architecture and urbanism — community-scale planning, sustainability frameworks, and the social dimensions of the built environment.',
+      'people.expertise.3.name': 'Building Construction & Construction Management',
+      'people.expertise.3.desc': 'BIM, modular construction, and the project-delivery mechanisms that turn designs into buildings — with circular economy principles woven throughout.',
+      'people.expertise.4.name': 'Building Planning & Environmental Control',
+      'people.expertise.4.desc': 'Building performance, energy modeling, digital twins for facility management, and the long operational life where most environmental impact accumulates.',
+
+      // Education
+      'people.edu.number': '02 / Education',
+      'people.edu.title': 'Four degrees, three <em>disciplines</em>, two countries.',
+      'people.edu.phd.degree': '<em>Ph.D.</em> in Civil Engineering',
+      'people.edu.phd.org': 'Department of Civil Engineering, National Taiwan University',
+      'people.edu.phd.detail': 'Taipei, Taiwan',
+      'people.edu.ucl.degree': '<em>M.Sc.</em> in Urban Planning',
+      'people.edu.ucl.org': 'The Bartlett School of Planning, University College London',
+      'people.edu.ucl.detail': 'London, United Kingdom',
+      'people.edu.ms.degree': '<em>M.Arch.</em> in Architecture',
+      'people.edu.ms.org': 'Department of Architecture, National Cheng Kung University',
+      'people.edu.ms.detail': 'Tainan, Taiwan',
+      'people.edu.ba.degree': '<em>B.Arch.</em> in Architecture',
+      'people.edu.ba.org': 'Department of Architecture, National Cheng Kung University',
+      'people.edu.ba.detail': 'Tainan, Taiwan',
+
+      // Experience
+      'people.exp.number': '03 / Experience',
+      'people.exp.title': 'From <em>practice</em> to <em>research</em>.',
+      'people.exp.current.period': '2026 — Present',
+      'people.exp.current.role': 'Assistant Professor',
+      'people.exp.current.tag': 'Current',
+      'people.exp.current.org': 'College of Architecture, Feng Chia University',
+      'people.exp.current.detail': 'Taichung, Taiwan',
+      'people.exp.tsea.role': 'Secretary General',
+      'people.exp.tsea.org': 'Taiwan Sustainable Energy & Environment Professional Association',
+      'people.exp.zhi.role': 'Project Associate Manager (Green Building Certification)',
+      'people.exp.zhi.org': 'RCI Engineering',
+      'people.exp.ncku.role': 'Researcher',
+      'people.exp.ncku.org': 'Department of Architecture, National Cheng Kung University',
+
+      // Highlights
+      'people.highlights.number': '04 / Selected Highlights',
+      'people.highlights.title': 'Recent <em>recognition &amp; service</em>.',
+      'people.highlights.bdtsc.title': 'First-author paper accepted at BDTSC 2026 (Cambridge)',
+      'people.highlights.bdtsc.org': '"Ontology- and Knowledge Graph–Enabled BIM for Building Energy Digital Twins: A Review" — 2nd Building Digital Twin Scientific Conference',
+      'people.highlights.bdtsc.detail': 'Conference Paper · Corresponding Author',
+      'people.highlights.caadria.title': 'First-author paper accepted at CAADRIA 2026 (Taiwan)',
+      'people.highlights.caadria.org': '"Semantic Approaches to Circular Building Practices: A Review of Knowledge Graphs and Ontologies"',
+      'people.highlights.caadria.detail': 'Conference Paper · Corresponding Author',
+      'people.highlights.jcp.title': 'First-author paper in Journal of Cleaner Production',
+      'people.highlights.jcp.org': '"Development and Application of an Enhanced Building Circularity Indicator: A Pilot Study in Taiwan"',
+      'people.highlights.jcp.detail': 'Q1 Journal · Corresponding Author',
+      'people.highlights.tsea.title': 'Professional Service: Secretary General, TSEA',
+      'people.highlights.tsea.org': 'Three years leading the operations of the Taiwan Sustainable Energy &amp; Environment Professional Association.',
+
+      // Contact
+      'people.contact.number': '05 / Get in Touch',
+      'people.contact.title': 'Open to <em>conversations</em>.',
+      'people.contact.email': 'Email',
+      'people.contact.office': 'Office',
+      'people.contact.office.addr': 'College of Architecture<br>Feng Chia University<br>Taichung, Taiwan',
+      'people.contact.collab': 'Collaborations',
+      'people.contact.collab.desc': 'Open to research collaborations, industry partnerships, and graduate students working at the intersection of AI, construction, and sustainability.',
+
+      // Publications page
+      'pubs.eyebrow': 'Live · Semantic Scholar',
+      'pubs.heroTitle': 'Publications.',
+      'pubs.heroLede': 'A live feed of papers, citations, and impact metrics — pulled directly from Semantic Scholar and refreshed regularly.',
+      'pubs.number': '',
+      'pubs.title': "What we've <em>published</em>.",
+      'pubs.stat.papers': 'Papers',
+      'pubs.stat.citations': 'Citations',
+      'pubs.stat.hindex': 'h-index',
+      'pubs.sortby': 'SORT BY',
+      'pubs.sort.newest': 'Newest first',
+      'pubs.sort.oldest': 'Oldest first',
+      'pubs.sort.cited': 'Most cited',
+      'pubs.loading': 'Loading…',
+      'pubs.attribution': 'Data via <a href="https://www.semanticscholar.org/" target="_blank" rel="noopener">Semantic Scholar</a> · cached for 12 hours · <span id="pubs-updated"></span>',
+
+      // Footer
+      'footer.tagline': "Let's build what's <em>next</em>.",
+      'footer.tagline.desc': 'Open to research collaborations, industry partnerships, and students curious about the intersection of AI, construction, and sustainability.',
+      'footer.news': 'News',
+      'footer.lab': 'Lab',
+      'footer.research': 'Research',
+      'footer.teaching': 'Teaching',
+      'footer.connect': 'Connect',
+      'footer.copyright': '© 2026 BEiLM Research Lab',
+      'footer.tagline.short': 'Built Environment · Intelligence · Lifecycle',
+      'footer.location': 'Taiwan',
+    },
+
+    'zh-Hant': {
+      'page.title': 'BIM-AI 專案助理 — BEiLM 研究室',
+
+      // Nav
+      'nav.news': '新訊 <span class="caret">▾</span>',
+      'nav.lab': '研究室 <span class="caret">▾</span>',
+      'nav.lab.overview': '研究室概述',
+      'nav.lab.people': '研究團隊',
+      'nav.lab.publications': '學術發表',
+      'nav.lab.projects': '研究計畫',
+      'nav.research': '研究主題 <span class="caret">▾</span>',
+      'nav.research.hpb': 'HPB 設計工具',
+      'nav.research.nzr': 'NZR 城市平台',
+      'nav.research.bimai': 'BIM-AI 專案助理',
+      'nav.research.csh': 'CSH 知識庫',
+      'nav.research.sdgs': 'SDGs 校園孿生',
+      'nav.teaching': '教學 <span class="caret">▾</span>',
+      'nav.news.events': '活動',
+      'nav.news.talks': '演講',
+      'nav.teaching.bim': 'BIM 基礎與實務應用',
+      'nav.teaching.aibim': 'AI-BIM 建築與室內設計',
+      'nav.teaching.gbim': '綠建築資訊模型',
+      'nav.teaching.dt': '建成環境數位孿生',
+      'nav.contact': '聯絡我們',
+
+
+      // Research page
+      'research.eyebrow': '研究主題 · 建築資訊模型 × 人工智慧',
+      'research.heroTitle': 'BIM-AI 專案助理。',
+      'research.heroLede': '一個以 BIM 為基礎的 AI 專案助理 — 在專案生命週期中支援設計檢核、生成式設計、成本估算、工地巡檢與風險分析。',
+      // Research journey
+      'research.journey.number': '研究歷程',
+      'research.journey.title': '從過去到<em>現在</em>。',
+      'research.journey.1.title': 'BIM 基礎研究',
+      'research.journey.1.text': '從分析全球 BIM 研究趨勢與 BIM 教育出發,將 BIM 應用於大型機場航廈的設計預警分析;之後結合物聯網,開發動態視覺化的室內逃生輔助系統。',
+      'research.journey.2.title': '教學與決策因素',
+      'research.journey.2.text': '以模擬遊戲「To BIM or Not to BIM」教授 AEC 學生專案交付機制,用模糊認知圖 (FCM) 分析 BIM 績效因素間的交互影響,並踏出 AI 的第一步:結合類神經網路與 BIM 估算材料成本。',
+      'research.journey.3.title': 'AI 輔助專案',
+      'research.journey.3.text': '發展住宅與社會住宅的生成式與自動化設計流程、結合 BIM、AR 與視覺 SLAM 的工地巡檢,以及以大型語言模型多代理人模擬理解營建專案風險。',
+      'research.journey.3.period': '2025 – 至今',
+      // Publications on this topic
+      'research.pubs.number': '學術發表',
+      'research.pubs.title': '這個主題的<em>相關論文</em>。',
+      'research.pubs.journal': '期刊論文',
+      'research.pubs.conference': '研討會論文',
+      'research.pubs.all': '所有學術發表 →',
+
+      // Profile hero
+      'people.photo.tag': '主持人',
+      'people.meta': '研究室主持人 · 計畫主持人',
+      'people.name': 'Yun-Tsui Chang',
+      'people.name.cn': '張芸翠',
+      'people.title.line': '助理教授,<em>逢甲大學建築專業學院</em><br>創辦人暨主持人,<em>BEiLM 研究室</em>',
+      'people.bio': '建築師、都市規劃師、計算設計研究者,工作橫跨建築資訊、永續性與生命週期思維三個領域。學術歷程涵蓋建築學(成功大學)、都市規劃(倫敦大學學院巴特雷學院)與土木工程(臺灣大學),並有十年綠建築認證與永續設計實務經驗。她創辦的 BEiLM 研究室,探討資訊化、智能化、工業化與整合化如何改變我們設計、營運與再生建築環境的方式。',
+      'people.link.pubs': '學術發表',
+
+      // Expertise
+      'people.expertise.number': '01 / 研究專長',
+      'people.expertise.title': '四個<em>研究領域</em>,一致的實踐路徑。',
+      'people.expertise.1.name': '設計理論與電腦輔助',
+      'people.expertise.1.desc': '生成式方法、參數化建模,以及當代建築設計背後的計算邏輯。',
+      'people.expertise.2.name': '都市社區與環境規劃',
+      'people.expertise.2.desc': '銜接建築與都市議題 — 社區尺度規劃、永續性架構,以及建築環境的社會面向。',
+      'people.expertise.3.name': '建築構造與營建管理',
+      'people.expertise.3.desc': 'BIM、模組化營造,以及將設計轉化為實體建築的計畫交付機制 — 並將循環經濟原則貫穿其中。',
+      'people.expertise.4.name': '建築計畫與環境控制',
+      'people.expertise.4.desc': '建築性能、能源模擬、設施管理數位孿生,以及大部分環境衝擊真正累積的漫長營運期。',
+
+      // Education
+      'people.edu.number': '02 / 學歷',
+      'people.edu.title': '四個學位,三個<em>學科</em>,兩個國家。',
+      'people.edu.phd.degree': '土木工程 <em>博士</em>',
+      'people.edu.phd.org': '國立臺灣大學 土木工程學系',
+      'people.edu.phd.detail': '臺灣 臺北',
+      'people.edu.ucl.degree': '都市規劃 <em>碩士</em>',
+      'people.edu.ucl.org': '倫敦大學學院 巴特雷規劃學院',
+      'people.edu.ucl.detail': '英國 倫敦',
+      'people.edu.ms.degree': '建築學 <em>碩士</em>',
+      'people.edu.ms.org': '國立成功大學 建築學系',
+      'people.edu.ms.detail': '臺灣 臺南',
+      'people.edu.ba.degree': '建築學 <em>學士</em>',
+      'people.edu.ba.org': '國立成功大學 建築學系',
+      'people.edu.ba.detail': '臺灣 臺南',
+
+      // Experience
+      'people.exp.number': '03 / 經歷',
+      'people.exp.title': '從<em>實務</em>走向<em>研究</em>。',
+      'people.exp.current.period': '2026 — 至今',
+      'people.exp.current.role': '助理教授',
+      'people.exp.current.tag': '現職',
+      'people.exp.current.org': '逢甲大學 建築專業學院',
+      'people.exp.current.detail': '臺灣 臺中',
+      'people.exp.tsea.role': '秘書長',
+      'people.exp.tsea.org': '台灣永續能源環境專業協會',
+      'people.exp.zhi.role': '專案副理(綠建築認證)',
+      'people.exp.zhi.org': '智森永續設計顧問有限公司 (RCI Engineering)',
+      'people.exp.ncku.role': '研究員',
+      'people.exp.ncku.org': '國立成功大學 建築學系',
+
+      // Highlights
+      'people.highlights.number': '04 / 近期亮點',
+      'people.highlights.title': '近期<em>學術成就與專業服務</em>。',
+      'people.highlights.bdtsc.title': '第一作者論文獲 BDTSC 2026 (劍橋大學) 接受發表',
+      'people.highlights.bdtsc.org': '〈Ontology- and Knowledge Graph–Enabled BIM for Building Energy Digital Twins: A Review〉— 第二屆建築數位孿生科學研討會',
+      'people.highlights.bdtsc.detail': '研討會論文 · 通訊作者',
+      'people.highlights.caadria.title': '第一作者論文獲 CAADRIA 2026 (臺灣) 接受發表',
+      'people.highlights.caadria.org': '〈Semantic Approaches to Circular Building Practices: A Review of Knowledge Graphs and Ontologies〉',
+      'people.highlights.caadria.detail': '研討會論文 · 通訊作者',
+      'people.highlights.jcp.title': 'Journal of Cleaner Production 第一作者期刊論文',
+      'people.highlights.jcp.org': '〈Development and Application of an Enhanced Building Circularity Indicator: A Pilot Study in Taiwan〉',
+      'people.highlights.jcp.detail': 'Q1 期刊 · 通訊作者',
+      'people.highlights.tsea.title': '專業服務:台灣永續能源環境專業協會秘書長',
+      'people.highlights.tsea.org': '三年期間負責台灣永續能源環境專業協會的營運與管理。',
+
+      // Contact
+      'people.contact.number': '05 / 聯絡方式',
+      'people.contact.title': '歡迎<em>對話交流</em>。',
+      'people.contact.email': '電子郵件',
+      'people.contact.office': '辦公室',
+      'people.contact.office.addr': '逢甲大學<br>建築專業學院<br>臺灣 臺中',
+      'people.contact.collab': '研究合作',
+      'people.contact.collab.desc': '歡迎研究合作、產業夥伴關係,以及對 AI、營造與永續交集感到好奇的研究生。',
+
+      // Publications page
+      'pubs.eyebrow': '即時更新 · Semantic Scholar',
+      'pubs.heroTitle': '學術發表。',
+      'pubs.heroLede': '由 Semantic Scholar 直接擷取的即時論文清單、引用數據與影響力指標,定期更新。',
+      'pubs.number': '',
+      'pubs.title': '我們<em>發表</em>了什麼。',
+      'pubs.stat.papers': '論文篇數',
+      'pubs.stat.citations': '被引用次數',
+      'pubs.stat.hindex': 'h 指數',
+      'pubs.sortby': '排序方式',
+      'pubs.sort.newest': '最新優先',
+      'pubs.sort.oldest': '最早優先',
+      'pubs.sort.cited': '引用最多',
+      'pubs.loading': '載入中…',
+      'pubs.attribution': '資料來源:<a href="https://www.semanticscholar.org/" target="_blank" rel="noopener">Semantic Scholar</a> · 快取 12 小時 · <span id="pubs-updated"></span>',
+
+      // Footer
+      'footer.tagline': '讓我們一起打造<em>未來</em>。',
+      'footer.tagline.desc': '歡迎研究合作、產業夥伴關係,以及對 AI、營造與永續交集感到好奇的學生。',
+      'footer.news': '新訊',
+      'footer.lab': '研究室',
+      'footer.research': '研究主題',
+      'footer.teaching': '教學',
+      'footer.connect': '聯絡',
+      'footer.copyright': '© 2026 BEiLM 研究室',
+      'footer.tagline.short': '建築環境 · 智慧科技 · 生命週期',
+      'footer.location': '臺灣',
+    },
+  };
+
+  function applyLang(lang) {
+    if (!dict[lang]) lang = DEFAULT_LANG;
+    const strings = dict[lang];
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const value = strings[key];
+      if (value == null) return;
+      if (el.hasAttribute('data-i18n-html') || /<[a-z]/.test(value)) {
+        el.innerHTML = value;
+      } else {
+        el.textContent = value;
+      }
+    });
+    if (strings['people.title']) document.title = strings['people.title'];
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  }
+
+  function getInitialLang() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && dict[saved]) return saved;
+    } catch (e) {}
+    return DEFAULT_LANG;
+  }
+
+  applyLang(getInitialLang());
+
+  const btn = document.getElementById('lang-toggle');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('lang');
+      applyLang(current === 'en' ? 'zh-Hant' : 'en');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

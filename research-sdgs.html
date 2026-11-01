@@ -348,55 +348,125 @@
   .contact-item a:hover { color: var(--forest); }
   
 
-  /* ============ RESEARCH PLACEHOLDER ============ */
-  .research-placeholder {
-    text-align: center;
-    padding: 60px 24px 100px;
-    max-width: 640px;
-    margin: 0 auto;
+  /* ============ RESEARCH JOURNEY ============ */
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    list-style: none;
   }
-  .placeholder-mark {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 28px;
-    opacity: 0.55;
-  }
-  .placeholder-tag {
-    display: inline-block;
+  .journey-step { border-top: 2px solid var(--forest); padding-top: 18px; }
+  .journey-period {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--jade);
-    padding: 5px 14px;
-    border: 1px solid var(--jade);
-    border-radius: 999px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
-  .placeholder-title {
-    font-weight: 800;
-    font-size: 38px;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+  .journey-title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
     color: var(--forest);
-    margin-bottom: 18px;
+    margin-bottom: 10px;
   }
-  .placeholder-title em { color: var(--jade); font-style: normal; }
-  .placeholder-body {
-    font-size: 16px;
-    line-height: 1.65;
-    color: var(--forest-2);
-    margin-bottom: 36px;
-    max-width: 56ch;
-    margin-left: auto;
-    margin-right: auto;
+  .journey-text { font-size: 15px; line-height: 1.65; color: var(--forest-2); }
+  @media (max-width: 920px) {
+    .journey { grid-template-columns: 1fr; gap: 28px; }
   }
-  .placeholder-cta {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+
+  /* ============ PROJECTS ON THIS TOPIC ============ */
+  .proj-list { display: flex; flex-direction: column; margin-bottom: 32px; }
+  .proj-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    padding: 22px 0;
+    border-top: 1px solid var(--rule);
   }
+  .proj-item:last-child { border-bottom: 1px solid var(--rule); }
+  .proj-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--forest);
+    padding-top: 3px;
+    white-space: nowrap;
+  }
+  .proj-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 8px;
+  }
+  .proj-tag { background: var(--jade); color: white; font-size: 9px; letter-spacing: 0.2em; padding: 2px 8px; }
+  .proj-title {
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--forest);
+    max-width: 70ch;
+  }
+  .proj-sub { margin-top: 8px; font-size: 14px; line-height: 1.55; color: var(--forest-2); max-width: 72ch; }
+  .proj-sub-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--jade);
+    margin-right: 10px;
+  }
+  @media (max-width: 920px) {
+    .proj-item { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  /* ============ PUBLICATIONS ON THIS TOPIC ============ */
+  .pubs-group { margin-bottom: 56px; }
+  .pubs-group-title {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--forest);
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--forest);
+  }
+  .pubs-group-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--jade);
+  }
+  .pubs-list { display: flex; flex-direction: column; }
+  .pub-item { padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .pub-item:hover .pub-title { color: var(--jade); }
+  .pub-title {
+    display: block;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: var(--forest);
+    margin-bottom: 6px;
+    max-width: 80ch;
+    transition: color 0.18s;
+  }
+  .pub-authors { font-size: 13px; line-height: 1.5; color: var(--forest-2); margin-bottom: 4px; }
+  .pub-authors strong { font-weight: 700; color: var(--forest); }
+  .pub-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .pub-meta em { font-style: italic; text-transform: none; letter-spacing: 0; color: var(--forest-2); }
   .cta-link {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -408,9 +478,6 @@
     transition: color 0.18s, border-color 0.18s;
   }
   .cta-link:hover { color: var(--jade); border-color: var(--jade); }
-  @media (max-width: 920px) {
-    .placeholder-title { font-size: 28px; }
-  }
 
   /* ============ FOOTER ============ */
   footer {
@@ -569,9 +636,11 @@
     <li class="has-dropdown">
       <a href="#" class="nav-trigger" data-i18n="nav.research" data-i18n-html>Research <span class="caret">▾</span></a>
       <div class="dropdown">
+        <a href="research-bimai.html" data-i18n="nav.research.bimai">BIM-AI Project Assistant</a>
+        <a href="research-csh.html" data-i18n="nav.research.csh">CSH Knowledge Base</a>
         <a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a>
-        <a href="research-sdgs.html" class="active" data-i18n="nav.research.sdgs">SDGs Campus Twin</a>
         <a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a>
+        <a href="research-sdgs.html" class="active" data-i18n="nav.research.sdgs">SDGs Campus Twin</a>
       </div>
     </li>
     <li class="has-dropdown">
@@ -598,43 +667,143 @@
 <section class="profile-hero">
   <div class="container">
     <div style="max-width: 720px;">
-      <div class="profile-meta" data-i18n="research.eyebrow">Project · Sustainable Development Goals</div>
+      <div class="profile-meta" data-i18n="research.eyebrow">Focus · Sustainable Development Goals</div>
       <h1 class="profile-name" style="font-size: 56px; line-height: 1.05;" data-i18n="research.heroTitle">SDGs Campus Twin.</h1>
       <p class="profile-bio" style="margin-top: 24px;" data-i18n="research.heroLede">A digital twin of the campus, structured around the UN Sustainable Development Goals — turning daily operations into measurable progress.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ COMING SOON PLACEHOLDER ============ -->
+<!-- ============ RESEARCH JOURNEY ============ -->
 <section style="padding-top: 0;">
   <div class="container">
-    <div class="research-placeholder">
-      <div class="placeholder-mark">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-          <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <g transform="translate(62, 51)">
-            <rect fill="#1F4D3A" x="0" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="22" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="44" y="0" width="10" height="10"/>
-            <rect fill="#2A9D8F" x="66" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="0" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="22" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="44" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="66" y="16" width="10" height="48"/>
-            <rect fill="#0F6E7C" x="0" y="24" width="76" height="4"/>
-          </g>
-        </svg>
-      </div>
-      <div class="placeholder-tag" data-i18n="research.tag">In Development</div>
-      <h2 class="placeholder-title" data-i18n="research.placeholder.title" data-i18n-html>This page is being <em>built</em>.</h2>
-      <p class="placeholder-body" data-i18n="research.placeholder.body">Detailed research content is on its way. In the meantime, the lab's framework — Built Environment × Four i's × Lifecycle Management — is described on the overview page, and recent papers are listed on the publications page.</p>
-      <div class="placeholder-cta">
-        <a href="index.html" class="cta-link" data-i18n="research.cta.overview">← Overview</a>
-        <a href="publications.html" class="cta-link" data-i18n="research.cta.pubs">Publications →</a>
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.journey.number">Research Journey</div>
+      <h2 class="section-title" data-i18n="research.journey.title" data-i18n-html>From past to <em>present</em>.</h2>
+    </div>
+    <ol class="journey">
+      <li class="journey-step">
+        <div class="journey-period">2021 – 2022</div>
+        <h3 class="journey-title" data-i18n="research.journey.1.title">Campus data</h3>
+        <p class="journey-text" data-i18n="research.journey.1.text">Predicting a university library’s electricity use from occupant Wi-Fi data, making shared bikes more useful, and NTU case studies on energy-efficiency rating information, solar parking layouts, and rooftop solar potential from satellite imagery — the groundwork for an information integration platform for smart decisions on campus sustainability.</p>
+      </li>
+      <li class="journey-step">
+        <div class="journey-period">2023 – 2024</div>
+        <h3 class="journey-title" data-i18n="research.journey.2.title">A campus digital twin</h3>
+        <p class="journey-text" data-i18n="research.journey.2.text">A digital twin platform for NTU built on 3D building models, BIM, and IoT sensors — first for a climate-resilient campus, then for a net-zero, circular, and WELL campus — with point-cloud rooftop analysis and a review of how people interact with digital twins in building operations.</p>
+      </li>
+      <li class="journey-step">
+        <div class="journey-period" data-i18n="research.journey.3.period">2025 – now</div>
+        <h3 class="journey-title" data-i18n="research.journey.3.title">Keeping the twin alive</h3>
+        <p class="journey-text" data-i18n="research.journey.3.text">Streamlining sensor registration in BIM-based twins, a platform that visualizes campus sustainability, guidance on university sustainability rankings, Scan-to-BIM for energy retrofit, and workflows that keep asset, sensor, and meter records linked as BIM models change.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ON THIS TOPIC ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.projects.number">Projects</div>
+      <h2 class="section-title" data-i18n="research.projects.title" data-i18n-html>Funded <em>projects</em>.</h2>
+    </div>
+    <div class="proj-list">
+        <article class="proj-item">
+          <div class="proj-period">2020.08 – 2023.07</div>
+          <div>
+            <div class="proj-meta"><span>MOST 109-2221-E-002-054-MY3</span></div>
+            <h3 class="proj-title" data-i18n="research.proj.most109a.title">An Information Integration Platform for Smart Decision Making on Campus Sustainability</h3>
+          </div>
+        </article>
+        <article class="proj-item">
+          <div class="proj-period">2023.08 – 2026.07</div>
+          <div>
+            <div class="proj-meta"><span>NSTC 112-2221-E-002-078-MY3</span></div>
+            <h3 class="proj-title" data-i18n="research.proj.nstc112.title">A Digital-Twin Enabled Application Platform for a Net-Zero, Circular and WELL Campus</h3>
+          </div>
+        </article>
+    </div>
+    <a href="projects.html" class="cta-link" data-i18n="research.projects.all">All projects →</a>
+  </div>
+</section>
+
+<!-- ============ PUBLICATIONS ON THIS TOPIC ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.pubs.number">Publications</div>
+      <h2 class="section-title" data-i18n="research.pubs.title" data-i18n-html>Papers on <em>this topic</em>.</h2>
+    </div>
+    <div class="pubs-group">
+      <h3 class="pubs-group-title"><span data-i18n="research.pubs.conference">Conference Papers</span><span class="pubs-group-count">14</span></h3>
+      <div class="pubs-list">
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/355771382_Identifying_and_predicting_the_electricity_consumption_pattern_of_a_university_library_with_occupant_related_Wi-Fi_data" target="_blank" rel="noopener">Identifying and predicting the electricity consumption pattern of a university library with occupant related Wi-Fi data</a>
+          <div class="pub-meta">2021 · <em>CCACHE</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/368245594_Improving_Usage_Capacity_of_Shared_Bikes_for_a_More_Sustainable_Campus_A_Case_Study_at_National_Taiwan_University" target="_blank" rel="noopener">Improving Usage Capacity of Shared Bikes for a More Sustainable Campus: A Case Study at National Taiwan University</a>
+          <div class="pub-meta">2022 · <em>SCEM</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/368245732_BUILDING_INFORMATION_MANAGEMENT_AND_VISUALIZATION_FOR_BUILDING_ENERGY-EFFICIENCY_RATING_SYSTEM_IN_TAIWAN-A_CASE_STUDY_AT_NATIONAL_TAIWAN_UNIVERSITY" target="_blank" rel="noopener">Building Information Management And Visualization For Building Energy-efficiency Rating System In Taiwan-a Case Study At National Taiwan University</a>
+          <div class="pub-authors">Singh, A. K., Tu, S.-W., <strong>Chang, Y.-T.</strong>, &amp; Hsieh, S.-H.</div>
+          <div class="pub-meta">2022 · <em>CONVR</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/368245821_PARAMETRIC_DESIGN_OF_SOLAR_PARKING_LOT_LAYOUT_WITH_EVOLUTIONARY_OPTIMIZATION_-A_CASE_STUDY_OF_NATIONAL_TAIWAN_UNIVERSITY" target="_blank" rel="noopener">Parametric Design Of Solar Parking Lot Layout With Evolutionary Optimization -a Case Study Of National Taiwan University</a>
+          <div class="pub-authors">Sierra, M.E., Gupta, B., <strong>Chang, Y.-T.</strong>, &amp; Hsieh, S.-H.</div>
+          <div class="pub-meta">2022 · <em>CONVR</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/368245650_IDENTIFYING_OBSTACLES_FOR_SOLAR_PANEL_INSTALLATION_ON_BUILDING_ROOFTOPS_UTILIZING_SATELLITE_IMAGERY_AND_COMPUTER_VISION_MODELS_-A_CASE_STUDY_OF_NATIONAL_TAIWAN_UNIVERSITY" target="_blank" rel="noopener">Identifying Obstacles For Solar Panel Installation On Building Rooftops Utilizing Satellite Imagery And Computer Vision Models -a Case Study Of National Taiwan University</a>
+          <div class="pub-authors">Lin, P.-H., Chen, K.-C., <strong>Chang, Y.-T.</strong>, &amp; Hsieh, S.-H.</div>
+          <div class="pub-meta">2022 · <em>CONVR</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/378760920_A_Digital_Twin_Platform_Based_on_3D_Building_Models_and_Smart_IoT_for_a_Climate-Resilient_Campus_A_Case_Study_of_National_Taiwan_University" target="_blank" rel="noopener">A Digital Twin Platform Based on 3D Building Models and Smart IoT for A Climate-Resilient Campus: A Case Study of National Taiwan University</a>
+          <div class="pub-authors">Chen, K. C., <strong>Chang, Y. T.</strong>, &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2023 · <em>i3CE</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/378535410_Building_Rooftop_Analysis_for_Solar_Panel_Installation_Through_Point_Cloud_Classification_-_A_Case_Study_of_National_Taiwan_University" target="_blank" rel="noopener">Building rooftop analysis for solar panel installation through point cloud classification - A case study of National Taiwan University</a>
+          <div class="pub-meta">2023 · <em>CONVR</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/389829581_A_Digital_Twin_Platform_Based_on_Building_Information_Models_and_Smart_Sensors_for_a_Net_Zero_Energy_Circular_and_WELL_Campus-_a_Case_Study_of_National_Taiwan_University" target="_blank" rel="noopener">A Digital Twin Platform Based on Building Information Models and Smart Sensors for a Net Zero Energy, Circular and WELL Campus- A Case Study of National Taiwan University</a>
+          <div class="pub-authors"><strong>Chang, Y. T.</strong>, Kuo, W. L., Wu, T. H., &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2024 · <em>ICCCBE</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/397656572_A_Review_on_the_Interactions_Between_Human_and_Digital_Twin_for_Building_Operations?_sg%5B0%5D=aA5KGgnnCh0Ee3eXq9hBkGk_SyzVrdnWxkqCdD9RUVvJkZJAsX_GPiOTJ8C9VVVeStXPP5yRUEbW12MMoci7Yli3bp_5K1iC6zcSRk3U.GQuHeZzYfSY3-eW3BnBHS5m4tggU3A1bZvbdCEO3r6d7BOrkRI026owCt_Ij-ZJL0g3AmFvX9Kzv__Qe5jnwtw&amp;_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6ImhvbWUiLCJwYWdlIjoicHJvZmlsZSIsInByZXZpb3VzUGFnZSI6InByb2ZpbGUiLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19" target="_blank" rel="noopener">A Review on the Interactions Between Human and Digital Twin for Building Operations</a>
+          <div class="pub-meta">2024 · <em>CONVR</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/391275650_Streamlining_Sensor_Registration_and_Updating_Process_in_BIM-based_Digital_Twins" target="_blank" rel="noopener">Streamlining Sensor Registration and Updating Process in BIM-based Digital Twins</a>
+          <div class="pub-authors">Fu, C. W., Wu, T. H., <strong>Chang, Y. T.</strong>, &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2025 · <em>ICCBEI</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/394943391_An_Information_Integration_Platform_for_Visualizing_Campus_Sustainability_with_Digital_Twin-A_Case_Study_of_National_Taiwan_University" target="_blank" rel="noopener">An Information Integration Platform for Visualizing Campus Sustainability with Digital Twin—A Case Study of National Taiwan University</a>
+          <div class="pub-authors"><strong>Chang, Y. T.</strong>, Wu, T. H., &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2025 · <em>DFBI</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">Demystifying University Sustainability Rankings: Insights and Guidance for Higher Education Institutions</div>
+          <div class="pub-meta">2025 · <em>ISDRS</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">A Review on Scan to BIM for Building Energy Retrofit</div>
+          <div class="pub-meta">2026 · <em>ICCCBE</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">An Integrated Workflow for Keeping Asset, Sensor, and Circuit-Meter Records Linked Across BIM Updates: A Single-Floor Case Study</div>
+          <div class="pub-meta">2026 · <em>KKTHCNN</em></div>
+        </article>
       </div>
     </div>
+    <a href="publications.html" class="cta-link" data-i18n="research.pubs.all">All publications →</a>
   </div>
 </section>
 
@@ -689,9 +858,11 @@
     <div class="footer-col">
       <h4 data-i18n="footer.research">Research</h4>
       <ul>
+        <li><a href="research-bimai.html" data-i18n="nav.research.bimai">BIM-AI Project Assistant</a></li>
+        <li><a href="research-csh.html" data-i18n="nav.research.csh">CSH Knowledge Base</a></li>
         <li><a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a></li>
-        <li><a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a></li>
         <li><a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a></li>
+        <li><a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -744,6 +915,8 @@
       'nav.research': 'Research <span class="caret">▾</span>',
       'nav.research.hpb': 'HPB Design Tool',
       'nav.research.nzr': 'NZR City Platform',
+      'nav.research.bimai': 'BIM-AI Project Assistant',
+      'nav.research.csh': 'CSH Knowledge Base',
       'nav.research.sdgs': 'SDGs Campus Twin',
       'nav.teaching': 'Teaching <span class="caret">▾</span>',
       'nav.news.events': 'Events',
@@ -756,14 +929,35 @@
 
 
       // Research page
-      'research.eyebrow': 'Project · Sustainable Development Goals',
+      'research.eyebrow': 'Focus · Sustainable Development Goals',
       'research.heroTitle': 'SDGs Campus Twin.',
       'research.heroLede': "A digital twin of the campus, structured around the UN Sustainable Development Goals — turning daily operations into measurable progress.",
-      'research.tag': 'In Development',
-      'research.placeholder.title': 'This page is being <em>built</em>.',
-      'research.placeholder.body': "Detailed research content is on its way. In the meantime, the lab's framework — Built Environment × Four i's × Lifecycle Management — is described on the overview page, and recent papers are listed on the publications page.",
-      'research.cta.overview': '← Overview',
-      'research.cta.pubs': 'Publications →',
+      // Research journey
+      'research.journey.number': 'Research Journey',
+      'research.journey.title': 'From past to <em>present</em>.',
+      'research.journey.1.title': 'Campus data',
+      'research.journey.1.text': 'Predicting a university library’s electricity use from occupant Wi-Fi data, making shared bikes more useful, and NTU case studies on energy-efficiency rating information, solar parking layouts, and rooftop solar potential from satellite imagery — the groundwork for an information integration platform for smart decisions on campus sustainability.',
+      'research.journey.2.title': 'A campus digital twin',
+      'research.journey.2.text': 'A digital twin platform for NTU built on 3D building models, BIM, and IoT sensors — first for a climate-resilient campus, then for a net-zero, circular, and WELL campus — with point-cloud rooftop analysis and a review of how people interact with digital twins in building operations.',
+      'research.journey.3.title': 'Keeping the twin alive',
+      'research.journey.3.text': 'Streamlining sensor registration in BIM-based twins, a platform that visualizes campus sustainability, guidance on university sustainability rankings, Scan-to-BIM for energy retrofit, and workflows that keep asset, sensor, and meter records linked as BIM models change.',
+      'research.journey.3.period': '2025 – now',
+      // Projects on this topic
+      'research.projects.number': 'Projects',
+      'research.projects.title': 'Funded <em>projects</em>.',
+      'research.projects.ongoing': 'Ongoing',
+      'research.projects.subproject': 'Sub-project',
+      'research.projects.abri': 'ABRI',
+      'research.projects.industry': 'Industry–Academia',
+      'research.projects.all': 'All projects →',
+      'research.proj.most109a.title': 'An Information Integration Platform for Smart Decision Making on Campus Sustainability',
+      'research.proj.nstc112.title': 'A Digital-Twin Enabled Application Platform for a Net-Zero, Circular and WELL Campus',
+      // Publications on this topic
+      'research.pubs.number': 'Publications',
+      'research.pubs.title': 'Papers on <em>this topic</em>.',
+      'research.pubs.journal': 'Journal Articles',
+      'research.pubs.conference': 'Conference Papers',
+      'research.pubs.all': 'All publications →',
 
       // Profile hero
       'people.photo.tag': 'Director',
@@ -883,6 +1077,8 @@
       'nav.research': '研究主題 <span class="caret">▾</span>',
       'nav.research.hpb': 'HPB 設計工具',
       'nav.research.nzr': 'NZR 城市平台',
+      'nav.research.bimai': 'BIM-AI 專案助理',
+      'nav.research.csh': 'CSH 知識庫',
       'nav.research.sdgs': 'SDGs 校園孿生',
       'nav.teaching': '教學 <span class="caret">▾</span>',
       'nav.news.events': '活動',
@@ -895,14 +1091,35 @@
 
 
       // Research page
-      'research.eyebrow': '研究計畫 · 永續發展目標',
+      'research.eyebrow': '研究主題 · 永續發展目標',
       'research.heroTitle': 'SDGs 校園孿生。',
       'research.heroLede': '以聯合國永續發展目標為結構的校園數位孿生 — 將日常營運轉化為可量化的進展。',
-      'research.tag': '建置中',
-      'research.placeholder.title': '此頁面正在<em>建構中</em>。',
-      'research.placeholder.body': '詳細的研究內容即將推出。同時,研究室的整體架構 — 建築環境 × 四個 i × 生命週期管理 — 已在概述頁面說明,近期論文則列於學術發表頁面。',
-      'research.cta.overview': '← 研究室概述',
-      'research.cta.pubs': '學術發表 →',
+      // Research journey
+      'research.journey.number': '研究歷程',
+      'research.journey.title': '從過去到<em>現在</em>。',
+      'research.journey.1.title': '校園資料',
+      'research.journey.1.text': '以使用者 Wi-Fi 資料預測大學圖書館用電、提升共享單車使用效率,並以臺大為案例,研究建築能效評級資訊管理、太陽能停車場配置最佳化,以及運用衛星影像辨識屋頂設置太陽能板的障礙,為永續校園智慧決策資訊整合平台奠定基礎。',
+      'research.journey.2.title': '校園數位孿生',
+      'research.journey.2.text': '以 3D 建築模型、BIM 與 IoT 感測器建構臺大校園數位孿生平台 — 從氣候韌性校園延伸到淨零、循環與健康 (WELL) 校園 — 並以點雲分析屋頂,回顧建築營運中人與數位孿生的互動。',
+      'research.journey.3.title': '讓孿生持續運作',
+      'research.journey.3.text': '簡化 BIM 數位孿生的感測器註冊與更新流程、建置校園永續資訊視覺化平台、解析大學永續排名,並研究以 Scan-to-BIM 支援建築節能改善,以及在 BIM 更新時保持資產、感測器與電表紀錄連結的整合流程。',
+      'research.journey.3.period': '2025 – 至今',
+      // Projects on this topic
+      'research.projects.number': '研究計畫',
+      'research.projects.title': '相關<em>研究計畫</em>。',
+      'research.projects.ongoing': '執行中',
+      'research.projects.subproject': '子計畫',
+      'research.projects.abri': '建研所',
+      'research.projects.industry': '產學合作',
+      'research.projects.all': '所有研究計畫 →',
+      'research.proj.most109a.title': '永續校園智慧決策資訊整合平台之研發',
+      'research.proj.nstc112.title': '淨零循環健康校園之數位雙生應用平台之建構',
+      // Publications on this topic
+      'research.pubs.number': '學術發表',
+      'research.pubs.title': '這個主題的<em>相關論文</em>。',
+      'research.pubs.journal': '期刊論文',
+      'research.pubs.conference': '研討會論文',
+      'research.pubs.all': '所有學術發表 →',
 
       // Profile hero
       'people.photo.tag': '主持人',
@@ -1045,6 +1262,12 @@
       applyLang(current === 'en' ? 'zh-Hant' : 'en');
     });
   }
+})();
+
+// Drop the "Ongoing" tag once a project's end date has passed.
+(function() {
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Taipei' });
+  document.querySelectorAll('[data-until]').forEach(el => { if (today > el.dataset.until) el.remove(); });
 })();
 </script>
 

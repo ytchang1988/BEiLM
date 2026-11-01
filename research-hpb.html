@@ -348,55 +348,125 @@
   .contact-item a:hover { color: var(--forest); }
   
 
-  /* ============ RESEARCH PLACEHOLDER ============ */
-  .research-placeholder {
-    text-align: center;
-    padding: 60px 24px 100px;
-    max-width: 640px;
-    margin: 0 auto;
+  /* ============ RESEARCH JOURNEY ============ */
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    list-style: none;
   }
-  .placeholder-mark {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 28px;
-    opacity: 0.55;
-  }
-  .placeholder-tag {
-    display: inline-block;
+  .journey-step { border-top: 2px solid var(--forest); padding-top: 18px; }
+  .journey-period {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--jade);
-    padding: 5px 14px;
-    border: 1px solid var(--jade);
-    border-radius: 999px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
-  .placeholder-title {
-    font-weight: 800;
-    font-size: 38px;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+  .journey-title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
     color: var(--forest);
-    margin-bottom: 18px;
+    margin-bottom: 10px;
   }
-  .placeholder-title em { color: var(--jade); font-style: normal; }
-  .placeholder-body {
-    font-size: 16px;
-    line-height: 1.65;
-    color: var(--forest-2);
-    margin-bottom: 36px;
-    max-width: 56ch;
-    margin-left: auto;
-    margin-right: auto;
+  .journey-text { font-size: 15px; line-height: 1.65; color: var(--forest-2); }
+  @media (max-width: 920px) {
+    .journey { grid-template-columns: 1fr; gap: 28px; }
   }
-  .placeholder-cta {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+
+  /* ============ PROJECTS ON THIS TOPIC ============ */
+  .proj-list { display: flex; flex-direction: column; margin-bottom: 32px; }
+  .proj-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    padding: 22px 0;
+    border-top: 1px solid var(--rule);
   }
+  .proj-item:last-child { border-bottom: 1px solid var(--rule); }
+  .proj-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--forest);
+    padding-top: 3px;
+    white-space: nowrap;
+  }
+  .proj-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin-bottom: 8px;
+  }
+  .proj-tag { background: var(--jade); color: white; font-size: 9px; letter-spacing: 0.2em; padding: 2px 8px; }
+  .proj-title {
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--forest);
+    max-width: 70ch;
+  }
+  .proj-sub { margin-top: 8px; font-size: 14px; line-height: 1.55; color: var(--forest-2); max-width: 72ch; }
+  .proj-sub-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--jade);
+    margin-right: 10px;
+  }
+  @media (max-width: 920px) {
+    .proj-item { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  /* ============ PUBLICATIONS ON THIS TOPIC ============ */
+  .pubs-group { margin-bottom: 56px; }
+  .pubs-group-title {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--forest);
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--forest);
+  }
+  .pubs-group-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--jade);
+  }
+  .pubs-list { display: flex; flex-direction: column; }
+  .pub-item { padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .pub-item:hover .pub-title { color: var(--jade); }
+  .pub-title {
+    display: block;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: var(--forest);
+    margin-bottom: 6px;
+    max-width: 80ch;
+    transition: color 0.18s;
+  }
+  .pub-authors { font-size: 13px; line-height: 1.5; color: var(--forest-2); margin-bottom: 4px; }
+  .pub-authors strong { font-weight: 700; color: var(--forest); }
+  .pub-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ocean);
+  }
+  .pub-meta em { font-style: italic; text-transform: none; letter-spacing: 0; color: var(--forest-2); }
   .cta-link {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -408,9 +478,6 @@
     transition: color 0.18s, border-color 0.18s;
   }
   .cta-link:hover { color: var(--jade); border-color: var(--jade); }
-  @media (max-width: 920px) {
-    .placeholder-title { font-size: 28px; }
-  }
 
   /* ============ FOOTER ============ */
   footer {
@@ -569,9 +636,11 @@
     <li class="has-dropdown">
       <a href="#" class="nav-trigger" data-i18n="nav.research" data-i18n-html>Research <span class="caret">▾</span></a>
       <div class="dropdown">
+        <a href="research-bimai.html" data-i18n="nav.research.bimai">BIM-AI Project Assistant</a>
+        <a href="research-csh.html" data-i18n="nav.research.csh">CSH Knowledge Base</a>
         <a href="research-hpb.html" class="active" data-i18n="nav.research.hpb">HPB Design Tool</a>
-        <a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a>
         <a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a>
+        <a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a>
       </div>
     </li>
     <li class="has-dropdown">
@@ -598,43 +667,122 @@
 <section class="profile-hero">
   <div class="container">
     <div style="max-width: 720px;">
-      <div class="profile-meta" data-i18n="research.eyebrow">Project · High-Performance Building</div>
+      <div class="profile-meta" data-i18n="research.eyebrow">Focus · High-Performance Building</div>
       <h1 class="profile-name" style="font-size: 56px; line-height: 1.05;" data-i18n="research.heroTitle">HPB Design Tool.</h1>
       <p class="profile-bio" style="margin-top: 24px;" data-i18n="research.heroLede">A computational design tool for architects and engineers — bringing performance-aware decision-making into early design stages.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ COMING SOON PLACEHOLDER ============ -->
+<!-- ============ RESEARCH JOURNEY ============ -->
 <section style="padding-top: 0;">
   <div class="container">
-    <div class="research-placeholder">
-      <div class="placeholder-mark">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-          <ellipse cx="100" cy="115" rx="82" ry="22" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="58" ry="16" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <ellipse cx="100" cy="115" rx="34" ry="10" fill="none" stroke="#1F4D3A" stroke-width="2.8"/>
-          <g transform="translate(62, 51)">
-            <rect fill="#1F4D3A" x="0" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="22" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="44" y="0" width="10" height="10"/>
-            <rect fill="#2A9D8F" x="66" y="0" width="10" height="10"/>
-            <rect fill="#1F4D3A" x="0" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="22" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="44" y="16" width="10" height="48"/>
-            <rect fill="#1F4D3A" x="66" y="16" width="10" height="48"/>
-            <rect fill="#0F6E7C" x="0" y="24" width="76" height="4"/>
-          </g>
-        </svg>
-      </div>
-      <div class="placeholder-tag" data-i18n="research.tag">In Development</div>
-      <h2 class="placeholder-title" data-i18n="research.placeholder.title" data-i18n-html>This page is being <em>built</em>.</h2>
-      <p class="placeholder-body" data-i18n="research.placeholder.body">Detailed research content is on its way. In the meantime, the lab's framework — Built Environment × Four i's × Lifecycle Management — is described on the overview page, and recent papers are listed on the publications page.</p>
-      <div class="placeholder-cta">
-        <a href="index.html" class="cta-link" data-i18n="research.cta.overview">← Overview</a>
-        <a href="publications.html" class="cta-link" data-i18n="research.cta.pubs">Publications →</a>
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.journey.number">Research Journey</div>
+      <h2 class="section-title" data-i18n="research.journey.title" data-i18n-html>From past to <em>present</em>.</h2>
+    </div>
+    <ol class="journey">
+      <li class="journey-step">
+        <div class="journey-period">2016 – 2020</div>
+        <h3 class="journey-title" data-i18n="research.journey.1.title">Performance in early design</h3>
+        <p class="journey-text" data-i18n="research.journey.1.text">How Taiwan’s green building projects analyse and decide at the conceptual design stage, a BIM-enabled method for green planting on building sites, a review of BIM research for performance-based green building design, and occupant trajectory data for building management.</p>
+      </li>
+      <li class="journey-step">
+        <div class="journey-period">2025</div>
+        <h3 class="journey-title" data-i18n="research.journey.2.title">Carbon across the building</h3>
+        <p class="journey-text" data-i18n="research.journey.2.text">BIM-based carbon analysis of residential buildings in India, the structural and carbon effects of base isolation in Taiwanese RC buildings, and a BIM tool that evaluates and visualizes embodied carbon for low-carbon interior design.</p>
+      </li>
+      <li class="journey-step">
+        <div class="journey-period" data-i18n="research.journey.3.period">2026 – now</div>
+        <h3 class="journey-title" data-i18n="research.journey.3.title">Reasoning and optimization</h3>
+        <p class="journey-text" data-i18n="research.journey.3.text">GRACE, a framework that combines BIM, AI, and knowledge graphs for green reasoning and cost evaluation over the building lifecycle; carbon payback in parametric façade optimization with genetic algorithms; a review of ontology- and knowledge-graph-enabled BIM for building energy digital twins; and, with industry, SparkGen, a generative design engine for design-driven construction innovation.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ON THIS TOPIC ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.projects.number">Projects</div>
+      <h2 class="section-title" data-i18n="research.projects.title" data-i18n-html>Funded <em>projects</em>.</h2>
+    </div>
+    <div class="proj-list">
+        <article class="proj-item">
+          <div class="proj-period">2026.07 – 2026.11</div>
+          <div>
+            <div class="proj-meta"><span data-i18n="research.projects.industry">Industry–Academia</span><span class="proj-tag" data-until="2026-11-30" data-i18n="research.projects.ongoing">Ongoing</span></div>
+            <h3 class="proj-title" data-i18n="research.proj.ind-sparkgen.title">Design-Driven Construction Innovation: Developing the SparkGen Generative Engine and Reinventing the Brand Experience</h3>
+          </div>
+        </article>
+    </div>
+    <a href="projects.html" class="cta-link" data-i18n="research.projects.all">All projects →</a>
+  </div>
+</section>
+
+<!-- ============ PUBLICATIONS ON THIS TOPIC ============ -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="section-number" data-i18n="research.pubs.number">Publications</div>
+      <h2 class="section-title" data-i18n="research.pubs.title" data-i18n-html>Papers on <em>this topic</em>.</h2>
+    </div>
+    <div class="pubs-group">
+      <h3 class="pubs-group-title"><span data-i18n="research.pubs.journal">Journal Articles</span><span class="pubs-group-count">2</span></h3>
+      <div class="pubs-list">
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/338810062_A_review_of_Building_Information_Modeling_research_for_green_building_design_through_building_performance_analysis" target="_blank" rel="noopener">A review of Building Information Modeling research for green building design through building performance analysis</a>
+          <div class="pub-authors"><strong>Chang, Y. T.</strong>, &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2020 · <em>Journal of Information Technology in Construction</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/390217146_BIM-based_approach_for_analyzing_carbon_emissions_of_residential_buildings_in_India" target="_blank" rel="noopener">BIM-based approach for analyzing carbon emissions of residential buildings in India</a>
+          <div class="pub-authors">Mishra, B., Shanmugapriya, T., Hsieh, S. H., <strong>Chang, Y. T.</strong>, &amp; Pal, A.</div>
+          <div class="pub-meta">2025 · <em>Innovative Infrastructure Solutions</em></div>
+        </article>
       </div>
     </div>
+    <div class="pubs-group">
+      <h3 class="pubs-group-title"><span data-i18n="research.pubs.conference">Conference Papers</span><span class="pubs-group-count">8</span></h3>
+      <div class="pubs-list">
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/304889203_A_preliminary_study_on_current_practices_and_barriers_in_design_analysis_and_decision_making_at_conceptual_design_stage_of_Taiwan&#x27;s_green_building_projects?_sg%5B0%5D=SBbaBscdtxmNxtuongZKtrtDOMz7rCN5vYLYzDTj7ciGtTuiotbHgDv4ezuIUrfd7odook509Lb7_cB3S_DDVCIJKTzX8oJb8g6FkCKd.NTe3jgVhX12LzO35YyNdqgFAr9A0fzoofoFqPNJ9oMC9eKL_rnATeBVZHcIs8aubo51wdph06BCuLoSOnyWAKA" target="_blank" rel="noopener">A preliminary study on current practices and barriers in design analysis and decision making at conceptual design stage of Taiwan&#x27;s green building projects</a>
+          <div class="pub-meta">2016 · <em>ID@50</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/333758467_A_BIM-Enabled_Design_Method_for_Green_Plantation_on_Building_Sites?_sg%5B0%5D=SBbaBscdtxmNxtuongZKtrtDOMz7rCN5vYLYzDTj7ciGtTuiotbHgDv4ezuIUrfd7odook509Lb7_cB3S_DDVCIJKTzX8oJb8g6FkCKd.NTe3jgVhX12LzO35YyNdqgFAr9A0fzoofoFqPNJ9oMC9eKL_rnATeBVZHcIs8aubo51wdph06BCuLoSOnyWAKA" target="_blank" rel="noopener">A BIM-Enabled Design Method for Green Plantation on Building Sites</a>
+          <div class="pub-authors">Chou, C. C., <strong>Chang, Y. T.</strong>, &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2019 · <em>i3CE</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/342925190_A_Framework_for_Utilization_of_Occupants&#x27;_Trajectory_Data_to_Enhance_Building_Management?_sg%5B0%5D=SBbaBscdtxmNxtuongZKtrtDOMz7rCN5vYLYzDTj7ciGtTuiotbHgDv4ezuIUrfd7odook509Lb7_cB3S_DDVCIJKTzX8oJb8g6FkCKd.NTe3jgVhX12LzO35YyNdqgFAr9A0fzoofoFqPNJ9oMC9eKL_rnATeBVZHcIs8aubo51wdph06BCuLoSOnyWAKA" target="_blank" rel="noopener">A Framework for Utilization of Occupants’ Trajectory Data to Enhance Building Management</a>
+          <div class="pub-authors">Hsu, S. H., Han, W., <strong>Chang, Y. T.</strong>, Chan, Y. C., &amp; Hsieh, S. H.</div>
+          <div class="pub-meta">2020 · <em>ICCCBE</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/395473493_Structural_Elements_Efficiency_and_Carbon_Emission_Reduction_of_Taiwanese_RC_Buildings_through_Base_Isolation_Implementation" target="_blank" rel="noopener">Structural Elements Efficiency and Carbon Emission Reduction of Taiwanese RC Buildings through Base Isolation Implementation</a>
+          <div class="pub-meta">2025 · <em>SCEM</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">A BIM-based Embodied Carbon Footprint Evaluation and Visualization Tool for Assisting Low Carbon Interior Design</div>
+          <div class="pub-meta">2025 · <em>CECAR</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/405355415_GRACE_Green_Reasoning_and_Cost_Evaluation_Framework_Using_BIM_AI_and_Knowledge_Graphs_for_Building_Lifecycles" target="_blank" rel="noopener">GRACE: Green Reasoning and Cost Evaluation Framework Using BIM, AI, and Knowledge Graphs for Building Lifecycles</a>
+          <div class="pub-meta">2026 · <em>ICCCBE</em></div>
+        </article>
+        <article class="pub-item">
+          <a class="pub-title" href="https://www.researchgate.net/publication/408111727_Evaluating_Carbon_Payback_Period_in_Parametric_Facade_Optimization_Using_Genetic_Algorithms_and_Multi-Criteria_Decision-Making" target="_blank" rel="noopener">Evaluating Carbon Payback Period in Parametric Facade Optimization Using Genetic Algorithms and Multi-Criteria Decision-Making</a>
+          <div class="pub-meta">2026 · <em>ISARC</em></div>
+        </article>
+        <article class="pub-item">
+          <div class="pub-title">Ontology- and Knowledge Graph–Enabled BIM for Building Energy Digital Twins: A Review</div>
+          <div class="pub-meta">2026 · <em>BDTSC</em></div>
+        </article>
+      </div>
+    </div>
+    <a href="publications.html" class="cta-link" data-i18n="research.pubs.all">All publications →</a>
   </div>
 </section>
 
@@ -689,9 +837,11 @@
     <div class="footer-col">
       <h4 data-i18n="footer.research">Research</h4>
       <ul>
+        <li><a href="research-bimai.html" data-i18n="nav.research.bimai">BIM-AI Project Assistant</a></li>
+        <li><a href="research-csh.html" data-i18n="nav.research.csh">CSH Knowledge Base</a></li>
         <li><a href="research-hpb.html" data-i18n="nav.research.hpb">HPB Design Tool</a></li>
-        <li><a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a></li>
         <li><a href="research-nzr.html" data-i18n="nav.research.nzr">NZR City Platform</a></li>
+        <li><a href="research-sdgs.html" data-i18n="nav.research.sdgs">SDGs Campus Twin</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -744,6 +894,8 @@
       'nav.research': 'Research <span class="caret">▾</span>',
       'nav.research.hpb': 'HPB Design Tool',
       'nav.research.nzr': 'NZR City Platform',
+      'nav.research.bimai': 'BIM-AI Project Assistant',
+      'nav.research.csh': 'CSH Knowledge Base',
       'nav.research.sdgs': 'SDGs Campus Twin',
       'nav.teaching': 'Teaching <span class="caret">▾</span>',
       'nav.news.events': 'Events',
@@ -756,14 +908,34 @@
 
 
       // Research page
-      'research.eyebrow': 'Project · High-Performance Building',
+      'research.eyebrow': 'Focus · High-Performance Building',
       'research.heroTitle': 'HPB Design Tool.',
       'research.heroLede': "A computational design tool for architects and engineers — bringing performance-aware decision-making into early design stages.",
-      'research.tag': 'In Development',
-      'research.placeholder.title': 'This page is being <em>built</em>.',
-      'research.placeholder.body': "Detailed research content is on its way. In the meantime, the lab's framework — Built Environment × Four i's × Lifecycle Management — is described on the overview page, and recent papers are listed on the publications page.",
-      'research.cta.overview': '← Overview',
-      'research.cta.pubs': 'Publications →',
+      // Research journey
+      'research.journey.number': 'Research Journey',
+      'research.journey.title': 'From past to <em>present</em>.',
+      'research.journey.1.title': 'Performance in early design',
+      'research.journey.1.text': 'How Taiwan’s green building projects analyse and decide at the conceptual design stage, a BIM-enabled method for green planting on building sites, a review of BIM research for performance-based green building design, and occupant trajectory data for building management.',
+      'research.journey.2.title': 'Carbon across the building',
+      'research.journey.2.text': 'BIM-based carbon analysis of residential buildings in India, the structural and carbon effects of base isolation in Taiwanese RC buildings, and a BIM tool that evaluates and visualizes embodied carbon for low-carbon interior design.',
+      'research.journey.3.title': 'Reasoning and optimization',
+      'research.journey.3.text': 'GRACE, a framework that combines BIM, AI, and knowledge graphs for green reasoning and cost evaluation over the building lifecycle; carbon payback in parametric façade optimization with genetic algorithms; a review of ontology- and knowledge-graph-enabled BIM for building energy digital twins; and, with industry, SparkGen, a generative design engine for design-driven construction innovation.',
+      'research.journey.3.period': '2026 – now',
+      // Projects on this topic
+      'research.projects.number': 'Projects',
+      'research.projects.title': 'Funded <em>projects</em>.',
+      'research.projects.ongoing': 'Ongoing',
+      'research.projects.subproject': 'Sub-project',
+      'research.projects.abri': 'ABRI',
+      'research.projects.industry': 'Industry–Academia',
+      'research.projects.all': 'All projects →',
+      'research.proj.ind-sparkgen.title': 'Design-Driven Construction Innovation: Developing the SparkGen Generative Engine and Reinventing the Brand Experience',
+      // Publications on this topic
+      'research.pubs.number': 'Publications',
+      'research.pubs.title': 'Papers on <em>this topic</em>.',
+      'research.pubs.journal': 'Journal Articles',
+      'research.pubs.conference': 'Conference Papers',
+      'research.pubs.all': 'All publications →',
 
       // Profile hero
       'people.photo.tag': 'Director',
@@ -883,6 +1055,8 @@
       'nav.research': '研究主題 <span class="caret">▾</span>',
       'nav.research.hpb': 'HPB 設計工具',
       'nav.research.nzr': 'NZR 城市平台',
+      'nav.research.bimai': 'BIM-AI 專案助理',
+      'nav.research.csh': 'CSH 知識庫',
       'nav.research.sdgs': 'SDGs 校園孿生',
       'nav.teaching': '教學 <span class="caret">▾</span>',
       'nav.news.events': '活動',
@@ -895,14 +1069,34 @@
 
 
       // Research page
-      'research.eyebrow': '研究計畫 · 高效能建築',
+      'research.eyebrow': '研究主題 · 高效能建築',
       'research.heroTitle': 'HPB 設計工具。',
       'research.heroLede': '一個專為建築師與工程師打造的計算設計工具 — 將性能導向的決策思維帶入設計初期階段。',
-      'research.tag': '建置中',
-      'research.placeholder.title': '此頁面正在<em>建構中</em>。',
-      'research.placeholder.body': '詳細的研究內容即將推出。同時,研究室的整體架構 — 建築環境 × 四個 i × 生命週期管理 — 已在概述頁面說明,近期論文則列於學術發表頁面。',
-      'research.cta.overview': '← 研究室概述',
-      'research.cta.pubs': '學術發表 →',
+      // Research journey
+      'research.journey.number': '研究歷程',
+      'research.journey.title': '從過去到<em>現在</em>。',
+      'research.journey.1.title': '設計初期的性能分析',
+      'research.journey.1.text': '研究台灣綠建築專案在概念設計階段的設計分析與決策現況及障礙、提出 BIM 輔助的基地綠化設計方法、回顧以性能分析支援綠建築設計的 BIM 研究,並運用使用者移動軌跡資料強化建築管理。',
+      'research.journey.2.title': '建築碳排分析',
+      'research.journey.2.text': '以 BIM 分析印度住宅建築碳排、探討基礎隔震對台灣 RC 建築結構效率與減碳的影響,並開發協助低碳室內設計的 BIM 蘊含碳評估與視覺化工具。',
+      'research.journey.3.title': '推理與最佳化',
+      'research.journey.3.text': '提出結合 BIM、AI 與知識圖譜的 GRACE 綠色推理與成本評估框架、以基因演算法與多準則決策評估參數化立面最佳化的碳回收期、回顧以本體論與知識圖譜支援建築能源數位孿生的 BIM 研究,並與產業合作研發 SparkGen 生成引擎,推動設計驅動的營建革新。',
+      'research.journey.3.period': '2026 – 至今',
+      // Projects on this topic
+      'research.projects.number': '研究計畫',
+      'research.projects.title': '相關<em>研究計畫</em>。',
+      'research.projects.ongoing': '執行中',
+      'research.projects.subproject': '子計畫',
+      'research.projects.abri': '建研所',
+      'research.projects.industry': '產學合作',
+      'research.projects.all': '所有研究計畫 →',
+      'research.proj.ind-sparkgen.title': '設計驅動營建革新 — SparkGen 生成引擎研發與品牌化體驗再造',
+      // Publications on this topic
+      'research.pubs.number': '學術發表',
+      'research.pubs.title': '這個主題的<em>相關論文</em>。',
+      'research.pubs.journal': '期刊論文',
+      'research.pubs.conference': '研討會論文',
+      'research.pubs.all': '所有學術發表 →',
 
       // Profile hero
       'people.photo.tag': '主持人',
@@ -1045,6 +1239,12 @@
       applyLang(current === 'en' ? 'zh-Hant' : 'en');
     });
   }
+})();
+
+// Drop the "Ongoing" tag once a project's end date has passed.
+(function() {
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Taipei' });
+  document.querySelectorAll('[data-until]').forEach(el => { if (today > el.dataset.until) el.remove(); });
 })();
 </script>
 
